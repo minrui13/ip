@@ -2,6 +2,8 @@ import java.time.LocalTime;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Yappa {
 
@@ -13,10 +15,12 @@ public class Yappa {
             + "  |_|\\__,_| .__/| .__/ \\__,_|\n"
             + "          |_|   |_|          \n";
 
+    public static List<String> inputList = new ArrayList<>(100);
+
     public static void main(String[] args) {
         printGreeting();
         inputAndEcho();
-        printExit();
+        printMessage("\t Catch you later :)!");
     }
 
     private static void printGreeting() {
@@ -27,8 +31,12 @@ public class Yappa {
         System.out.println(LINE);
     }
 
-    private static void printExit() {
-        printMessage("Catch you later :)!");
+    private static void printList() {
+        System.out.println(LINE);
+        for (int i = 0; i < inputList.size(); i++) {
+            System.out.println("\t" + (i + 1) + ". " + inputList.get(i));
+        }
+        System.out.println(LINE);
     }
 
     private static void printMessage(String text) {
@@ -64,9 +72,12 @@ public class Yappa {
                     break;
                 }
 
-                System.out.println(LINE);
-                System.out.println("\t" + input);
-                System.out.println(LINE);
+                if (input.equalsIgnoreCase("list")) {
+                    printList();
+                } else {
+                    inputList.add(input);
+                    printMessage("\tadded: " + input);
+                }
             }
         } catch (IOException e) {
             System.out.println("Error reading input: " + e.getMessage());
