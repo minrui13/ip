@@ -15,7 +15,7 @@ public class Yappa {
             + "  |_|\\__,_| .__/| .__/ \\__,_|\n"
             + "          |_|   |_|          \n";
 
-    public static List<String> inputList = new ArrayList<>(100);
+    public static List<Task> tasks = new ArrayList<>();
 
     public static void main(String[] args) {
         printGreeting();
@@ -33,8 +33,13 @@ public class Yappa {
 
     private static void printList() {
         System.out.println(LINE);
-        for (int i = 0; i < inputList.size(); i++) {
-            System.out.println("\t" + (i + 1) + ". " + inputList.get(i));
+        if (tasks.size() == 0) {
+            System.out.println("No tasks");
+        }
+        for (int i = 0; i < tasks.size(); i++) {
+            String description = tasks.get(i).getDescription();
+            String status = tasks.get(i).getStatusIcon();
+            System.out.println("\t" + (i + 1) + ". " + "[" + status + "] " + description);
         }
         System.out.println(LINE);
     }
@@ -72,15 +77,39 @@ public class Yappa {
                     break;
                 }
 
-                if (input.equalsIgnoreCase("list")) {
+                else if (input.equalsIgnoreCase("list")) {
                     printList();
+                } else if (input.startsWith("mark ")) {
+                    int taskIndex = Integer.parseInt(input.split(" ")[1]) - 1;
+                    mark(taskIndex);
+                } else if (input.startsWith("unmark ")) {
+                    int taskIndex = Integer.parseInt(input.split(" ")[1]) - 1;
+                    unmark(taskIndex);
                 } else {
-                    inputList.add(input);
+                    tasks.add(new Task(input));
                     printMessage("\tadded: " + input);
                 }
             }
         } catch (IOException e) {
             System.out.println("Error reading input: " + e.getMessage());
+        }
+    }
+
+    private static void mark(int taskIndex) {
+        if (taskIndex >= tasks.size()) {
+            printMessage("Task does not exist");
+        } else {
+            tasks.get(taskIndex).markAsDone();
+            printMessage("Ok! I've marked this task as completed: \n\t[X] " + tasks.get(taskIndex).getDescription());
+        }
+    }
+
+    private static void unmark(int taskIndex) {
+        if (taskIndex >= tasks.size()) {
+            printMessage("Task does not exist");
+        } else {
+            tasks.get(taskIndex).markAsUndone();
+            printMessage("Ok! I've unmarked this task as completed: \n\t[ ] " + tasks.get(taskIndex).getDescription());
         }
     }
 }
