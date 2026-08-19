@@ -33,13 +33,12 @@ public class Yappa {
 
     private static void printList() {
         System.out.println(LINE);
+        System.out.println("Here are your current tasks: ");
         if (tasks.size() == 0) {
             System.out.println("No tasks");
         }
         for (int i = 0; i < tasks.size(); i++) {
-            String description = tasks.get(i).getDescription();
-            String status = tasks.get(i).getStatusIcon();
-            System.out.println("\t" + (i + 1) + ". " + "[" + status + "] " + description);
+            System.out.println("\t" + (i + 1) + "." + tasks.get(i));
         }
         System.out.println(LINE);
     }
@@ -47,6 +46,15 @@ public class Yappa {
     private static void printMessage(String text) {
         System.out.println(LINE);
         System.out.println(text);
+        System.out.println(LINE);
+    }
+
+    private static void addTask(Task task) {
+        tasks.add(task);
+        System.out.println(LINE);
+        System.out.println("Ok! I have added the task:");
+        System.out.println("\t" + task);
+        System.out.println("Now you have " + tasks.size() + (tasks.size() > 1 ? " tasks " : " task ") + "in the list");
         System.out.println(LINE);
     }
 
@@ -85,9 +93,18 @@ public class Yappa {
                 } else if (input.startsWith("unmark ")) {
                     int taskIndex = Integer.parseInt(input.split(" ")[1]) - 1;
                     unmark(taskIndex);
-                } else {
-                    tasks.add(new Task(input));
-                    printMessage("\tadded: " + input);
+                } else if (input.startsWith("todo ")) {
+                    String description = input.substring(5).trim();
+                    Task task = new Todo(description);
+                    addTask(task);
+                } else if (input.startsWith("deadline ")) {
+                    String[] taskParts = input.substring(9).split(" /by ", 2);
+                    Task task = new Deadline(taskParts[0], taskParts[1]);
+                    addTask(task);
+                } else if (input.startsWith("event ")) {
+                    String[] taskParts = input.substring(6).split(" /from | /to ");
+                    Task task = new Event(taskParts[0], taskParts[1], taskParts[2]);
+                    addTask(task);
                 }
             }
         } catch (IOException e) {
@@ -112,4 +129,5 @@ public class Yappa {
             printMessage("Ok! I've unmarked this task as completed: \n\t[ ] " + tasks.get(taskIndex).getDescription());
         }
     }
+
 }
