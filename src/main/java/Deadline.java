@@ -1,3 +1,6 @@
+/**
+ * Represents a task with a deadline date/time constraint.
+ */
 public class Deadline extends Task {
     protected String date;
 

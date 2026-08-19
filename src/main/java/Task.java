@@ -1,4 +1,7 @@
-
+/**
+ * Represents a generic task managed by Yappa.
+ * Base class for specific task types like Todo, Deadline, and Event.
+ */
 public class Task {
 
     protected String description;

@@ -80,31 +80,58 @@ public class Yappa {
             String input;
             while ((input = br.readLine()) != null) {
                 input = input.trim();
-
-                if (input.equalsIgnoreCase("bye")) {
-                    break;
-                }
-
-                else if (input.equalsIgnoreCase("list")) {
-                    printList();
-                } else if (input.startsWith("mark ")) {
-                    int taskIndex = Integer.parseInt(input.split(" ")[1]) - 1;
-                    mark(taskIndex);
-                } else if (input.startsWith("unmark ")) {
-                    int taskIndex = Integer.parseInt(input.split(" ")[1]) - 1;
-                    unmark(taskIndex);
-                } else if (input.startsWith("todo ")) {
-                    String description = input.substring(5).trim();
-                    Task task = new Todo(description);
-                    addTask(task);
-                } else if (input.startsWith("deadline ")) {
-                    String[] taskParts = input.substring(9).split(" /by ", 2);
-                    Task task = new Deadline(taskParts[0], taskParts[1]);
-                    addTask(task);
-                } else if (input.startsWith("event ")) {
-                    String[] taskParts = input.substring(6).split(" /from | /to ");
-                    Task task = new Event(taskParts[0], taskParts[1], taskParts[2]);
-                    addTask(task);
+                try {
+                    if (input.equalsIgnoreCase("bye")) {
+                        break;
+                    } else if (input.equalsIgnoreCase("list")) {
+                        printList();
+                    } else if (input.startsWith("mark ") || input.equalsIgnoreCase("mark")) {
+                        int taskIndex = parseIndex(input);
+                        mark(taskIndex);
+                    } else if (input.startsWith("unmark ") || input.equalsIgnoreCase("unmark")) {
+                        int taskIndex = parseIndex(input);
+                        unmark(taskIndex);
+                    } else if (input.startsWith("todo")) {
+                        String description = input.substring(4).trim();
+                        if (description.isEmpty()) {
+                            throw new YappaException("Todo description must not be empty :(. Yappa cannot add task.");
+                        }
+                        Task task = new Todo(description);
+                        addTask(task);
+                    } else if (input.startsWith("deadline")) {
+                        String taskBody = input.substring(8).trim();
+                        if (taskBody.isEmpty() || !taskBody.contains(" /by ")) {
+                            throw new YappaException(
+                                    "Invalid Deadline task. Please re-enter in this format: deadline <task> /by <date/time>");
+                        }
+                        String[] taskParts = taskBody.split(" /by ", 2);
+                        if (taskParts[0].trim().isEmpty() || taskParts[1].trim().isEmpty()) {
+                            throw new YappaException(
+                                    "Both deadline description and /by date must not be empty :(. Yappa cannot add task.");
+                        }
+                        Task task = new Deadline(taskParts[0].trim(), taskParts[1].trim());
+                        addTask(task);
+                    } else if (input.startsWith("event")) {
+                        String taskBody = input.substring(5).trim();
+                        if (taskBody.isEmpty() || !taskBody.contains(" /from ") || !taskBody.contains(" /to ")) {
+                            throw new YappaException(
+                                    "Invalid Event task. Please re-enter in this format: event <task> /from <start> /to <end>");
+                        }
+                        String[] taskParts = taskBody.split(" /from | /to ", 3);
+                        if (taskParts.length < 3 || taskParts[0].trim().isEmpty() || taskParts[1].trim().isEmpty()
+                                || taskParts[2].trim().isEmpty()) {
+                            throw new YappaException(
+                                    "Event description, /from, and /to fields must not be empty :(. Yappa cannot add task.");
+                        }
+                        Task task = new Event(taskParts[0].trim(), taskParts[1].trim(), taskParts[2].trim());
+                        addTask(task);
+                    } else {
+                        throw new YappaException("Oh no...sorry, I am not sure what you mean :(");
+                    }
+                } catch (YappaException e) {
+                    printMessage(e.getMessage());
+                } catch (NumberFormatException e) {
+                    printMessage("Please give me a valid task number!");
                 }
             }
         } catch (IOException e) {
@@ -112,22 +139,27 @@ public class Yappa {
         }
     }
 
-    private static void mark(int taskIndex) {
-        if (taskIndex >= tasks.size()) {
-            printMessage("Task does not exist");
-        } else {
-            tasks.get(taskIndex).markAsDone();
-            printMessage("Ok! I've marked this task as completed: \n\t[X] " + tasks.get(taskIndex).getDescription());
+    private static int parseIndex(String input) throws YappaException {
+        String[] parts = input.split("\\s+");
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            throw new YappaException("Please specify a task number!");
         }
+        int index = Integer.parseInt(parts[1]) - 1;
+        if (index < 0 || index >= tasks.size()) {
+            throw new YappaException("Task number " + (index + 1) + " does not exist!");
+        }
+        return index;
+    }
+
+    private static void mark(int taskIndex) {
+        tasks.get(taskIndex).markAsDone();
+        printMessage("Ok! I've marked this task as completed: \n\t[X] " + tasks.get(taskIndex).getDescription());
+
     }
 
     private static void unmark(int taskIndex) {
-        if (taskIndex >= tasks.size()) {
-            printMessage("Task does not exist");
-        } else {
-            tasks.get(taskIndex).markAsUndone();
-            printMessage("Ok! I've unmarked this task as completed: \n\t[ ] " + tasks.get(taskIndex).getDescription());
-        }
+        tasks.get(taskIndex).markAsUndone();
+        printMessage("Ok! I've unmarked this task as completed: \n\t[ ] " + tasks.get(taskIndex).getDescription());
     }
 
 }
