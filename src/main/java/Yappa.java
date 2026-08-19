@@ -49,6 +49,17 @@ public class Yappa {
         System.out.println(LINE);
     }
 
+    private static void mark(int taskIndex) {
+        tasks.get(taskIndex).markAsDone();
+        printMessage("Ok! I've marked this task as completed: \n\t[X] " + tasks.get(taskIndex).getDescription());
+
+    }
+
+    private static void unmark(int taskIndex) {
+        tasks.get(taskIndex).markAsUndone();
+        printMessage("Ok! I've unmarked this task as completed: \n\t[ ] " + tasks.get(taskIndex).getDescription());
+    }
+
     private static void addTask(Task task) {
         tasks.add(task);
         System.out.println(LINE);
@@ -58,21 +69,20 @@ public class Yappa {
         System.out.println(LINE);
     }
 
-    public static String getTimeOfDay() {
-        LocalTime currentTime = LocalTime.now();
-        int currentHour = currentTime.getHour();
-
-        String period;
-
-        if (currentHour >= 12 && currentHour < 17) {
-            period = "Afternoon";
-        } else if (currentHour >= 17 && currentHour < 21) {
-            period = "Evening";
-        } else {
-            period = "Morning";
-        }
-
-        return period;
+    /**
+     * Removes the task at a previously validated zero-based index and reports the
+     * updated list size.
+     *
+     * @param taskIndex zero-based index of the task to remove
+     */
+    private static void deleteTask(int taskIndex) {
+        Task task = tasks.get(taskIndex);
+        tasks.remove(taskIndex);
+        System.out.println(LINE);
+        System.out.println("Ok! I will remove this task:");
+        System.out.println("\t" + task);
+        System.out.println("Now you have " + tasks.size() + (tasks.size() > 1 ? " tasks " : " task ") + "in the list");
+        System.out.println(LINE);
     }
 
     public static void inputAndEcho() {
@@ -125,6 +135,9 @@ public class Yappa {
                         }
                         Task task = new Event(taskParts[0].trim(), taskParts[1].trim(), taskParts[2].trim());
                         addTask(task);
+                    } else if (input.startsWith("delete ") || input.equalsIgnoreCase("delete")) {
+                        int taskIndex = parseIndex(input);
+                        deleteTask(taskIndex);
                     } else {
                         throw new YappaException("Oh no...sorry, I am not sure what you mean :(");
                     }
@@ -139,6 +152,23 @@ public class Yappa {
         }
     }
 
+    private static String getTimeOfDay() {
+        LocalTime currentTime = LocalTime.now();
+        int currentHour = currentTime.getHour();
+
+        String period;
+
+        if (currentHour >= 12 && currentHour < 17) {
+            period = "Afternoon";
+        } else if (currentHour >= 17 && currentHour < 21) {
+            period = "Evening";
+        } else {
+            period = "Morning";
+        }
+
+        return period;
+    }
+
     private static int parseIndex(String input) throws YappaException {
         String[] parts = input.split("\\s+");
         if (parts.length < 2 || parts[1].trim().isEmpty()) {
@@ -150,16 +180,4 @@ public class Yappa {
         }
         return index;
     }
-
-    private static void mark(int taskIndex) {
-        tasks.get(taskIndex).markAsDone();
-        printMessage("Ok! I've marked this task as completed: \n\t[X] " + tasks.get(taskIndex).getDescription());
-
-    }
-
-    private static void unmark(int taskIndex) {
-        tasks.get(taskIndex).markAsUndone();
-        printMessage("Ok! I've unmarked this task as completed: \n\t[ ] " + tasks.get(taskIndex).getDescription());
-    }
-
 }
