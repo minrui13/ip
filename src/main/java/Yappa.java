@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -147,7 +148,8 @@ public class Yappa {
                             throw new YappaException(
                                     "Both deadline description and /by date must not be empty :(. Yappa cannot add task.");
                         }
-                        Task task = new Deadline(taskParts[0].trim(), taskParts[1].trim());
+                        LocalDateTime deadlineDateTime = DateUtil.parseDateTime(taskParts[1].trim());
+                        Task task = new Deadline(taskParts[0].trim(), deadlineDateTime);
                         addTask(task);
                     } else if (input.startsWith("event")) {
                         String taskBody = input.substring(5).trim();
@@ -161,7 +163,9 @@ public class Yappa {
                             throw new YappaException(
                                     "Event description, /from, and /to fields must not be empty :(. Yappa cannot add task.");
                         }
-                        Task task = new Event(taskParts[0].trim(), taskParts[1].trim(), taskParts[2].trim());
+                        LocalDateTime fromDateTime = DateUtil.parseDateTime(taskParts[1].trim());
+                        LocalDateTime toDateTime = DateUtil.parseDateTime(taskParts[2].trim());
+                        Task task = new Event(taskParts[0].trim(), fromDateTime, toDateTime);
                         addTask(task);
                     } else if (input.startsWith("delete ") || input.equalsIgnoreCase("delete")) {
                         int taskIndex = parseIndex(input);

@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -31,15 +32,20 @@ public class Storage {
                     continue;
                 }
 
-                Task task = parseTask(taskString);
-                tasks.add(task);
+                try {
+                    Task task = parseTask(taskString);
+                    tasks.add(task);
+                } catch (YappaException e) {
+                    System.out.println(
+                            "Skipping invalid saved task: " + e.getMessage());
+                }
             }
         }
 
         return tasks;
     }
 
-    private Task parseTask(String taskString) {
+    private Task parseTask(String taskString) throws YappaException {
         String[] taskParts = taskString.split(" \\| ");
 
         String taskType = taskParts[0];
@@ -51,12 +57,12 @@ public class Storage {
                 return new Todo(description, isDone);
 
             case "D":
-                String date = taskParts[3];
+                LocalDateTime date = DateUtil.parseDateTime(taskParts[3]);
                 return new Deadline(description, isDone, date);
 
             case "E":
-                String from = taskParts[3];
-                String to = taskParts[4];
+                LocalDateTime from = DateUtil.parseDateTime(taskParts[3]);
+                LocalDateTime to = DateUtil.parseDateTime(taskParts[4]);
                 return new Event(description, isDone, from, to);
 
             default:
