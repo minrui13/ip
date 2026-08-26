@@ -9,6 +9,18 @@ public class Deadline extends Task {
         this.date = date;
     }
 
+    public Deadline(String description, boolean isDone, String date) {
+        super(description, isDone);
+        this.date = date;
+    }
+
+    @Override
+    public String toFileString() {
+        return "D | " + (isDone ? "1" : "0")
+                + " | " + description
+                + " | " + date;
+    }
+
     @Override
     public String toString() {
         return "[D] " + super.toString() + " (by: " + this.date + ")";

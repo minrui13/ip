@@ -1,5 +1,6 @@
 import java.time.LocalTime;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -15,9 +16,11 @@ public class Yappa {
             + "  |_|\\__,_| .__/| .__/ \\__,_|\n"
             + "          |_|   |_|          \n";
 
+    private static final Storage STORAGE = new Storage("data/yappa.txt");
     public static List<Task> tasks = new ArrayList<>();
 
     public static void main(String[] args) {
+        loadTasks();
         printGreeting();
         inputAndEcho();
         printMessage("\t Catch you later :)!");
@@ -51,21 +54,25 @@ public class Yappa {
 
     private static void mark(int taskIndex) {
         tasks.get(taskIndex).markAsDone();
+        saveTasks();
         printMessage("Ok! I've marked this task as completed: \n\t[X] " + tasks.get(taskIndex).getDescription());
 
     }
 
     private static void unmark(int taskIndex) {
         tasks.get(taskIndex).markAsUndone();
+        saveTasks();
         printMessage("Ok! I've unmarked this task as completed: \n\t[ ] " + tasks.get(taskIndex).getDescription());
     }
 
     private static void addTask(Task task) {
         tasks.add(task);
+        saveTasks();
         System.out.println(LINE);
         System.out.println("Ok! I have added the task:");
         System.out.println("\t" + task);
-        System.out.println("Now you have " + tasks.size() + (tasks.size() > 1 ? " tasks " : " task ") + "in the list");
+        System.out.println(
+                "Now you have " + tasks.size() + (tasks.size() > 1 ? " tasks " : " task ") + "in the list");
         System.out.println(LINE);
     }
 
@@ -78,11 +85,32 @@ public class Yappa {
     private static void deleteTask(int taskIndex) {
         Task task = tasks.get(taskIndex);
         tasks.remove(taskIndex);
+        saveTasks();
         System.out.println(LINE);
         System.out.println("Ok! I will remove this task:");
         System.out.println("\t" + task);
-        System.out.println("Now you have " + tasks.size() + (tasks.size() > 1 ? " tasks " : " task ") + "in the list");
+        System.out.println("Now you have " + tasks.size()
+                + (tasks.size() > 1 ? " tasks " : " task ")
+                + "in the list");
         System.out.println(LINE);
+    }
+
+    private static void loadTasks() {
+        try {
+            tasks = STORAGE.loadTasks();
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to load saved tasks.");
+
+        }
+    }
+
+    private static void saveTasks() {
+        try {
+            STORAGE.saveTasks(tasks);
+        } catch (IOException e) {
+            printMessage("Oops! I couldn't save the updated task list.");
+            return;
+        }
     }
 
     public static void inputAndEcho() {

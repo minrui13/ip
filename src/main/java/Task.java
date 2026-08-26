@@ -2,7 +2,7 @@
  * Represents a generic task managed by Yappa.
  * Base class for specific task types like Todo, Deadline, and Event.
  */
-public class Task {
+public abstract class Task {
 
     protected String description;
     protected boolean isDone;
@@ -10,6 +10,11 @@ public class Task {
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+    }
+
+    public Task(String description, boolean isDone) {
+        this.description = description;
+        this.isDone = isDone;
     }
 
     public String getDescription() {
@@ -24,7 +29,7 @@ public class Task {
         this.isDone = false;
     }
 
-    public String getStatusIcon() {
+    private String getStatusIcon() {
         return this.isDone ? "X" : " ";
     }
 
@@ -32,4 +37,6 @@ public class Task {
     public String toString() {
         return "[" + getStatusIcon() + "] " + this.description;
     }
+
+    public abstract String toFileString();
 }
