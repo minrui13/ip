@@ -1,4 +1,5 @@
 package yappa.task;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,21 +7,44 @@ import yappa.exception.YappaException;
 
 import java.util.Iterator;
 
+/**
+ * Stores a list of the Task and its supporting functions
+ */
 public class TaskList implements Iterable<Task> {
     private final List<Task> tasks;
 
+    /**
+     * Creates an empty task list.
+     */
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
 
+    /**
+     * Creates a task list containing a defensive copy of the loaded tasks.
+     *
+     * @param tasks tasks to copy into the list
+     */
     public TaskList(List<Task> tasks) {
         this.tasks = new ArrayList<>(tasks);
     }
 
+    /**
+     * Returns the number of tasks in the list.
+     *
+     * @return number of tasks
+     */
     public int size() {
         return tasks.size();
     }
 
+    /**
+     * Marks the specified task as complete.
+     *
+     * @param taskIndex zero-based task index
+     * @return task that was marked
+     * @throws YappaException if the index does not identify a task
+     */
     public Task mark(int taskIndex) throws YappaException {
         validateIndex(taskIndex);
         Task markedTask = tasks.get(taskIndex);
@@ -28,6 +52,13 @@ public class TaskList implements Iterable<Task> {
         return markedTask;
     }
 
+    /**
+     * Unmarks the specified task as complete.
+     *
+     * @param taskIndex zero-based task index
+     * @return task that was unmarked
+     * @throws YappaException if the index does not identify a task
+     */
     public Task unmark(int taskIndex) throws YappaException {
         validateIndex(taskIndex);
         Task unmarkedTask = tasks.get(taskIndex);
@@ -35,26 +66,53 @@ public class TaskList implements Iterable<Task> {
         return unmarkedTask;
     }
 
+    /**
+     * Appends a task to the list.
+     *
+     * @param task task to add
+     */
     public void add(Task task) {
         tasks.add(task);
     }
 
+    /**
+     * Removes and returns the task.
+     *
+     * @param taskIndex zero-based task index
+     * @return removed task
+     * @throws YappaException if the index does not identify a task
+     */
     public Task remove(int taskIndex) throws YappaException {
         validateIndex(taskIndex);
         return tasks.remove(taskIndex);
     }
 
+    /**
+     * Ensures that an index identifies an existing task.
+     *
+     * @param index zero-based task index
+     * @throws YappaException if the index is outside the task list
+     */
     private void validateIndex(int index) throws YappaException {
         if (index < 0 || index >= tasks.size()) {
             throw new YappaException("Task number " + (index + 1) + " does not exist!");
         }
     }
 
+    /**
+     * Returns an iterator over tasks in display order.
+     *
+     * @return task iterator
+     */
     @Override
     public Iterator<Task> iterator() {
         return tasks.iterator();
     }
 
+    /**
+     * Returns a string representation of the task list
+     * @return display the string representation of the task list
+     */
     @Override
     public String toString() {
         if (tasks.isEmpty()) {

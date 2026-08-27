@@ -2,6 +2,9 @@ package yappa.parser;
 
 import yappa.exception.YappaException;
 
+/**
+ * Extracts commands and task details from raw user input.
+ */
 public class Parser {
 
     /**

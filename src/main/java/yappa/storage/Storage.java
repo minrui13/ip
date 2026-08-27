@@ -18,13 +18,30 @@ import yappa.task.TaskList;
 import yappa.task.Todo;
 import yappa.util.DateUtil;
 
+/**
+ * Loads and saves Yappa tasks in a line-based text file.
+ */
 public class Storage {
     private final Path filePath;
 
+    /**
+     * Creates storage rooted at the application's working directory.
+     *
+     * @param relativePath path to the storage file, relative to the working directory
+     */
     public Storage(String relativePath) {
         this.filePath = Paths.get(".", relativePath);
     }
 
+    /**
+     * Loads all valid task records from the storage file.
+     *
+     * <p>If the file does not exist, an empty task list is returned. Invalid records
+     * are reported and skipped so that remaining tasks can still be loaded.</p>
+     *
+     * @return tasks loaded from storage
+     * @throws FileNotFoundException if an existing storage file cannot be opened
+     */
     public TaskList loadTasks() throws FileNotFoundException {
         List<Task> tasks = new ArrayList<>();
         File file = filePath.toFile();
@@ -53,6 +70,13 @@ public class Storage {
         return new TaskList(tasks);
     }
 
+    /**
+     * Converts one storage record into its corresponding task subtype.
+     *
+     * @param taskString storage record to parse
+     * @return parsed task
+     * @throws YappaException if a stored date-time or event range is invalid
+     */
     private Task parseTask(String taskString) throws YappaException {
         String[] taskParts = taskString.split(" \\| ");
 
@@ -79,6 +103,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Saving all the tasks in the task list to the storage file.
+     *
+     * @param tasks tasks to save in iteration order
+     * @throws IOException if the directory or storage file cannot be written
+     */
     public void saveTasks(TaskList tasks) throws IOException {
         File file = filePath.toFile();
 

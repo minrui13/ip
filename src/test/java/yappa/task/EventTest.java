@@ -17,15 +17,23 @@ public class EventTest {
     private static final LocalDateTime START = LocalDateTime.of(2026, 12, 2, 14, 0);
     private static final LocalDateTime END = LocalDateTime.of(2026, 12, 2, 16, 0);
 
+    /**
+     * Verifies that a valid event is created and displayed correctly.
+     *
+     * @throws YappaException if event validation unexpectedly fails
+     */
     @Test
     public void constructor_endAfterStart_createsEvent() throws YappaException {
         Event event = new Event("project meeting", START, END);
 
         assertEquals(
-                "[E] [ ] project meeting (from: Dec 02 2026, 2:00 PM to: Dec 02 2026, 4:00 PM)",
+                "[E] [ ] project meeting (from: Dec 02 2026, 2:00 pm to: Dec 02 2026, 4:00 pm)",
                 event.toString());
     }
 
+    /**
+     * Verifies that zero-length and backwards events are rejected.
+     */
     @Test
     public void constructor_endEqualToOrBeforeStart_throwsYappaException() {
         assertThrows(YappaException.class,
@@ -34,6 +42,11 @@ public class EventTest {
                 () -> new Event("backwards meeting", START, START.minusMinutes(1)));
     }
 
+    /**
+     * Verifies serialization of a completed event.
+     *
+     * @throws YappaException if event validation unexpectedly fails
+     */
     @Test
     public void toFileString_completedEvent_returnsStorageRecord() throws YappaException {
         Event event = new Event("project meeting", true, START, END);

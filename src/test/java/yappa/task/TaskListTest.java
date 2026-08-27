@@ -17,6 +17,9 @@ import yappa.exception.YappaException;
  */
 public class TaskListTest {
 
+    /**
+     * Verifies that the list constructor makes a defensive copy.
+     */
     @Test
     public void constructor_sourceListChanges_doesNotChangeTaskList() {
         List<Task> source = new ArrayList<>();
@@ -28,6 +31,11 @@ public class TaskListTest {
         assertEquals(1, tasks.size());
     }
 
+    /**
+     * Verifies that adding and removing tasks updates list contents correctly.
+     *
+     * @throws YappaException if a valid task index is unexpectedly rejected
+     */
     @Test
     public void addAndRemove_validTasks_updatesListAndReturnsRemovedTask() throws YappaException {
         TaskList tasks = new TaskList();
@@ -43,6 +51,11 @@ public class TaskListTest {
         assertEquals(secondTask, tasks.iterator().next());
     }
 
+    /**
+     * Verifies that marking and unmarking update a task's completion state.
+     *
+     * @throws YappaException if a valid task index is unexpectedly rejected
+     */
     @Test
     public void markAndUnmark_validIndex_updatesCompletionState() throws YappaException {
         TaskList tasks = new TaskList(List.of(new Todo("read book")));
@@ -54,6 +67,9 @@ public class TaskListTest {
         assertFalse(unmarkedTask.toString().contains("[X]"));
     }
 
+    /**
+     * Verifies that invalid mutations fail without changing the task list.
+     */
     @Test
     public void mutations_invalidIndices_throwYappaExceptionWithoutChangingList() {
         TaskList tasks = new TaskList(List.of(new Todo("read book")));
@@ -65,6 +81,9 @@ public class TaskListTest {
         assertEquals("[T] [ ] read book", tasks.iterator().next().toString());
     }
 
+    /**
+     * Verifies formatting of empty and populated task lists.
+     */
     @Test
     public void toString_emptyAndPopulatedLists_formatsNumberedTasks() {
         assertEquals("No tasks", new TaskList().toString());

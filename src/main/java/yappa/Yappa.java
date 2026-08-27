@@ -15,12 +15,20 @@ import yappa.util.DateUtil;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * Runs the Yappa task manager and coordinates user input, storage, and output.
+ */
 public class Yappa {
 
     private static final Storage STORAGE = new Storage("data/yappa.txt");
     private static TaskList tasks = new TaskList();
     private static Ui ui = new Ui();
 
+    /**
+     * Starts Yappa, loads saved tasks, and processes commands until the session ends.
+     *
+     * @param args command-line arguments, which are not used
+     */
     public static void main(String[] args) {
         loadTasks();
         ui.showGreeting();
@@ -28,12 +36,20 @@ public class Yappa {
         ui.showGoodbye();
     }
 
+    /**
+     * Adds a task, persists the updated list, and displays the result.
+     *
+     * @param task task to add
+     */
     private static void addTask(Task task) {
         tasks.add(task);
         saveTasks();
         ui.showTaskAdded(task, tasks.size());
     }
 
+    /**
+     * Loads saved tasks, or displays an error if the storage file cannot be read.
+     */
     private static void loadTasks() {
         try {
             tasks = STORAGE.loadTasks();
@@ -43,15 +59,21 @@ public class Yappa {
         }
     }
 
+    /**
+     * Saves the current task list and displays an error if fails.
+     */
     private static void saveTasks() {
         try {
             STORAGE.saveTasks(tasks);
         } catch (IOException e) {
-            ui.showError("oH no! I couldn't save the updated task list.");
+            ui.showError("Oh no! I couldn't save the updated task list.");
             return;
         }
     }
 
+    /**
+     * Reads and executes commands until the user exits or the input stream closes.
+     */
     private static void handleUserInput() {
         boolean isExit = false;
 
