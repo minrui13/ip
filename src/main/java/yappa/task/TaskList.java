@@ -87,6 +87,24 @@ public class TaskList implements Iterable<Task> {
     }
 
     /**
+     * Finds tasks whose descriptions contain the specified search query.
+     *
+     * @param searchQuery keyword or text to search for in task descriptions
+     * @return a list of tasks with descriptions containing the search query
+     */
+    public TaskList find(String searchQuery) {
+        TaskList matchedTasks = new TaskList();
+
+        for (Task task : tasks) {
+            if (task.getDescription().contains(searchQuery)) {
+                matchedTasks.add(task);
+            }
+        }
+
+        return matchedTasks;
+    }
+
+    /**
      * Ensures that an index identifies an existing task.
      *
      * @param index Zero-based task index.

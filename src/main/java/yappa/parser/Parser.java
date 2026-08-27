@@ -89,7 +89,7 @@ public class Parser {
                     "Deadline description and date/time cannot be empty.");
         }
 
-        return new String[]{description, dateTime};
+        return new String[] { description, dateTime };
     }
 
     /**
@@ -127,6 +127,16 @@ public class Parser {
                             + "cannot be empty.");
         }
 
-        return new String[]{description, from, to};
+        return new String[] { description, from, to };
+    }
+
+    /**
+     * Parses the search query of a find command.
+     *
+     * @param input User input.
+     * @return Search query from find command.
+     */
+    public static String parseFind(String input) {
+        return input.substring(4).trim();
     }
 }

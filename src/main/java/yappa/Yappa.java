@@ -25,7 +25,8 @@ public class Yappa {
     private static Ui ui = new Ui();
 
     /**
-     * Starts Yappa, loads saved tasks, and processes commands until the session ends.
+     * Starts Yappa, loads saved tasks, and processes commands until the session
+     * ends.
      *
      * @param args Command-line arguments, which are not used.
      */
@@ -118,6 +119,10 @@ public class Yappa {
                     Task task = tasks.remove(taskIndex);
                     saveTasks();
                     ui.showTaskDeleted(task, tasks.size());
+                } else if (command.equals("find")) {
+                    String searchQuery = Parser.parseFind(input);
+                    TaskList matchedTasks = tasks.find(searchQuery);
+                    ui.showMatchingTasks(matchedTasks);
                 } else {
                     throw new YappaException("Oh no...sorry, I am not sure what you mean :(");
                 }

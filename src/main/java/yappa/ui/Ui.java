@@ -63,13 +63,33 @@ public class Ui {
     }
 
     /**
-     * Displays all tasks in their current order.
+     * Displays all current tasks in the list with a standard header message.
      *
-     * @param tasks Tasks to display.
+     * @param tasks The task list to display.
      */
     public void showTaskList(TaskList tasks) {
+        showTasks("Here are your current tasks:", tasks);
+    }
+
+    /**
+     * Displays tasks that match a search query with a matching-results
+     * message.
+     *
+     * @param tasks The filtered task list containing matching tasks to display.
+     */
+    public void showMatchingTasks(TaskList tasks) {
+        showTasks("Here are the matching tasks:", tasks);
+    }
+
+    /**
+     * Displays all tasks with their respectivce messages.
+     *
+     * @param message Message to display.
+     * @param tasks   Tasks to display.
+     */
+    private void showTasks(String message, TaskList tasks) {
         System.out.println(LINE);
-        System.out.println("Here are your current tasks: ");
+        System.out.println(message);
         System.out.println(tasks);
         System.out.println(LINE);
     }
@@ -95,7 +115,7 @@ public class Ui {
     /**
      * Displays an added task and the new number of tasks.
      *
-     * @param task Added task.
+     * @param task      Added task.
      * @param taskCount Number of tasks after the addition.
      */
     public void showTaskAdded(Task task, int taskCount) {
@@ -110,7 +130,7 @@ public class Ui {
     /**
      * Displays a deleted task and the new number of tasks.
      *
-     * @param task Deleted task.
+     * @param task      Deleted task.
      * @param taskCount Number of tasks after the deletion.
      */
     public void showTaskDeleted(Task task, int taskCount) {
