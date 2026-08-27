@@ -42,7 +42,7 @@ public class TaskList implements Iterable<Task> {
 
     private void validateIndex(int index) throws YappaException {
         if (index < 0 || index >= tasks.size()) {
-            throw new YappaException("Invalid task index: " + (index + 1));
+            throw new YappaException("Task number " + (index + 1) + " does not exist!");
         }
     }
 

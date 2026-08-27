@@ -1,92 +1,31 @@
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class Yappa {
 
-    public static final String LINE = "____________________________________________________________";
-    public static final String LOGO = "__   __                    \n"
-            + "\\ \\ / /_ _ _ __  _ __  __ _ \n"
-            + " \\ V / _` | '_ \\| '_ \\/ _` |\n"
-            + "  | | (_| | |_) | |_) | (_| |\n"
-            + "  |_|\\__,_| .__/| .__/ \\__,_|\n"
-            + "          |_|   |_|          \n";
-
     private static final Storage STORAGE = new Storage("data/yappa.txt");
     private static TaskList tasks = new TaskList();
+    private static Ui ui = new Ui();
 
     public static void main(String[] args) {
         loadTasks();
-        printGreeting();
+        ui.showGreeting();
         handleUserInput();
-        printMessage("\t Catch you later :)!");
-    }
-
-    private static void printGreeting() {
-        System.out.println(LINE);
-        System.out.println(LOGO);
-        System.out.println("Good " + getTimeOfDay() + "! I'm Yappa. Ready to yap and get stuff done!");
-        System.out.println("What are we tackling today? Let's do this!");
-        System.out.println(LINE);
-    }
-
-    private static void printList() {
-        System.out.println(LINE);
-        System.out.println("Here are your current tasks: ");
-        System.out.println(tasks);
-        System.out.println(LINE);
-    }
-
-    private static void printMessage(String text) {
-        System.out.println(LINE);
-        System.out.println(text);
-        System.out.println(LINE);
-    }
-
-    private static void mark(int taskIndex) throws YappaException {
-        Task task = tasks.mark(taskIndex);
-        saveTasks();
-        printMessage("Ok! I've marked this task as completed: \n\t[X] " + task.getDescription());
-
-    }
-
-    private static void unmark(int taskIndex) throws YappaException {
-        Task task = tasks.unmark(taskIndex);
-        saveTasks();
-        printMessage("Ok! I've unmarked this task as completed: \n\t[ ] " + task.getDescription());
+        ui.showGoodbye();
     }
 
     private static void addTask(Task task) {
         tasks.add(task);
         saveTasks();
-        System.out.println(LINE);
-        System.out.println("Ok! I have added the task:");
-        System.out.println("\t" + task);
-        System.out.println(
-                "Now you have " + tasks.size() + (tasks.size() > 1 ? " tasks " : " task ") + "in the list");
-        System.out.println(LINE);
-    }
-
-    private static void deleteTask(int taskIndex) throws YappaException {
-        Task task = tasks.remove(taskIndex);
-        saveTasks();
-        System.out.println(LINE);
-        System.out.println("Ok! I will remove this task:");
-        System.out.println("\t" + task);
-        System.out.println("Now you have " + tasks.size()
-                + (tasks.size() > 1 ? " tasks " : " task ")
-                + "in the list");
-        System.out.println(LINE);
+        ui.showTaskAdded(task, tasks.size());
     }
 
     private static void loadTasks() {
         try {
             tasks = STORAGE.loadTasks();
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to load saved tasks.");
+            ui.showError("Oh no! Unable to load saved tasks.");
 
         }
     }
@@ -95,107 +34,69 @@ public class Yappa {
         try {
             STORAGE.saveTasks(tasks);
         } catch (IOException e) {
-            printMessage("Oops! I couldn't save the updated task list.");
+            ui.showError("oH no! I couldn't save the updated task list.");
             return;
         }
     }
 
-    public static void handleUserInput() {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
-            String input;
-            while ((input = br.readLine()) != null) {
-                input = input.trim();
-                try {
-                    if (input.equalsIgnoreCase("bye")) {
-                        break;
-                    } else if (input.equalsIgnoreCase("list")) {
-                        printList();
-                    } else if (input.startsWith("mark ") || input.equalsIgnoreCase("mark")) {
-                        int taskIndex = parseIndex(input);
-                        mark(taskIndex);
-                    } else if (input.startsWith("unmark ") || input.equalsIgnoreCase("unmark")) {
-                        int taskIndex = parseIndex(input);
-                        unmark(taskIndex);
-                    } else if (input.startsWith("todo")) {
-                        String description = input.substring(4).trim();
-                        if (description.isEmpty()) {
-                            throw new YappaException("Todo description must not be empty :(. Yappa cannot add task.");
-                        }
-                        Task task = new Todo(description);
-                        addTask(task);
-                    } else if (input.startsWith("deadline")) {
-                        String taskBody = input.substring(8).trim();
-                        if (taskBody.isEmpty() || !taskBody.contains(" /by ")) {
-                            throw new YappaException(
-                                    "Invalid Deadline task. Please re-enter in this format: deadline <task> /by <date/time>");
-                        }
-                        String[] taskParts = taskBody.split(" /by ", 2);
-                        if (taskParts[0].trim().isEmpty() || taskParts[1].trim().isEmpty()) {
-                            throw new YappaException(
-                                    "Both deadline description and /by date must not be empty :(. Yappa cannot add task.");
-                        }
-                        LocalDateTime deadlineDateTime = DateUtil.parseDateTime(taskParts[1].trim());
-                        Task task = new Deadline(taskParts[0].trim(), deadlineDateTime);
-                        addTask(task);
-                    } else if (input.startsWith("event")) {
-                        String taskBody = input.substring(5).trim();
-                        if (taskBody.isEmpty() || !taskBody.contains(" /from ") || !taskBody.contains(" /to ")) {
-                            throw new YappaException(
-                                    "Invalid Event task. Please re-enter in this format: event <task> /from <start> /to <end>");
-                        }
-                        String[] taskParts = taskBody.split(" /from | /to ", 3);
-                        if (taskParts.length < 3 || taskParts[0].trim().isEmpty() || taskParts[1].trim().isEmpty()
-                                || taskParts[2].trim().isEmpty()) {
-                            throw new YappaException(
-                                    "Event description, /from, and /to fields must not be empty :(. Yappa cannot add task.");
-                        }
-                        LocalDateTime fromDateTime = DateUtil.parseDateTime(taskParts[1].trim());
-                        LocalDateTime toDateTime = DateUtil.parseDateTime(taskParts[2].trim());
-                        Task task = new Event(taskParts[0].trim(), fromDateTime, toDateTime);
-                        addTask(task);
-                    } else if (input.startsWith("delete ") || input.equalsIgnoreCase("delete")) {
-                        int taskIndex = parseIndex(input);
-                        deleteTask(taskIndex);
-                    } else {
-                        throw new YappaException("Oh no...sorry, I am not sure what you mean :(");
-                    }
-                } catch (YappaException e) {
-                    printMessage(e.getMessage());
-                } catch (NumberFormatException e) {
-                    printMessage("Please give me a valid task number!");
+    private static void handleUserInput() {
+        boolean isExit = false;
+
+        while (!isExit) {
+            try {
+                String input = ui.readCommand();
+                if (input == null) {
+                    break;
                 }
+
+                String command = Parser.getCommandWord(input);
+
+                if (command.equals("bye")) {
+                    isExit = true;
+                } else if (command.equals("list")) {
+                    ui.showTaskList(tasks);
+                } else if (command.equals("mark")) {
+                    int taskIndex = Parser.parseIndex(input);
+                    Task task = tasks.mark(taskIndex);
+                    saveTasks();
+                    ui.showTaskMarked(task.getDescription());
+                } else if (command.equals("unmark")) {
+                    int taskIndex = Parser.parseIndex(input);
+                    Task task = tasks.unmark(taskIndex);
+                    saveTasks();
+                    ui.showTaskUnmarked(task.getDescription());
+                } else if (command.equals("todo")) {
+                    String description = Parser.parseTodo(input);
+                    Task task = new Todo(description);
+                    addTask(task);
+                } else if (command.equals("deadline")) {
+                    String[] taskParts = Parser.parseDeadline(input);
+                    LocalDateTime dateTime = DateUtil.parseDateTime(taskParts[1]);
+                    Task task = new Deadline(taskParts[0], dateTime);
+                    addTask(task);
+                } else if (command.equals("event")) {
+                    String[] taskParts = Parser.parseEvent(input);
+                    LocalDateTime startTime = DateUtil.parseDateTime(taskParts[1]);
+                    LocalDateTime endTime = DateUtil.parseDateTime(taskParts[2]);
+                    Task task = new Event(taskParts[0], startTime, endTime);
+                    addTask(task);
+                } else if (command.equals("delete")) {
+                    int taskIndex = Parser.parseIndex(input);
+                    Task task = tasks.remove(taskIndex);
+                    saveTasks();
+                    ui.showTaskDeleted(task, tasks.size());
+                } else {
+                    throw new YappaException("Oh no...sorry, I am not sure what you mean :(");
+                }
+            } catch (YappaException e) {
+                ui.showError(e.getMessage());
+            } catch (NumberFormatException e) {
+                ui.showError("Please give me a valid task number!");
+            } catch (IOException e) {
+                ui.showError("Oh no! Error reading input: " + e.getMessage());
+                break;
             }
-        } catch (IOException e) {
-            System.out.println("Error reading input: " + e.getMessage());
         }
     }
 
-    private static String getTimeOfDay() {
-        LocalTime currentTime = LocalTime.now();
-        int currentHour = currentTime.getHour();
-
-        String period;
-
-        if (currentHour >= 12 && currentHour < 17) {
-            period = "Afternoon";
-        } else if (currentHour >= 17 && currentHour < 21) {
-            period = "Evening";
-        } else {
-            period = "Morning";
-        }
-
-        return period;
-    }
-
-    private static int parseIndex(String input) throws YappaException {
-        String[] parts = input.split("\\s+");
-        if (parts.length < 2 || parts[1].trim().isEmpty()) {
-            throw new YappaException("Please specify a task number!");
-        }
-        int index = Integer.parseInt(parts[1]) - 1;
-        if (index < 0 || index >= tasks.size()) {
-            throw new YappaException("Task number " + (index + 1) + " does not exist!");
-        }
-        return index;
-    }
 }
