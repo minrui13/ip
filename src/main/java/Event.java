@@ -31,8 +31,8 @@ public class Event extends Task {
     public String toFileString() {
         return "E | " + (isDone ? "1" : "0")
                 + " | " + description
-                + " | " + from
-                + " | " + to;
+                + " | " + DateUtil.toFileString(from)
+                + " | " + DateUtil.toFileString(to);
     }
 
     @Override

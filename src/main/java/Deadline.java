@@ -20,7 +20,7 @@ public class Deadline extends Task {
     public String toFileString() {
         return "D | " + (isDone ? "1" : "0")
                 + " | " + description
-                + " | " + date;
+                + " | " + DateUtil.toFileString(date);
     }
 
     @Override

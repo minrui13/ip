@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Yappa {
 
@@ -18,12 +16,12 @@ public class Yappa {
             + "          |_|   |_|          \n";
 
     private static final Storage STORAGE = new Storage("data/yappa.txt");
-    public static List<Task> tasks = new ArrayList<>();
+    private static TaskList tasks = new TaskList();
 
     public static void main(String[] args) {
         loadTasks();
         printGreeting();
-        inputAndEcho();
+        handleUserInput();
         printMessage("\t Catch you later :)!");
     }
 
@@ -38,12 +36,7 @@ public class Yappa {
     private static void printList() {
         System.out.println(LINE);
         System.out.println("Here are your current tasks: ");
-        if (tasks.size() == 0) {
-            System.out.println("No tasks");
-        }
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println("\t" + (i + 1) + "." + tasks.get(i));
-        }
+        System.out.println(tasks);
         System.out.println(LINE);
     }
 
@@ -53,17 +46,17 @@ public class Yappa {
         System.out.println(LINE);
     }
 
-    private static void mark(int taskIndex) {
-        tasks.get(taskIndex).markAsDone();
+    private static void mark(int taskIndex) throws YappaException {
+        Task task = tasks.mark(taskIndex);
         saveTasks();
-        printMessage("Ok! I've marked this task as completed: \n\t[X] " + tasks.get(taskIndex).getDescription());
+        printMessage("Ok! I've marked this task as completed: \n\t[X] " + task.getDescription());
 
     }
 
-    private static void unmark(int taskIndex) {
-        tasks.get(taskIndex).markAsUndone();
+    private static void unmark(int taskIndex) throws YappaException {
+        Task task = tasks.unmark(taskIndex);
         saveTasks();
-        printMessage("Ok! I've unmarked this task as completed: \n\t[ ] " + tasks.get(taskIndex).getDescription());
+        printMessage("Ok! I've unmarked this task as completed: \n\t[ ] " + task.getDescription());
     }
 
     private static void addTask(Task task) {
@@ -77,15 +70,8 @@ public class Yappa {
         System.out.println(LINE);
     }
 
-    /**
-     * Removes the task at a previously validated zero-based index and reports the
-     * updated list size.
-     *
-     * @param taskIndex zero-based index of the task to remove
-     */
-    private static void deleteTask(int taskIndex) {
-        Task task = tasks.get(taskIndex);
-        tasks.remove(taskIndex);
+    private static void deleteTask(int taskIndex) throws YappaException {
+        Task task = tasks.remove(taskIndex);
         saveTasks();
         System.out.println(LINE);
         System.out.println("Ok! I will remove this task:");
@@ -114,7 +100,7 @@ public class Yappa {
         }
     }
 
-    public static void inputAndEcho() {
+    public static void handleUserInput() {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             String input;
             while ((input = br.readLine()) != null) {

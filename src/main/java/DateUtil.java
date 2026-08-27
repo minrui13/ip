@@ -7,15 +7,23 @@ public class DateUtil {
     private static final DateTimeFormatter DATETIME_OUTPUT_FORMATTER = DateTimeFormatter
             .ofPattern("MMM dd yyyy, h:mm a");
 
-    private static final DateTimeFormatter DATETIME_STORAGE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HHmm");
+    private static final DateTimeFormatter DATETIME_STORAGE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
     public static LocalDateTime parseDateTime(String input) throws YappaException {
         try {
             return LocalDateTime.parse(input.trim(), DATETIME_INPUT_FORMATTER);
         } catch (DateTimeParseException e) {
             throw new YappaException(
-                    "Invalid date/time :(. Please use the format dd/MM/yyyy HHmm, "
+                    "Oh no, invalid datetime!. Please use the format dd/MM/yyyy HHmm, "
                             + "e.g. 02/12/2019 1800");
+        }
+    }
+
+    public static LocalDateTime parseStorageDateTime(String input) throws YappaException {
+        try {
+            return LocalDateTime.parse(input.trim(), DATETIME_STORAGE_FORMAT);
+        } catch (DateTimeParseException e) {
+            throw new YappaException("Oh no, corrupted date/time in storage file!:" + input);
         }
     }
 

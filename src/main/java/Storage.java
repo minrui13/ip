@@ -16,12 +16,12 @@ public class Storage {
         this.filePath = Paths.get(".", relativePath);
     }
 
-    public List<Task> loadTasks() throws FileNotFoundException {
+    public TaskList loadTasks() throws FileNotFoundException {
         List<Task> tasks = new ArrayList<>();
         File file = filePath.toFile();
 
         if (!file.exists()) {
-            return tasks;
+            return new TaskList(tasks);
         }
 
         try (Scanner scanner = new Scanner(file)) {
@@ -33,16 +33,15 @@ public class Storage {
                 }
 
                 try {
-                    Task task = parseTask(taskString);
-                    tasks.add(task);
+                    tasks.add(parseTask(taskString));
                 } catch (YappaException e) {
                     System.out.println(
-                            "Skipping invalid saved task: " + e.getMessage());
+                            "Task cannot be loaded: " + e.getMessage());
                 }
             }
         }
 
-        return tasks;
+        return new TaskList(tasks);
     }
 
     private Task parseTask(String taskString) throws YappaException {
@@ -57,12 +56,12 @@ public class Storage {
                 return new Todo(description, isDone);
 
             case "D":
-                LocalDateTime date = DateUtil.parseDateTime(taskParts[3]);
+                LocalDateTime date = DateUtil.parseStorageDateTime(taskParts[3]);
                 return new Deadline(description, isDone, date);
 
             case "E":
-                LocalDateTime from = DateUtil.parseDateTime(taskParts[3]);
-                LocalDateTime to = DateUtil.parseDateTime(taskParts[4]);
+                LocalDateTime from = DateUtil.parseStorageDateTime(taskParts[3]);
+                LocalDateTime to = DateUtil.parseStorageDateTime(taskParts[4]);
                 return new Event(description, isDone, from, to);
 
             default:
@@ -71,7 +70,7 @@ public class Storage {
         }
     }
 
-    public void saveTasks(List<Task> tasks) throws IOException {
+    public void saveTasks(TaskList tasks) throws IOException {
         File file = filePath.toFile();
 
         File parent = file.getParentFile();
