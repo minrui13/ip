@@ -3,8 +3,9 @@
 ## Test setup
 
 - Java version: 25
-- Compile command: `javac -d out src/main/java/*.java`
-- Launch command: `java -cp out Yappa`
+- Compile command (from the project root): `.\gradlew.bat classes`
+- Launch command: `java -cp <project-root>\build\classes\java\main yappa.Yappa`
+- Working directory: a new empty temporary directory for each test case, so saved tasks cannot leak between cases.
 - Comparison: exact output, including whitespace and line breaks. Use `{{TIME_OF_DAY}}` only for the application's time-dependent greeting.
 
 ## Test cases
