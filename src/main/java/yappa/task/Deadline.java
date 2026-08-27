@@ -1,4 +1,5 @@
 package yappa.task;
+
 import java.time.LocalDateTime;
 
 import yappa.util.DateUtil;
@@ -13,8 +14,8 @@ public class Deadline extends Task {
     /**
      * Creates a new deadline task.
      *
-     * @param description task description
-     * @param date deadline date and time
+     * @param description Task description.
+     * @param date Deadline date and time.
      */
     public Deadline(String description, LocalDateTime date) {
         super(description);
@@ -24,9 +25,9 @@ public class Deadline extends Task {
     /**
      * Creates a deadline task with the known completion state.
      *
-     * @param description task description
-     * @param isDone whether the task is completed
-     * @param date deadline date and time
+     * @param description Task description.
+     * @param isDone Whether the task is completed.
+     * @param date Deadline date and time.
      */
     public Deadline(String description, boolean isDone, LocalDateTime date) {
         super(description, isDone);
@@ -36,7 +37,7 @@ public class Deadline extends Task {
     /**
      * Formats this deadline for file storage.
      *
-     * @return storage representation of this deadline
+     * @return Storage representation of this deadline.
      */
     @Override
     public String toFileString() {
@@ -48,7 +49,7 @@ public class Deadline extends Task {
     /**
      * Formats this deadline for display.
      *
-     * @return display representation of this deadline
+     * @return Display representation of this deadline.
      */
     @Override
     public String toString() {

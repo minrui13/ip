@@ -1,16 +1,14 @@
 package yappa.task;
 
-import yappa.exception.YappaException;
-
 /**
  * Represents a todo task.
  */
 public class Todo extends Task {
 
     /**
-     * Creates a new todo task
+     * Creates a new todo task.
      *
-     * @param description task description
+     * @param description Task description.
      */
     public Todo(String description) {
         super(description);
@@ -19,8 +17,8 @@ public class Todo extends Task {
     /**
      * Creates a todo task with the given completion state.
      *
-     * @param description task description
-     * @param isDone      whether the task is completed
+     * @param description Task description.
+     * @param isDone Whether the task is completed.
      */
     public Todo(String description, boolean isDone) {
         super(description, isDone);
@@ -29,7 +27,7 @@ public class Todo extends Task {
     /**
      * Formats this todo for file storage.
      *
-     * @return storage representation of this todo
+     * @return Storage representation of this todo.
      */
     @Override
     public String toFileString() {
@@ -40,7 +38,7 @@ public class Todo extends Task {
     /**
      * Formats this todo for display.
      *
-     * @return display representation of this todo
+     * @return Display representation of this todo.
      */
     @Override
     public String toString() {

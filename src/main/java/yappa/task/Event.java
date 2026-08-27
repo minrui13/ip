@@ -18,10 +18,10 @@ public class Event extends Task {
     /**
      * Creates a new event, verifying the end is after its start.
      *
-     * @param description task description
-     * @param from        event start datetime
-     * @param to          event end datetime
-     * @throws YappaException if the event does not end after it starts
+     * @param description Task description.
+     * @param from Event start date and time.
+     * @param to Event end date and time.
+     * @throws YappaException If the event does not end after it starts.
      */
     public Event(String description, LocalDateTime from, LocalDateTime to) throws YappaException {
         super(description);
@@ -33,13 +33,14 @@ public class Event extends Task {
     /**
      * Creates an event with the given completion state.
      *
-     * @param description task description
-     * @param isDone      whether the task is completed
-     * @param from        event start date and time
-     * @param to          event end date and time
-     * @throws YappaException if the event does not end after it starts
+     * @param description Task description.
+     * @param isDone Whether the task is completed.
+     * @param from Event start date and time.
+     * @param to Event end date and time.
+     * @throws YappaException If the event does not end after it starts.
      */
-    public Event(String description, boolean isDone, LocalDateTime from, LocalDateTime to) throws YappaException {
+    public Event(String description, boolean isDone, LocalDateTime from, LocalDateTime to)
+            throws YappaException {
         super(description, isDone);
         validateDateTimes(from, to);
         this.from = from;
@@ -49,9 +50,9 @@ public class Event extends Task {
     /**
      * Ensures that an event has a positive duration.
      *
-     * @param from event start date and time
-     * @param to   event end date and time
-     * @throws YappaException if {@code to} is not after {@code from}
+     * @param from Event start date and time.
+     * @param to Event end date and time.
+     * @throws YappaException If {@code to} is not after {@code from}.
      */
     private static void validateDateTimes(LocalDateTime from, LocalDateTime to) throws YappaException {
         if (!to.isAfter(from)) {
@@ -62,7 +63,7 @@ public class Event extends Task {
     /**
      * Formats this event file storage.
      *
-     * @return storage representation of this event
+     * @return Storage representation of this event.
      */
     @Override
     public String toFileString() {
@@ -75,11 +76,12 @@ public class Event extends Task {
     /**
      * Formats this event for display.
      *
-     * @return display representation of this event
+     * @return Display representation of this event.
      */
     @Override
     public String toString() {
-        return "[E] " + super.toString() + " (from: " + DateUtil.toDisplayString(this.from) + " to: "
-                + DateUtil.toDisplayString(this.to) + ")";
+        return "[E] " + super.toString()
+                + " (from: " + DateUtil.toDisplayString(this.from)
+                + " to: " + DateUtil.toDisplayString(this.to) + ")";
     }
 }

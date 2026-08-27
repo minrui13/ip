@@ -1,14 +1,13 @@
 package yappa.task;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import yappa.exception.YappaException;
 
-import java.util.Iterator;
-
 /**
- * Stores a list of the Task and its supporting functions
+ * Stores tasks and provides operations for managing them.
  */
 public class TaskList implements Iterable<Task> {
     private final List<Task> tasks;
@@ -23,7 +22,7 @@ public class TaskList implements Iterable<Task> {
     /**
      * Creates a task list containing a defensive copy of the loaded tasks.
      *
-     * @param tasks tasks to copy into the list
+     * @param tasks Tasks to copy into the list.
      */
     public TaskList(List<Task> tasks) {
         this.tasks = new ArrayList<>(tasks);
@@ -32,7 +31,7 @@ public class TaskList implements Iterable<Task> {
     /**
      * Returns the number of tasks in the list.
      *
-     * @return number of tasks
+     * @return Number of tasks.
      */
     public int size() {
         return tasks.size();
@@ -41,9 +40,9 @@ public class TaskList implements Iterable<Task> {
     /**
      * Marks the specified task as complete.
      *
-     * @param taskIndex zero-based task index
-     * @return task that was marked
-     * @throws YappaException if the index does not identify a task
+     * @param taskIndex Zero-based task index.
+     * @return Task that was marked.
+     * @throws YappaException If the index does not identify a task.
      */
     public Task mark(int taskIndex) throws YappaException {
         validateIndex(taskIndex);
@@ -55,9 +54,9 @@ public class TaskList implements Iterable<Task> {
     /**
      * Unmarks the specified task as complete.
      *
-     * @param taskIndex zero-based task index
-     * @return task that was unmarked
-     * @throws YappaException if the index does not identify a task
+     * @param taskIndex Zero-based task index.
+     * @return Task that was unmarked.
+     * @throws YappaException If the index does not identify a task.
      */
     public Task unmark(int taskIndex) throws YappaException {
         validateIndex(taskIndex);
@@ -69,7 +68,7 @@ public class TaskList implements Iterable<Task> {
     /**
      * Appends a task to the list.
      *
-     * @param task task to add
+     * @param task Task to add.
      */
     public void add(Task task) {
         tasks.add(task);
@@ -78,9 +77,9 @@ public class TaskList implements Iterable<Task> {
     /**
      * Removes and returns the task.
      *
-     * @param taskIndex zero-based task index
-     * @return removed task
-     * @throws YappaException if the index does not identify a task
+     * @param taskIndex Zero-based task index.
+     * @return Removed task.
+     * @throws YappaException If the index does not identify a task.
      */
     public Task remove(int taskIndex) throws YappaException {
         validateIndex(taskIndex);
@@ -90,8 +89,8 @@ public class TaskList implements Iterable<Task> {
     /**
      * Ensures that an index identifies an existing task.
      *
-     * @param index zero-based task index
-     * @throws YappaException if the index is outside the task list
+     * @param index Zero-based task index.
+     * @throws YappaException If the index is outside the task list.
      */
     private void validateIndex(int index) throws YappaException {
         if (index < 0 || index >= tasks.size()) {
@@ -102,7 +101,7 @@ public class TaskList implements Iterable<Task> {
     /**
      * Returns an iterator over tasks in display order.
      *
-     * @return task iterator
+     * @return Task iterator.
      */
     @Override
     public Iterator<Task> iterator() {
@@ -110,8 +109,9 @@ public class TaskList implements Iterable<Task> {
     }
 
     /**
-     * Returns a string representation of the task list
-     * @return display the string representation of the task list
+     * Returns a string representation of the task list.
+     *
+     * @return Display representation of the task list.
      */
     @Override
     public String toString() {
@@ -127,7 +127,6 @@ public class TaskList implements Iterable<Task> {
                     .append(".")
                     .append(tasks.get(i))
                     .append(System.lineSeparator());
-            ;
         }
 
         return taskList.toString();

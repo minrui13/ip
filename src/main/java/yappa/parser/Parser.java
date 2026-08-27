@@ -10,8 +10,8 @@ public class Parser {
     /**
      * Gets the command word from the user's input.
      *
-     * @param input user input
-     * @return command word in lowercase
+     * @param input User input.
+     * @return Command word in lowercase.
      */
     public static String getCommandWord(String input) {
         String trimmedInput = input.trim();
@@ -26,9 +26,9 @@ public class Parser {
     /**
      * Parses a one-based task number into a zero-based index.
      *
-     * @param input user input
-     * @return zero-based task index
-     * @throws YappaException if a task number is missing or invalid
+     * @param input User input.
+     * @return Zero-based task index.
+     * @throws YappaException If a task number is missing or invalid.
      */
     public static int parseIndex(String input) throws YappaException {
         String[] parts = input.trim().split("\\s+");
@@ -47,9 +47,9 @@ public class Parser {
     /**
      * Parses the description of a todo command.
      *
-     * @param input user input
-     * @return todo description
-     * @throws YappaException if the description is empty
+     * @param input User input.
+     * @return Todo description.
+     * @throws YappaException If the description is empty.
      */
     public static String parseTodo(String input) throws YappaException {
         String description = input.substring(4).trim();
@@ -65,9 +65,9 @@ public class Parser {
     /**
      * Parses a deadline command.
      *
-     * @param input user input
-     * @return description and deadline date/time
-     * @throws YappaException if the command is invalid
+     * @param input User input.
+     * @return Description and deadline date/time.
+     * @throws YappaException If the command is invalid.
      */
     public static String[] parseDeadline(String input)
             throws YappaException {
@@ -95,9 +95,9 @@ public class Parser {
     /**
      * Parses an event command.
      *
-     * @param input user input
-     * @return description, start date/time, and end date/time
-     * @throws YappaException if the command is invalid
+     * @param input User input.
+     * @return Description, start date/time, and end date/time.
+     * @throws YappaException If the command is invalid.
      */
     public static String[] parseEvent(String input)
             throws YappaException {

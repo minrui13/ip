@@ -1,4 +1,5 @@
 package yappa.task;
+
 /**
  * Represents a generic task managed by Yappa.
  * Base class for specific task types like Todo, Deadline, and Event.
@@ -14,7 +15,7 @@ public abstract class Task {
     /**
      * Creates a new task with the given description.
      *
-     * @param description task description
+     * @param description Task description.
      */
     public Task(String description) {
         this.description = description;
@@ -24,8 +25,8 @@ public abstract class Task {
     /**
      * Creates a task with the given description and completion state.
      *
-     * @param description task description
-     * @param isDone whether the task is completed
+     * @param description Task description.
+     * @param isDone Whether the task is completed.
      */
     public Task(String description, boolean isDone) {
         this.description = description;
@@ -35,7 +36,7 @@ public abstract class Task {
     /**
      * Returns the task description.
      *
-     * @return task description
+     * @return Task description.
      */
     public String getDescription() {
         return this.description;
@@ -62,7 +63,7 @@ public abstract class Task {
     /**
      * Formats the task's completion state and description for display.
      *
-     * @return display representation of the task
+     * @return Display representation of the task.
      */
     @Override
     public String toString() {
@@ -72,7 +73,7 @@ public abstract class Task {
     /**
      * Formats the task as a record suitable for persistent storage.
      *
-     * @return storage representation of the task
+     * @return Storage representation of the task.
      */
     public abstract String toFileString();
 }

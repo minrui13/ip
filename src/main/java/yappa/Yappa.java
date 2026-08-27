@@ -1,4 +1,7 @@
 package yappa;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 import yappa.exception.YappaException;
@@ -12,9 +15,6 @@ import yappa.task.Todo;
 import yappa.ui.Ui;
 import yappa.util.DateUtil;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 /**
  * Runs the Yappa task manager and coordinates user input, storage, and output.
  */
@@ -27,7 +27,7 @@ public class Yappa {
     /**
      * Starts Yappa, loads saved tasks, and processes commands until the session ends.
      *
-     * @param args command-line arguments, which are not used
+     * @param args Command-line arguments, which are not used.
      */
     public static void main(String[] args) {
         loadTasks();
@@ -39,7 +39,7 @@ public class Yappa {
     /**
      * Adds a task, persists the updated list, and displays the result.
      *
-     * @param task task to add
+     * @param task Task to add.
      */
     private static void addTask(Task task) {
         tasks.add(task);
@@ -55,7 +55,6 @@ public class Yappa {
             tasks = STORAGE.loadTasks();
         } catch (FileNotFoundException e) {
             ui.showError("Oh no! Unable to load saved tasks.");
-
         }
     }
 
@@ -67,7 +66,6 @@ public class Yappa {
             STORAGE.saveTasks(tasks);
         } catch (IOException e) {
             ui.showError("Oh no! I couldn't save the updated task list.");
-            return;
         }
     }
 
@@ -133,5 +131,4 @@ public class Yappa {
             }
         }
     }
-
 }

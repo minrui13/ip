@@ -1,4 +1,5 @@
 package yappa.util;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -9,18 +10,19 @@ import yappa.exception.YappaException;
  * Converts date-time values between user input, display, and storage formats.
  */
 public class DateUtil {
-    private static final DateTimeFormatter DATETIME_INPUT_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+    private static final DateTimeFormatter DATETIME_INPUT_FORMATTER = DateTimeFormatter
+            .ofPattern("dd/MM/yyyy HHmm");
     private static final DateTimeFormatter DATETIME_OUTPUT_FORMATTER = DateTimeFormatter
             .ofPattern("MMM dd yyyy, h:mm a");
-
-    private static final DateTimeFormatter DATETIME_STORAGE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+    private static final DateTimeFormatter DATETIME_STORAGE_FORMAT = DateTimeFormatter
+            .ofPattern("yyyy-MM-dd'T'HH:mm");
 
     /**
      * Parses a date-time entered by a user in {@code dd/MM/yyyy HHmm} format.
      *
-     * @param input date-time text to parse
-     * @return parsed date-time
-     * @throws YappaException if the input does not follow the required format
+     * @param input Date-time text to parse.
+     * @return Parsed date-time.
+     * @throws YappaException If the input does not follow the required format.
      */
     public static LocalDateTime parseDateTime(String input) throws YappaException {
         try {
@@ -35,9 +37,9 @@ public class DateUtil {
     /**
      * Parses a date-time read from Yappa's storage format.
      *
-     * @param input stored date-time text
-     * @return parsed date-time
-     * @throws YappaException if the stored value is invalid
+     * @param input Stored date-time text.
+     * @return Parsed date-time.
+     * @throws YappaException If the stored value is invalid.
      */
     public static LocalDateTime parseStorageDateTime(String input) throws YappaException {
         try {
@@ -50,8 +52,8 @@ public class DateUtil {
     /**
      * Formats a date-time for display to the user.
      *
-     * @param dateTime date-time to format
-     * @return user-facing date-time text
+     * @param dateTime Date-time to format.
+     * @return User-facing date-time text.
      */
     public static String toDisplayString(LocalDateTime dateTime) {
         return dateTime.format(DATETIME_OUTPUT_FORMATTER);
@@ -60,8 +62,8 @@ public class DateUtil {
     /**
      * Formats a date-time for writing to the storage file.
      *
-     * @param dateTime date-time to format
-     * @return storage-compatible date-time text
+     * @param dateTime Date-time to format.
+     * @return Storage-compatible date-time text.
      */
     public static String toFileString(LocalDateTime dateTime) {
         return dateTime.format(DATETIME_STORAGE_FORMAT);

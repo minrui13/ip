@@ -1,4 +1,5 @@
 package yappa.ui;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,8 +13,8 @@ import yappa.task.TaskList;
  */
 public class Ui {
 
-    private final String LINE = "____________________________________________________________";
-    private final String LOGO = "__   __                    \n"
+    private static final String LINE = "____________________________________________________________";
+    private static final String LOGO = "__   __                    \n"
             + "\\ \\ / /_ _ _ __  _ __  __ _ \n"
             + " \\ V / _` | '_ \\| '_ \\/ _` |\n"
             + "  | | (_| | |_) | |_) | (_| |\n"
@@ -25,15 +26,15 @@ public class Ui {
     /**
      * Reads the next command from standard input.
      *
-     * @return command text, or {@code null} when the input stream is closed
-     * @throws IOException if the command cannot be read
+     * @return Command text, or {@code null} when the input stream is closed.
+     * @throws IOException If the command cannot be read.
      */
     public String readCommand() throws IOException {
         return reader.readLine();
     }
 
     /**
-     * Displays Yappa's logo and welcome message
+     * Displays Yappa's logo and welcome message.
      */
     public void showGreeting() {
         System.out.println(LINE);
@@ -53,7 +54,7 @@ public class Ui {
     /**
      * Displays a message between horizontal separators.
      *
-     * @param message message to display
+     * @param message Message to display.
      */
     private void showMessage(String message) {
         System.out.println(LINE);
@@ -64,7 +65,7 @@ public class Ui {
     /**
      * Displays all tasks in their current order.
      *
-     * @param tasks tasks to display
+     * @param tasks Tasks to display.
      */
     public void showTaskList(TaskList tasks) {
         System.out.println(LINE);
@@ -76,28 +77,26 @@ public class Ui {
     /**
      * Confirms that a task has been marked as completed.
      *
-     * @param taskDescription description of the marked task
+     * @param taskDescription Description of the marked task.
      */
     public void showTaskMarked(String taskDescription) {
         showMessage("Ok! I've marked this task as completed: \n\t[X] " + taskDescription);
-
     }
 
     /**
      * Confirms that a task has been unmarked as completed.
      *
-     * @param taskDescription description of the unmarked task
+     * @param taskDescription Description of the unmarked task.
      */
     public void showTaskUnmarked(String taskDescription) {
         showMessage("Ok! I've unmarked this task as completed: \n\t[ ] " + taskDescription);
-
     }
 
     /**
      * Displays an added task and the new number of tasks.
      *
-     * @param task added task
-     * @param taskCount number of tasks after the addition
+     * @param task Added task.
+     * @param taskCount Number of tasks after the addition.
      */
     public void showTaskAdded(Task task, int taskCount) {
         System.out.println(LINE);
@@ -111,8 +110,8 @@ public class Ui {
     /**
      * Displays a deleted task and the new number of tasks.
      *
-     * @param task deleted task
-     * @param taskCount number of tasks after the deletion
+     * @param task Deleted task.
+     * @param taskCount Number of tasks after the deletion.
      */
     public void showTaskDeleted(Task task, int taskCount) {
         System.out.println(LINE);
@@ -127,7 +126,7 @@ public class Ui {
     /**
      * Displays an error message between horizontal separators.
      *
-     * @param message error message to display
+     * @param message Error message to display.
      */
     public void showError(String message) {
         showMessage(message);
@@ -136,7 +135,7 @@ public class Ui {
     /**
      * Determines the greeting period from the current local time.
      *
-     * @return {@code Morning}, {@code Afternoon}, or {@code Evening}
+     * @return {@code Morning}, {@code Afternoon}, or {@code Evening}.
      */
     private String getTimeOfDay() {
         LocalTime currentTime = LocalTime.now();
@@ -154,5 +153,4 @@ public class Ui {
 
         return period;
     }
-
 }

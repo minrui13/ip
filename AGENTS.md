@@ -36,8 +36,13 @@ After every code update, review `test/ui-test-plan.md` and update it when the ch
 
 Maintain JUnit tests for at least the top 50% of methods by testing value, prioritising complex, core, and critical business logic over trivial accessors. Update the relevant JUnit tests after each code change so that this target continues to be met.
 
+## Coding standard
+
+Invoke the project-specific `$seedu-java-coding-standard` skill whenever creating, changing, or reviewing Java code. Follow it for all Java code in this project.
+
 ## Git
 
+Invoke the project-specific `$seedu-git-standard` skill whenever proposing, reviewing, or creating commit messages or branch names. Follow it for all future Git commits in this project.
 Use lightweight tags unless the user requests an annotated tag.
 When proposing or creating a commit message, include enough detail to explain the rationale for the change.
 Do not commit or push unless explicitly asked.
