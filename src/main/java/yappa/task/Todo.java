@@ -1,3 +1,4 @@
+package yappa.task;
 /**
  * Represents a todo task
  */

@@ -1,7 +1,11 @@
+package yappa.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalTime;
+
+import yappa.task.Task;
+import yappa.task.TaskList;
 
 public class Ui {
 

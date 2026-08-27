@@ -1,5 +1,9 @@
+package yappa.task;
 import java.util.ArrayList;
 import java.util.List;
+
+import yappa.exception.YappaException;
+
 import java.util.Iterator;
 
 public class TaskList implements Iterable<Task> {

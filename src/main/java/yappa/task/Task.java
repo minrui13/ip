@@ -1,3 +1,4 @@
+package yappa.task;
 /**
  * Represents a generic task managed by Yappa.
  * Base class for specific task types like Todo, Deadline, and Event.

@@ -1,3 +1,4 @@
+package yappa.exception;
 /**
  * Represents application-specific exceptions thrown by the Yappa application
  * when encountering invalid user inputs or execution errors.

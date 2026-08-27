@@ -1,3 +1,7 @@
+package yappa.parser;
+
+import yappa.exception.YappaException;
+
 public class Parser {
 
     /**

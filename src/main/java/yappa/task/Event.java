@@ -1,4 +1,8 @@
+package yappa.task;
 import java.time.LocalDateTime;
+
+import yappa.exception.YappaException;
+import yappa.util.DateUtil;
 
 /**
  * Represents a task that occurs within a specific time range.

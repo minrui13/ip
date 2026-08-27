@@ -1,6 +1,9 @@
+package yappa.util;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import yappa.exception.YappaException;
 
 public class DateUtil {
     private static final DateTimeFormatter DATETIME_INPUT_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
