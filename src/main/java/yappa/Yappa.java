@@ -14,80 +14,31 @@ import yappa.task.TaskList;
 import yappa.task.Todo;
 import yappa.ui.Ui;
 import yappa.util.DateUtil;
-import javafx.animation.PauseTransition;
-import javafx.application.Platform;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 
 /**
  * Runs the Yappa task manager and coordinates user input, storage, and output.
  */
 
-// Application instance by calling no argument constructior
-// But if there is no other constructor in the class, there is no need to
-// provide such a constructor
-// If there is an existing constructor which takes arguments in that class, need
-// to create an overloaded
-// constructor with no arguments.
+public class Yappa {
 
-public class Yappa extends Application {
-
-    private final Storage STORAGE = new Storage("data/yappa.txt");
+    private final Storage storage = new Storage("data/yappa.txt");
     private TaskList tasks = new TaskList();
     private Ui ui = new Ui();
 
-    private ScrollPane scrollPane;
-    private VBox dialogContainer;
-    private TextField userInput;
-    private Button sendButton;
-    private Scene scene;
-
     /**
-     * Starts Yappa, loads saved tasks, and processes commands until the session
-     * ends.
-     *
-     * @param args Command-line arguments, which are not used.
+     * Creates Yappa and loads previously saved tasks.
      */
-    public static void main(String[] args) {
-        launch(args);
+    public Yappa() {
+        loadTasks();
     }
 
-    @Override
-    public void start(Stage stage) {
-
-        loadTasks();
-
-        scrollPane = new ScrollPane();
-        dialogContainer = new VBox();
-        scrollPane.setContent(dialogContainer);
-        userInput = new TextField();
-        sendButton = new Button("Send");
-
-        userInput.setOnAction((event) -> handleUserInput());
-        sendButton.setOnAction((event) -> handleUserInput());
-
-        AnchorPane mainLayout = new AnchorPane();
-        mainLayout.getChildren().addAll(scrollPane, userInput, sendButton);
-
-        scene = new Scene(mainLayout, 400, 400);
-
-        String greetingMessage = ui.showGreeting();
-        dialogContainer.getChildren().add(new Label("Yappa: " + greetingMessage));
-
-        // Setting the stage to show our scene
-        stage.setScene(scene);
-        // Set title
-        stage.setTitle("Yappa");
-        // render the stage
-        stage.show();
+    /**
+     * Returns the greeting shown when the application starts.
+     *
+     * @return User-facing greeting.
+     */
+    public String getGreeting() {
+        return ui.showGreeting();
     }
 
     /**
@@ -106,9 +57,8 @@ public class Yappa extends Application {
      */
     private void loadTasks() {
         try {
-            tasks = STORAGE.loadTasks();
+            tasks = storage.loadTasks();
         } catch (FileNotFoundException e) {
-            dialogContainer.getChildren().add(new Label("Yappa: " + e));
             tasks = new TaskList();
         }
     }
@@ -118,49 +68,28 @@ public class Yappa extends Application {
      */
     private void saveTasks() throws YappaException {
         try {
-            STORAGE.saveTasks(tasks);
+            storage.saveTasks(tasks);
         } catch (IOException e) {
             throw new YappaException("Oh no! I couldn't save the updated task list: " + e.getMessage());
         }
     }
 
-    private void handleUserInput() {
-        String input = userInput.getText();
-        if (input.isBlank()) {
-            return;
-        }
-        String response = getResponse(input);
-
-        dialogContainer.getChildren().addAll(
-                new Label("User: " + input),
-                new Label("Yappa: " + response));
-
-        userInput.clear();
-    }
-
-    private String handleExit() {
-
-        PauseTransition delay = new PauseTransition(Duration.seconds(1.5));
-        delay.setOnFinished(event -> Platform.exit());
-        delay.play();
-
-        return ui.showGoodbye();
-    }
-
     /**
      * Reads and executes commands until the user exits or the input stream closes.
      */
-    private String getResponse(String input) {
-
-        if (input == null || input.isBlank()) {
-            return handleExit();
-        }
+    /**
+     * Processes a user command and returns the corresponding response.
+     *
+     * @param input User command.
+     * @return User-facing response.
+     */
+    public String getResponse(String input) {
         try {
             String command = Parser.getCommandWord(input);
 
             switch (command) {
                 case "bye":
-                    return handleExit();
+                    return ui.showGoodbye();
                 case "list":
                     return ui.showTaskList(tasks);
                 case "mark": {
@@ -203,6 +132,10 @@ public class Yappa extends Application {
                     String searchQuery = Parser.parseFind(input);
                     TaskList matchedTasks = tasks.find(searchQuery);
                     return ui.showMatchingTasks(matchedTasks);
+                }
+                case "clear": {
+                    tasks.clear();
+                    return ui.showTaskCleared();
                 }
                 default:
                     throw new YappaException("Oh no...sorry, I am not sure what you mean :(");

@@ -76,7 +76,7 @@ public class Parser {
 
         if (!taskBody.contains(" /by ")) {
             throw new YappaException(
-                    "Oh no! Please re-enter in this format: deadline <task> /by <date/time>");
+                    "Oh no! Please re-enter in this format: deadline <task> /by <dd/MM/yy HHmm>");
         }
 
         String[] parts = taskBody.split(" /by ", 2);

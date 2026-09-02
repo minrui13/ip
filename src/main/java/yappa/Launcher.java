@@ -2,10 +2,15 @@ package yappa;
 
 import javafx.application.Application;
 
-// Launcher class to workaround classpath issues
+/** Launches the JavaFX application through a classpath-safe entry point. */
 public class Launcher {
+    /**
+     * Launches the main JavaFX application.
+     *
+     * @param args Application arguments.
+     */
     public static void main(String[] args) {
-        Application.launch(Yappa.class, args);
+        Application.launch(Main.class, args);
     }
-    
+
 }

@@ -117,6 +117,13 @@ public class TaskList implements Iterable<Task> {
     }
 
     /**
+     * Clears all tasks from the task list.
+     */
+    public void clear() {
+        tasks.clear();
+    }
+
+    /**
      * Returns an iterator over tasks in display order.
      *
      * @return Task iterator.

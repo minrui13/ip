@@ -47,6 +47,9 @@ jar {
 
 shadowJar {
     archiveFileName = 'Yappa.jar'
+    manifest {
+        attributes 'Main-Class': 'yappa.Launcher'
+    }
 }
 
 run {

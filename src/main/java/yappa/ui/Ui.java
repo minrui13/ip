@@ -121,6 +121,14 @@ public class Ui {
                 + "in the list.";
     }
 
+    /**
+     * Returns a confirmation message indicating that all tasks have been cleared.
+     *
+     * @return A string confirming that all tasks were cleared.
+     */
+    public String showTaskCleared() {
+        return "All tasks cleared";
+    }
 
     /**
      * Determines the greeting period from the current local time.
