@@ -1,19 +1,15 @@
 package yappa.ui;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.time.LocalTime;
 
 import yappa.task.Task;
 import yappa.task.TaskList;
 
 /**
- * Reads console input and displays Yappa's messages to the user.
+ * Generates Yappa's messages for the user interface.
  */
 public class Ui {
 
-    private static final String LINE = "____________________________________________________________";
     private static final String LOGO = "__   __                    \n"
             + "\\ \\ / /_ _ _ __  _ __  __ _ \n"
             + " \\ V / _` | '_ \\| '_ \\/ _` |\n"
@@ -21,156 +17,126 @@ public class Ui {
             + "  |_|\\__,_| .__/| .__/ \\__,_|\n"
             + "          |_|   |_|          \n";
 
-    private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
     /**
-     * Reads the next command from standard input.
+     * Returns Yappa's logo and welcome message.
      *
-     * @return Command text, or {@code null} when the input stream is closed.
-     * @throws IOException If the command cannot be read.
+     * @return greeting message
      */
-    public String readCommand() throws IOException {
-        return reader.readLine();
+    public String showGreeting() {
+        return LOGO
+                + "\nGood " + getTimeOfDay()
+                + "! I'm Yappa. Ready to yap and get stuff done!\n"
+                + "What are we tackling today? Let's do this!";
     }
 
     /**
-     * Displays Yappa's logo and welcome message.
-     */
-    public void showGreeting() {
-        System.out.println(LINE);
-        System.out.println(LOGO);
-        System.out.println("Good " + getTimeOfDay() + "! I'm Yappa. Ready to yap and get stuff done!");
-        System.out.println("What are we tackling today? Let's do this!");
-        System.out.println(LINE);
-    }
-
-    /**
-     * Displays the goodbye message.
-     */
-    public void showGoodbye() {
-        System.out.println("Catch you later :)!");
-    }
-
-    /**
-     * Displays a message between horizontal separators.
+     * Returns the goodbye message.
      *
-     * @param message Message to display.
+     * @return goodbye message
      */
-    private void showMessage(String message) {
-        System.out.println(LINE);
-        System.out.println(message);
-        System.out.println(LINE);
+    public String showGoodbye() {
+        return "Catch you later :)!";
     }
 
     /**
-     * Displays all current tasks in the list with a standard header message.
+     * Returns all current tasks with a standard header message.
      *
-     * @param tasks The task list to display.
+     * @param tasks task list to display
+     * @return formatted task list message
      */
-    public void showTaskList(TaskList tasks) {
-        showTasks("Here are your current tasks:", tasks);
+    public String showTaskList(TaskList tasks) {
+        return showTasks("Here are your current tasks:", tasks);
     }
 
     /**
-     * Displays tasks that match a search query with a matching-results
-     * message.
+     * Returns tasks that match a search query.
      *
-     * @param tasks The filtered task list containing matching tasks to display.
+     * @param tasks filtered task list containing matching tasks
+     * @return formatted matching tasks message
      */
-    public void showMatchingTasks(TaskList tasks) {
-        showTasks("Here are the matching tasks:", tasks);
+    public String showMatchingTasks(TaskList tasks) {
+        return showTasks("Here are the matching tasks:", tasks);
     }
 
     /**
-     * Displays all tasks with their respectivce messages.
+     * Returns tasks together with the specified header message.
      *
-     * @param message Message to display.
-     * @param tasks   Tasks to display.
+     * @param message header message
+     * @param tasks   tasks to display
+     * @return formatted task message
      */
-    private void showTasks(String message, TaskList tasks) {
-        System.out.println(LINE);
-        System.out.println(message);
-        System.out.println(tasks);
-        System.out.println(LINE);
+    private String showTasks(String message, TaskList tasks) {
+        return message + "\n" + tasks;
     }
 
     /**
-     * Confirms that a task has been marked as completed.
+     * Returns a confirmation that a task has been marked as completed.
      *
-     * @param taskDescription Description of the marked task.
+     * @param taskDescription description of the marked task
+     * @return task marked confirmation
      */
-    public void showTaskMarked(String taskDescription) {
-        showMessage("Ok! I've marked this task as completed: \n\t[X] " + taskDescription);
+    public String showTaskMarked(String taskDescription) {
+        return "Ok! I've marked this task as completed:\n"
+                + "\t[X] " + taskDescription;
     }
 
     /**
-     * Confirms that a task has been unmarked as completed.
+     * Returns a confirmation that a task has been marked as not completed.
      *
-     * @param taskDescription Description of the unmarked task.
+     * @param taskDescription description of the unmarked task
+     * @return task unmarked confirmation
      */
-    public void showTaskUnmarked(String taskDescription) {
-        showMessage("Ok! I've unmarked this task as completed: \n\t[ ] " + taskDescription);
+    public String showTaskUnmarked(String taskDescription) {
+        return "Ok! I've marked this task as not completed:\n"
+                + "\t[ ] " + taskDescription;
     }
 
     /**
-     * Displays an added task and the new number of tasks.
+     * Returns a confirmation that a task has been added.
      *
-     * @param task      Added task.
-     * @param taskCount Number of tasks after the addition.
+     * @param task      added task
+     * @param taskCount number of tasks after the addition
+     * @return task added confirmation
      */
-    public void showTaskAdded(Task task, int taskCount) {
-        System.out.println(LINE);
-        System.out.println("Ok! I have added the task:");
-        System.out.println("\t" + task);
-        System.out.println(
-                "Now you have " + taskCount + (taskCount > 1 ? " tasks " : " task ") + "in the list");
-        System.out.println(LINE);
+    public String showTaskAdded(Task task, int taskCount) {
+        return "Ok! I have added the task:\n"
+                + "\t" + task + "\n"
+                + "Now you have " + taskCount
+                + (taskCount == 1 ? " task " : " tasks ")
+                + "in the list.";
     }
 
     /**
-     * Displays a deleted task and the new number of tasks.
+     * Returns a confirmation that a task has been deleted.
      *
-     * @param task      Deleted task.
-     * @param taskCount Number of tasks after the deletion.
+     * @param task      deleted task
+     * @param taskCount number of tasks after the deletion
+     * @return task deleted confirmation
      */
-    public void showTaskDeleted(Task task, int taskCount) {
-        System.out.println(LINE);
-        System.out.println("Ok! I will remove this task:");
-        System.out.println("\t" + task);
-        System.out.println("Now you have " + taskCount
-                + (taskCount > 1 ? " tasks " : " task ")
-                + "in the list");
-        System.out.println(LINE);
+    public String showTaskDeleted(Task task, int taskCount) {
+        return "Ok! I will remove this task:\n"
+                + "\t" + task + "\n"
+                + "Now you have " + taskCount
+                + (taskCount == 1 ? " task " : " tasks ")
+                + "in the list.";
     }
 
-    /**
-     * Displays an error message between horizontal separators.
-     *
-     * @param message Error message to display.
-     */
-    public void showError(String message) {
-        showMessage(message);
-    }
 
     /**
      * Determines the greeting period from the current local time.
      *
-     * @return {@code Morning}, {@code Afternoon}, or {@code Evening}.
+     * @return {@code Morning}, {@code Afternoon}, or {@code Evening}
      */
     private String getTimeOfDay() {
         LocalTime currentTime = LocalTime.now();
         int currentHour = currentTime.getHour();
 
-        String period;
-
         if (currentHour >= 12 && currentHour < 17) {
-            period = "Afternoon";
+            return "Afternoon";
         } else if (currentHour >= 17 && currentHour < 21) {
-            period = "Evening";
+            return "Evening";
         } else {
-            period = "Morning";
+            return "Morning";
         }
-
-        return period;
     }
 }

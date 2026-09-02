@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
     id 'com.gradleup.shadow' version '9.5.1'
 }
 
@@ -11,6 +12,11 @@ java {
 
 repositories {
     mavenCentral()
+}
+
+javafx {
+    version = '17.0.7'
+    modules = ['javafx.controls', 'javafx.fxml']
 }
 
 dependencies {
@@ -27,23 +33,15 @@ test {
 
     testLogging {
         events 'passed', 'skipped', 'failed'
-
-        showExceptions = true
-        exceptionFormat = 'full'
-        showCauses = true
-        showStackTraces = true
-        showStandardStreams = false
     }
 }
 
 application {
-    mainClass = 'yappa.Yappa'
+    mainClass.set('yappa.Launcher')
 }
 
 jar {
-    // A lean JAR file (i.e., without the dependencies packaged inside) is not needed.
     enabled = false
-    // Rename its output anyway; Gradle forbids it clashing with the shadowJar output file, even for a disabled task.
     archiveClassifier = 'without-dependencies'
 }
 
