@@ -135,6 +135,7 @@ public class Yappa {
                 }
                 case "clear": {
                     tasks.clear();
+                    saveTasks();
                     return ui.showTaskCleared();
                 }
                 default:

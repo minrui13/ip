@@ -1,0 +1,30 @@
+.dialog-container {
+  -fx-background-image: url("../images/background.jpg");
+  -fx-background-size: cover;
+  -fx-background-position: center;
+  -fx-background-repeat: no-repeat;
+}
+
+.dialog-label {
+  -fx-padding: 10px;
+  -fx-background-radius: 15px;
+  -fx-border-radius: 15px;
+  -fx-effect: dropshadow(gaussian, rgba(0, 85, 150, 0.4), 5, 0, 0, 0);
+  -fx-font-weight: 500;
+}
+
+.user-dialog {
+  -fx-background-color: rgb(0, 166, 255);
+  -fx-text-fill: seashell;
+  -fx-font-weight: bold;
+}
+
+.yappa-dialog {
+  -fx-background-color: mediumpurple;
+  -fx-text-fill: seashell;
+  -fx-font-weight: bold;
+}
+
+.image-view {
+  -fx-effect: dropshadow(gaussian, rgba(0, 85, 150, 0.4), 5, 0, 0, 0);
+}

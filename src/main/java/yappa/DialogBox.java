@@ -53,7 +53,7 @@ public class DialogBox extends HBox {
         ObservableList<Node> tmp = FXCollections.observableArrayList(getChildren());
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
-        setAlignment(Pos.TOP_LEFT);
+        setAlignment(Pos.BOTTOM_LEFT);
     }
 
     /**
@@ -64,7 +64,9 @@ public class DialogBox extends HBox {
      * @return User-aligned dialog box.
      */
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        DialogBox dialogBox = new DialogBox(text, img);
+        dialogBox.dialog.getStyleClass().add("user-dialog");
+        return dialogBox;
     }
 
     /**
@@ -76,6 +78,7 @@ public class DialogBox extends HBox {
      */
     public static DialogBox getYappaDialog(String text, Image img) {
         var db = new DialogBox(text, img);
+        db.dialog.getStyleClass().add("yappa-dialog");
         db.flip();
         return db;
     }
