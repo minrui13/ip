@@ -24,8 +24,8 @@ public class Main extends Application {
             stage.setMinHeight(600);
             stage.setMinWidth(600);
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
-            AnchorPane ap = fxmlLoader.load();
-            Scene scene = new Scene(ap);
+            AnchorPane mainPane = fxmlLoader.load();
+            Scene scene = new Scene(mainPane);
             stage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setYappa(yappa);
             stage.show();

@@ -29,9 +29,9 @@ public class DialogBox extends HBox {
      * Creates a dialog box with the specified text and speaker image.
      *
      * @param text Text to display.
-     * @param img Speaker image to display.
+     * @param speakerImage Speaker image to display.
      */
-    public DialogBox(String text, Image img) {
+    public DialogBox(String text, Image speakerImage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
             fxmlLoader.setController(this);
@@ -42,7 +42,7 @@ public class DialogBox extends HBox {
         }
 
         dialog.setText(text);
-        displayPicture.setImage(img);
+        displayPicture.setImage(speakerImage);
     }
 
     /**
@@ -50,9 +50,9 @@ public class DialogBox extends HBox {
      * right.
      */
     private void flip() {
-        ObservableList<Node> tmp = FXCollections.observableArrayList(getChildren());
-        Collections.reverse(tmp);
-        getChildren().setAll(tmp);
+        ObservableList<Node> reversedChildren = FXCollections.observableArrayList(getChildren());
+        Collections.reverse(reversedChildren);
+        getChildren().setAll(reversedChildren);
         setAlignment(Pos.BOTTOM_LEFT);
     }
 
@@ -60,11 +60,11 @@ public class DialogBox extends HBox {
      * Creates a dialog box aligned as a user message.
      *
      * @param text Text to display.
-     * @param img Speaker image to display.
+     * @param speakerImage Speaker image to display.
      * @return User-aligned dialog box.
      */
-    public static DialogBox getUserDialog(String text, Image img) {
-        DialogBox dialogBox = new DialogBox(text, img);
+    public static DialogBox getUserDialog(String text, Image speakerImage) {
+        DialogBox dialogBox = new DialogBox(text, speakerImage);
         dialogBox.dialog.getStyleClass().add("user-dialog");
         return dialogBox;
     }
@@ -73,13 +73,13 @@ public class DialogBox extends HBox {
      * Creates a dialog box aligned as a Yappa message.
      *
      * @param text Text to display.
-     * @param img Speaker image to display.
+     * @param speakerImage Speaker image to display.
      * @return Yappa-aligned dialog box.
      */
-    public static DialogBox getYappaDialog(String text, Image img) {
-        var db = new DialogBox(text, img);
-        db.dialog.getStyleClass().add("yappa-dialog");
-        db.flip();
-        return db;
+    public static DialogBox getYappaDialog(String text, Image speakerImage) {
+        DialogBox dialogBox = new DialogBox(text, speakerImage);
+        dialogBox.dialog.getStyleClass().add("yappa-dialog");
+        dialogBox.flip();
+        return dialogBox;
     }
 }

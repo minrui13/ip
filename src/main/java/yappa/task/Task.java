@@ -7,10 +7,10 @@ package yappa.task;
 public abstract class Task {
 
     /** Description shown to the user. */
-    protected String description;
+    private final String description;
 
     /** Whether this task has been completed. */
-    protected boolean isDone;
+    private boolean isDone;
 
     /**
      * Creates a new task with the given description.
@@ -18,15 +18,14 @@ public abstract class Task {
      * @param description Task description.
      */
     public Task(String description) {
-        this.description = description;
-        this.isDone = false;
+        this(description, false);
     }
 
     /**
      * Creates a task with the given description and completion state.
      *
      * @param description Task description.
-     * @param isDone Whether the task is completed.
+     * @param isDone      Whether the task is completed.
      */
     public Task(String description, boolean isDone) {
         this.description = description;
@@ -60,6 +59,10 @@ public abstract class Task {
         return this.isDone ? "X" : " ";
     }
 
+    public boolean isDone() {
+        return isDone;
+    }
+
     /**
      * Formats the task's completion state and description for display.
      *
@@ -76,4 +79,5 @@ public abstract class Task {
      * @return Storage representation of the task.
      */
     public abstract String toFileString();
+
 }

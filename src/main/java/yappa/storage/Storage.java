@@ -28,7 +28,8 @@ public class Storage {
     /**
      * Creates storage rooted at the application's working directory.
      *
-     * @param relativePath Path to the storage file, relative to the working directory.
+     * @param relativePath Path to the storage file, relative to the working
+     *                     directory.
      */
     public Storage(String relativePath) {
         this.filePath = Paths.get(".", relativePath);
@@ -37,13 +38,15 @@ public class Storage {
     /**
      * Loads all valid task records from the storage file.
      *
-     * <p>If the file does not exist, an empty task list is returned. Invalid records
-     * are reported and skipped so that remaining tasks can still be loaded.</p>
+     * <p>
+     * If the file does not exist, an empty task list is returned. Invalid records
+     * are reported and skipped so that remaining tasks can still be loaded.
+     * </p>
      *
      * @return Tasks loaded from storage.
-     * @throws FileNotFoundException If an existing storage file cannot be opened.
+     * @throws YappaException If an existing storage file cannot be opened.
      */
-    public TaskList loadTasks() throws FileNotFoundException {
+    public TaskList loadTasks() throws YappaException {
         List<Task> tasks = new ArrayList<>();
         File file = filePath.toFile();
 
@@ -66,6 +69,8 @@ public class Storage {
                             "Task cannot be loaded: " + e.getMessage());
                 }
             }
+        } catch (FileNotFoundException e) {
+            throw new YappaException("Storage file could not be opened: " + e.getMessage());
         }
 
         return new TaskList(tasks);
@@ -110,7 +115,7 @@ public class Storage {
      * @param tasks Tasks to save in iteration order.
      * @throws IOException If the directory or storage file cannot be written.
      */
-    public void saveTasks(TaskList tasks) throws IOException {
+    public void saveTasks(TaskList tasks) throws YappaException {
         File file = filePath.toFile();
 
         File parent = file.getParentFile();
@@ -123,6 +128,9 @@ public class Storage {
                 fileWriter.write(task.toFileString()
                         + System.lineSeparator());
             }
+        } catch (IOException e) {
+            throw new YappaException("Failed to save tasks to file: " + e.getMessage());
         }
     }
+
 }

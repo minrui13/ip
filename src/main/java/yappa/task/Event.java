@@ -9,18 +9,15 @@ import yappa.util.DateUtil;
  * Represents a task that occurs within a specific time range.
  */
 public class Event extends Task {
-    /** Date and time at which this event starts. */
-    protected LocalDateTime from;
-
-    /** Date and time at which this event ends. */
-    protected LocalDateTime to;
+    private final LocalDateTime from;
+    private final LocalDateTime to;
 
     /**
      * Creates a new event, verifying the end is after its start.
      *
      * @param description Task description.
-     * @param from Event start date and time.
-     * @param to Event end date and time.
+     * @param from        Event start date and time.
+     * @param to          Event end date and time.
      * @throws YappaException If the event does not end after it starts.
      */
     public Event(String description, LocalDateTime from, LocalDateTime to) throws YappaException {
@@ -34,9 +31,9 @@ public class Event extends Task {
      * Creates an event with the given completion state.
      *
      * @param description Task description.
-     * @param isDone Whether the task is completed.
-     * @param from Event start date and time.
-     * @param to Event end date and time.
+     * @param isDone      Whether the task is completed.
+     * @param from        Event start date and time.
+     * @param to          Event end date and time.
      * @throws YappaException If the event does not end after it starts.
      */
     public Event(String description, boolean isDone, LocalDateTime from, LocalDateTime to)
@@ -51,10 +48,13 @@ public class Event extends Task {
      * Ensures that an event has a positive duration.
      *
      * @param from Event start date and time.
-     * @param to Event end date and time.
+     * @param to   Event end date and time.
      * @throws YappaException If {@code to} is not after {@code from}.
      */
     private static void validateDateTimes(LocalDateTime from, LocalDateTime to) throws YappaException {
+        if (from == null || to == null) {
+            throw new YappaException("Event time must not be empty.");
+        }
         if (!to.isAfter(from)) {
             throw new YappaException("Event end time must be after its start time :(.");
         }
@@ -67,8 +67,8 @@ public class Event extends Task {
      */
     @Override
     public String toFileString() {
-        return "E | " + (isDone ? "1" : "0")
-                + " | " + description
+        return "E | " + (isDone() ? "1" : "0")
+                + " | " + getDescription()
                 + " | " + DateUtil.toFileString(from)
                 + " | " + DateUtil.toFileString(to);
     }

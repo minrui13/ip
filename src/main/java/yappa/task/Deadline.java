@@ -9,13 +9,13 @@ import yappa.util.DateUtil;
  */
 public class Deadline extends Task {
     /** Date and time by which this task should be completed. */
-    protected LocalDateTime date;
+    private final LocalDateTime date;
 
     /**
      * Creates a new deadline task.
      *
      * @param description Task description.
-     * @param date Deadline date and time.
+     * @param date        Deadline date and time.
      */
     public Deadline(String description, LocalDateTime date) {
         super(description);
@@ -26,8 +26,8 @@ public class Deadline extends Task {
      * Creates a deadline task with the known completion state.
      *
      * @param description Task description.
-     * @param isDone Whether the task is completed.
-     * @param date Deadline date and time.
+     * @param isDone      Whether the task is completed.
+     * @param date        Deadline date and time.
      */
     public Deadline(String description, boolean isDone, LocalDateTime date) {
         super(description, isDone);
@@ -41,8 +41,8 @@ public class Deadline extends Task {
      */
     @Override
     public String toFileString() {
-        return "D | " + (isDone ? "1" : "0")
-                + " | " + description
+        return "D | " + (isDone() ? "1" : "0")
+                + " | " + getDescription()
                 + " | " + DateUtil.toFileString(date);
     }
 

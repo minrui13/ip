@@ -11,7 +11,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
-/** Controls the main JavaFX window and translates user actions into Yappa commands. */
+/**
+ * Controls the main JavaFX window and translates user actions into Yappa
+ * commands.
+ */
 public class MainWindow extends AnchorPane {
     @FXML
     private ScrollPane scrollPane;
@@ -27,6 +30,9 @@ public class MainWindow extends AnchorPane {
     private final Image userImage = new Image(getClass().getResourceAsStream("/images/user.png"));
     private final Image yappaImage = new Image(getClass().getResourceAsStream("/images/yappa.png"));
 
+    /**
+     * Initializes scrolling behavior after the FXML controls are loaded.
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
@@ -50,19 +56,16 @@ public class MainWindow extends AnchorPane {
         String input = userInput.getText();
         String response = yappa.getResponse(input);
 
-        if (input.isBlank()) {
-            return;
-        }
-
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getYappaDialog(response, yappaImage));
 
         userInput.clear();
 
-        if (input.trim().equalsIgnoreCase("bye")) {
+        if (yappa.isExitRequested()) {
             exitAfterDelay();
         }
+
     }
 
     private void exitAfterDelay() {

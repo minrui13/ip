@@ -18,7 +18,7 @@ public class Todo extends Task {
      * Creates a todo task with the given completion state.
      *
      * @param description Task description.
-     * @param isDone Whether the task is completed.
+     * @param isDone      Whether the task is completed.
      */
     public Todo(String description, boolean isDone) {
         super(description, isDone);
@@ -31,8 +31,8 @@ public class Todo extends Task {
      */
     @Override
     public String toFileString() {
-        return "T | " + (isDone ? "1" : "0")
-                + " | " + description;
+        return "T | " + (isDone() ? "1" : "0")
+                + " | " + getDescription();
     }
 
     /**
