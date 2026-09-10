@@ -17,16 +17,19 @@ public class Ui {
             + "  |_|\\__,_| .__/| .__/ \\__,_|\n"
             + "          |_|   |_|          \n";
 
+    private static String buildMessage(String... messageParts) {
+        return String.join(System.lineSeparator(), messageParts);
+    }
+
     /**
      * Returns Yappa's logo and welcome message.
      *
      * @return Greeting message.
      */
     public String showGreeting() {
-        return LOGO
-                + "\nGood " + getTimeOfDay()
-                + "! I'm Yappa. Ready to yap and get stuff done!\n"
-                + "What are we tackling today? Let's do this!";
+        return buildMessage(LOGO,
+                "Good " + getTimeOfDay() + "! I'm Yappa. Ready to yap and get stuff done!",
+                "What are we tackling today? Let's do this!");
     }
 
     /**
@@ -66,7 +69,7 @@ public class Ui {
      * @return Formatted task message.
      */
     private String showTasks(String message, TaskList tasks) {
-        return message + "\n" + tasks;
+        return buildMessage(message, tasks.toString());
     }
 
     /**
@@ -76,8 +79,9 @@ public class Ui {
      * @return Task marked confirmation.
      */
     public String showTaskMarked(String taskDescription) {
-        return "Ok! I've marked this task as completed:\n"
-                + "\t[X] " + taskDescription;
+        return buildMessage(
+                "Ok! I've marked this task as completed:",
+                "\t[X] " + taskDescription);
     }
 
     /**
@@ -87,8 +91,7 @@ public class Ui {
      * @return Task unmarked confirmation.
      */
     public String showTaskUnmarked(String taskDescription) {
-        return "Ok! I've marked this task as not completed:\n"
-                + "\t[ ] " + taskDescription;
+        return buildMessage("Ok! I've marked this task as not completed:", "\t[ ] " + taskDescription);
     }
 
     /**
@@ -99,11 +102,9 @@ public class Ui {
      * @return Task added confirmation.
      */
     public String showTaskAdded(Task task, int taskCount) {
-        return "Ok! I have added the task:\n"
-                + "\t" + task + "\n"
-                + "Now you have " + taskCount
-                + (taskCount == 1 ? " task " : " tasks ")
-                + "in the list.";
+        return buildMessage("Ok! I have added the task:",
+                "\t" + task,
+                formatTaskCount(taskCount));
     }
 
     /**
@@ -114,11 +115,10 @@ public class Ui {
      * @return Task deleted confirmation.
      */
     public String showTaskDeleted(Task task, int taskCount) {
-        return "Ok! I will remove this task:\n"
-                + "\t" + task + "\n"
-                + "Now you have " + taskCount
-                + (taskCount == 1 ? " task " : " tasks ")
-                + "in the list.";
+        return buildMessage(
+                "Ok! I will remove this task:",
+                "\t" + task,
+                formatTaskCount(taskCount));
     }
 
     /**
@@ -128,6 +128,12 @@ public class Ui {
      */
     public String showTaskCleared() {
         return "All tasks cleared";
+    }
+
+    private static String formatTaskCount(int taskCount) {
+        return "Now you have " + taskCount
+                + (taskCount == 1 ? " task " : " tasks ")
+                + "in the list.";
     }
 
     /**
