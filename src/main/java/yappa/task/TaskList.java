@@ -93,15 +93,11 @@ public class TaskList implements Iterable<Task> {
      * @return a list of tasks with descriptions containing the search query
      */
     public TaskList find(String searchQuery) {
-        TaskList matchedTasks = new TaskList();
 
-        for (Task task : tasks) {
-            if (task.getDescription().contains(searchQuery)) {
-                matchedTasks.add(task);
-            }
-        }
-
-        return matchedTasks;
+        return new TaskList(
+                tasks.stream()
+                        .filter(task -> task.getDescription().contains(searchQuery))
+                        .toList());
     }
 
     /**
