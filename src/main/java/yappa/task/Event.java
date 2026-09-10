@@ -23,6 +23,8 @@ public class Event extends Task {
     public Event(String description, LocalDateTime from, LocalDateTime to) throws YappaException {
         super(description);
         validateDateTimes(from, to);
+        // Validation guarantees that both values are safe to store.
+        assert from != null && to != null && to.isAfter(from);
         this.from = from;
         this.to = to;
     }
@@ -40,6 +42,8 @@ public class Event extends Task {
             throws YappaException {
         super(description, isDone);
         validateDateTimes(from, to);
+        // Validation guarantees that both values are safe to store.
+        assert from != null && to != null && to.isAfter(from);
         this.from = from;
         this.to = to;
     }
