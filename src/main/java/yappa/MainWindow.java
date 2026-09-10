@@ -59,6 +59,9 @@ public class MainWindow extends AnchorPane {
     // Adds the user's message and Yappa's reply, then clears the input field.
     @FXML
     private void handleUserInput() {
+        // Yappa is injected by Main before any user action can be handled.
+        assert yappa != null;
+
         String input = userInput.getText();
 
         if (input.isBlank()) {

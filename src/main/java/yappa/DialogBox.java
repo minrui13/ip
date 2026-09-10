@@ -36,6 +36,9 @@ public class DialogBox extends HBox {
             fxmlLoader.setController(this);
             fxmlLoader.setRoot(this);
             fxmlLoader.load();
+
+            // These controls are required by DialogBox.fxml for every dialog box.
+            assert dialog != null && displayPicture != null;
         } catch (IOException e) {
             e.printStackTrace();
         }
