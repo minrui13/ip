@@ -59,6 +59,11 @@ public abstract class Task {
         return this.isDone ? "X" : " ";
     }
 
+    /**
+     * Returns whether this task has been completed.
+     *
+     * @return True if the task is complete.
+     */
     public boolean isDone() {
         return isDone;
     }

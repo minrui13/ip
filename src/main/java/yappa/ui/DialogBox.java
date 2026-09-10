@@ -1,4 +1,4 @@
-package yappa;
+package yappa.ui;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -15,8 +15,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 /**
- * Represents a dialog box consisting of an image for the speaker's face and a
- * label containing the speaker's text.
+ * Represents a dialog box consisting of an ImageView to represent the speaker's
+ * face
+ * and a label containing text from the speaker.
  */
 public class DialogBox extends HBox {
     @FXML
@@ -36,9 +37,6 @@ public class DialogBox extends HBox {
             fxmlLoader.setController(this);
             fxmlLoader.setRoot(this);
             fxmlLoader.load();
-
-            // These controls are required by DialogBox.fxml for every dialog box.
-            assert dialog != null && displayPicture != null;
         } catch (IOException e) {
             e.printStackTrace();
         }

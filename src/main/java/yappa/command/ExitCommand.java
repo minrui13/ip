@@ -22,6 +22,12 @@ public class ExitCommand extends Command {
         return ui.showGoodbye();
     }
 
+    /** Returns whether this command modifies the task list. */
+    @Override
+    public boolean modifiesTasks() {
+        return false;
+    }
+
     /** Returns whether this command requests application exit. */
     @Override
     public boolean isExit() {
