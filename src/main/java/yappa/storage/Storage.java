@@ -24,6 +24,7 @@ import yappa.util.DateUtil;
  */
 public class Storage {
     private final Path filePath;
+    private static final String FIELD_SEPARATOR_REGEX = " \\| ";
 
     /**
      * Creates storage rooted at the application's working directory.
@@ -81,13 +82,15 @@ public class Storage {
      *
      * @param taskString Storage record to parse.
      * @return Parsed task.
-     * @throws YappaException If a stored date-time or event range is invalid.
+     * @throws YappaException If the storage record is malformed or contains invalid task data.
      */
-    private Task parseTask(String taskString) throws YappaException {
-        String[] taskParts = taskString.split(" \\| ");
+    private static Task parseTask(String taskString) throws YappaException {
+        String[] taskParts = taskString.split(FIELD_SEPARATOR_REGEX);
+
+        validateTaskParts(taskParts);
 
         String taskType = taskParts[0];
-        boolean isDone = taskParts[1].equals("1");
+        boolean isDone = parseCompletionStatus(taskParts[1]);
         String description = taskParts[2];
 
         switch (taskType) {
@@ -104,23 +107,61 @@ public class Storage {
                 return new Event(description, isDone, from, to);
 
             default:
-                throw new IllegalArgumentException(
+                throw new YappaException(
                         "Unknown task type: " + taskType);
         }
+    }
+
+    /**
+     * Validates the number of fields in a storage record before field access.
+     *
+     * @param taskParts Fields extracted from a storage record.
+     * @throws YappaException If the record has an invalid structure.
+     */
+    private static void validateTaskParts(String[] taskParts) throws YappaException {
+        if (taskParts.length < 3) {
+            throw new YappaException("Storage record has too few fields.");
+        }
+
+        int expectedFieldCount = switch (taskParts[0]) {
+            case "T" -> 3;
+            case "D" -> 4;
+            case "E" -> 5;
+            default -> throw new YappaException("Unknown task type: " + taskParts[0]);
+        };
+
+        if (taskParts.length != expectedFieldCount) {
+            throw new YappaException("Storage record has an invalid number of fields.");
+        }
+    }
+
+    /**
+     * Converts the persisted completion marker into a boolean value.
+     *
+     * @param completionStatus Persisted completion marker.
+     * @return True when the task is complete.
+     * @throws YappaException If the marker is neither {@code 0} nor {@code 1}.
+     */
+    private static boolean parseCompletionStatus(String completionStatus) throws YappaException {
+        if (!completionStatus.equals("0") && !completionStatus.equals("1")) {
+            throw new YappaException("Storage record has an invalid completion status.");
+        }
+        return completionStatus.equals("1");
     }
 
     /**
      * Saves all tasks in the task list to the storage file.
      *
      * @param tasks Tasks to save in iteration order.
-     * @throws IOException If the directory or storage file cannot be written.
+     * @throws YappaException If the directory or storage file cannot be written.
      */
     public void saveTasks(TaskList tasks) throws YappaException {
         File file = filePath.toFile();
 
         File parent = file.getParentFile();
-        if (parent != null) {
-            parent.mkdirs();
+        if (parent != null && !parent.exists() && !parent.mkdirs()) {
+            throw new YappaException(
+                    "Failed to create storage directory.");
         }
 
         try (FileWriter fileWriter = new FileWriter(file)) {
