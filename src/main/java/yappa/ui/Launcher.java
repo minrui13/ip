@@ -1,4 +1,4 @@
-package yappa;
+package yappa.ui;
 
 import javafx.application.Application;
 
