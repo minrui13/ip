@@ -1,6 +1,7 @@
 package yappa.task;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -127,6 +128,18 @@ public class TaskList implements Iterable<Task> {
     @Override
     public Iterator<Task> iterator() {
         return tasks.iterator();
+    }
+
+    /**
+     * Sorts tasks alphabetically by description, ignoring case.
+     */
+    /**
+     * Sorts tasks alphabetically by description, ignoring case.
+     */
+    public void sort() {
+        tasks.sort(Comparator.comparing(
+                Task::getDescription,
+                String.CASE_INSENSITIVE_ORDER));
     }
 
     /**

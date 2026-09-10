@@ -12,6 +12,7 @@ import yappa.command.ExitCommand;
 import yappa.command.FindCommand;
 import yappa.command.ListCommand;
 import yappa.command.MarkCommand;
+import yappa.command.SortCommand;
 import yappa.command.UnmarkCommand;
 import yappa.exception.YappaException;
 import yappa.task.Deadline;
@@ -41,6 +42,10 @@ public class Parser {
         COMMAND_PARSERS.put("todo", Parser::parseTodo);
         COMMAND_PARSERS.put("deadline", Parser::parseDeadline);
         COMMAND_PARSERS.put("event", Parser::parseEvent);
+        COMMAND_PARSERS.put("sort", arguments -> {
+            requireNoArguments(arguments);
+            return new SortCommand();
+        });
     }
 
     /**
@@ -196,5 +201,13 @@ public class Parser {
         }
 
         return commandParser.parse(arguments);
+    }
+
+    private static void requireNoArguments(String arguments)
+            throws YappaException {
+        if (!arguments.isBlank()) {
+            throw new YappaException(
+                    "This command does not accept arguments.");
+        }
     }
 }

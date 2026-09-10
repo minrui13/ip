@@ -130,6 +130,15 @@ public class Ui {
         return "All tasks cleared";
     }
 
+    /**
+     * Returns a confirmation that tasks have been sorted.
+     *
+     * @return Task sorting confirmation.
+     */
+    public String showTasksSorted() {
+        return "Tasks have been sorted alphabetically!";
+    }
+
     private static String formatTaskCount(int taskCount) {
         return "Now you have " + taskCount
                 + (taskCount == 1 ? " task " : " tasks ")
