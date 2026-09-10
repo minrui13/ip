@@ -18,7 +18,6 @@ public class DeleteCommand extends Command {
         this.taskIndex = taskIndex;
     }
 
-    @Override
     /**
      * Deletes the task and formats the result.
      *
@@ -27,14 +26,15 @@ public class DeleteCommand extends Command {
      * @return Formatted deletion response.
      * @throws YappaException If the task index is invalid.
      */
+    @Override
     public String execute(TaskList tasks, Ui ui) throws YappaException {
 
         Task task = tasks.remove(taskIndex);
         return ui.showTaskDeleted(task, tasks.size());
     }
 
-    @Override
     /** Returns whether this command changes the task list. */
+    @Override
     public boolean modifiesTasks() {
         return true;
     }

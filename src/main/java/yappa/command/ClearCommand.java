@@ -24,8 +24,8 @@ public class ClearCommand extends Command {
 
     }
 
-    @Override
     /** Returns whether this command changes the task list. */
+    @Override
     public boolean modifiesTasks() {
         return true;
     }

@@ -10,7 +10,7 @@ public class ExitCommand extends Command {
      * Returns the goodbye response.
      *
      * @param tasks Task list, which is unchanged.
-     * @param ui User interface used to format the response.
+     * @param ui    User interface used to format the response.
      * @return Formatted goodbye response.
      * @throws YappaException If the response cannot be generated.
      */
@@ -22,8 +22,8 @@ public class ExitCommand extends Command {
         return ui.showGoodbye();
     }
 
-    @Override
     /** Returns whether this command requests application exit. */
+    @Override
     public boolean isExit() {
         return true;
     }

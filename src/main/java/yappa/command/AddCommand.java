@@ -18,7 +18,6 @@ public class AddCommand extends Command {
         this.task = task;
     }
 
-    @Override
     /**
      * Adds the task and formats the result.
      *
@@ -27,6 +26,7 @@ public class AddCommand extends Command {
      * @return Formatted addition response.
      * @throws YappaException If the task cannot be added.
      */
+    @Override
     public String execute(TaskList tasks, Ui ui) throws YappaException {
 
         tasks.add(task);
@@ -34,12 +34,12 @@ public class AddCommand extends Command {
         return ui.showTaskAdded(task, tasks.size());
     }
 
-    @Override
     /**
      * Returns whether this command changes the task list.
      *
      * @return True because the command adds a task.
      */
+    @Override
     public boolean modifiesTasks() {
         return true;
     }

@@ -18,7 +18,6 @@ public class UnmarkCommand extends Command {
         this.taskIndex = taskIndex;
     }
 
-    @Override
     /**
      * Marks the task as incomplete and formats the result.
      *
@@ -27,6 +26,7 @@ public class UnmarkCommand extends Command {
      * @return Formatted unmarking response.
      * @throws YappaException If the task index is invalid.
      */
+    @Override
     public String execute(TaskList tasks, Ui ui) throws YappaException {
 
         Task task = tasks.unmark(taskIndex);
@@ -34,8 +34,8 @@ public class UnmarkCommand extends Command {
         return ui.showTaskUnmarked(task.getDescription());
     }
 
-    @Override
     /** Returns whether this command changes the task list. */
+    @Override
     public boolean modifiesTasks() {
         return true;
     }

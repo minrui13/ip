@@ -23,8 +23,9 @@ public class FindCommand extends Command {
      * @param tasks Task list to search.
      * @param ui User interface used to format the response.
      * @return Formatted search response.
-     * @throws YappaException If searching fails.
+    * @throws YappaException If searching fails.
      */
+    @Override
     public String execute(TaskList tasks, Ui ui) throws YappaException {
         TaskList matchedTasks = tasks.find(searchQuery);
         return ui.showMatchingTasks(matchedTasks);

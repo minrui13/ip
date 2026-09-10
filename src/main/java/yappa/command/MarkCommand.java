@@ -20,7 +20,6 @@ public class MarkCommand extends Command {
         this.taskIndex = taskIndex;
     }
 
-    @Override
     /**
      * Marks the task and formats the result.
      *
@@ -29,6 +28,7 @@ public class MarkCommand extends Command {
      * @return Formatted marking response.
      * @throws YappaException If the task index is invalid.
      */
+    @Override
     public String execute(TaskList tasks, Ui ui) throws YappaException {
 
         Task task = tasks.mark(taskIndex);
@@ -36,8 +36,8 @@ public class MarkCommand extends Command {
         return ui.showTaskMarked(task.getDescription());
     }
 
-    @Override
     /** Returns whether this command changes the task list. */
+    @Override
     public boolean modifiesTasks() {
         return true;
     }
