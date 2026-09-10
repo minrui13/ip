@@ -61,7 +61,7 @@ public class Event extends Task {
     }
 
     /**
-     * Formats this event file storage.
+     * Formats this event for file storage.
      *
      * @return Storage representation of this event.
      */

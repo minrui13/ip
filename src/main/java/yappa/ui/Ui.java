@@ -20,7 +20,7 @@ public class Ui {
     /**
      * Returns Yappa's logo and welcome message.
      *
-     * @return greeting message
+     * @return Greeting message.
      */
     public String showGreeting() {
         return LOGO
@@ -32,7 +32,7 @@ public class Ui {
     /**
      * Returns the goodbye message.
      *
-     * @return goodbye message
+     * @return Goodbye message.
      */
     public String showGoodbye() {
         return "Catch you later :)!";
@@ -41,8 +41,8 @@ public class Ui {
     /**
      * Returns all current tasks with a standard header message.
      *
-     * @param tasks task list to display
-     * @return formatted task list message
+     * @param tasks Task list to display.
+     * @return Formatted task list message.
      */
     public String showTaskList(TaskList tasks) {
         return showTasks("Here are your current tasks:", tasks);
@@ -51,8 +51,8 @@ public class Ui {
     /**
      * Returns tasks that match a search query.
      *
-     * @param tasks filtered task list containing matching tasks
-     * @return formatted matching tasks message
+     * @param tasks Filtered task list containing matching tasks.
+     * @return Formatted matching tasks message.
      */
     public String showMatchingTasks(TaskList tasks) {
         return showTasks("Here are the matching tasks:", tasks);
@@ -61,9 +61,9 @@ public class Ui {
     /**
      * Returns tasks together with the specified header message.
      *
-     * @param message header message
-     * @param tasks   tasks to display
-     * @return formatted task message
+     * @param message Header message.
+     * @param tasks   Tasks to display.
+     * @return Formatted task message.
      */
     private String showTasks(String message, TaskList tasks) {
         return message + "\n" + tasks;
@@ -72,8 +72,8 @@ public class Ui {
     /**
      * Returns a confirmation that a task has been marked as completed.
      *
-     * @param taskDescription description of the marked task
-     * @return task marked confirmation
+     * @param taskDescription Description of the marked task.
+     * @return Task marked confirmation.
      */
     public String showTaskMarked(String taskDescription) {
         return "Ok! I've marked this task as completed:\n"
@@ -83,8 +83,8 @@ public class Ui {
     /**
      * Returns a confirmation that a task has been marked as not completed.
      *
-     * @param taskDescription description of the unmarked task
-     * @return task unmarked confirmation
+     * @param taskDescription Description of the unmarked task.
+     * @return Task unmarked confirmation.
      */
     public String showTaskUnmarked(String taskDescription) {
         return "Ok! I've marked this task as not completed:\n"
@@ -94,9 +94,9 @@ public class Ui {
     /**
      * Returns a confirmation that a task has been added.
      *
-     * @param task      added task
-     * @param taskCount number of tasks after the addition
-     * @return task added confirmation
+     * @param task      Added task.
+     * @param taskCount Number of tasks after the addition.
+     * @return Task added confirmation.
      */
     public String showTaskAdded(Task task, int taskCount) {
         return "Ok! I have added the task:\n"
@@ -109,9 +109,9 @@ public class Ui {
     /**
      * Returns a confirmation that a task has been deleted.
      *
-     * @param task      deleted task
-     * @param taskCount number of tasks after the deletion
-     * @return task deleted confirmation
+     * @param task      Deleted task.
+     * @param taskCount Number of tasks after the deletion.
+     * @return Task deleted confirmation.
      */
     public String showTaskDeleted(Task task, int taskCount) {
         return "Ok! I will remove this task:\n"
@@ -133,7 +133,7 @@ public class Ui {
     /**
      * Determines the greeting period from the current local time.
      *
-     * @return {@code Morning}, {@code Afternoon}, or {@code Evening}
+     * @return {@code Morning}, {@code Afternoon}, or {@code Evening}.
      */
     private String getTimeOfDay() {
         LocalTime currentTime = LocalTime.now();

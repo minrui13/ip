@@ -72,7 +72,7 @@ public class Parser {
      * Parses a deadline command.
      *
      * @param argument Deadline command arguments.
-     * @return Description and deadline date/time.
+     * @return Command that adds the deadline task.
      * @throws YappaException If the command is invalid.
      */
     private static Command parseDeadline(String argument)
@@ -103,7 +103,7 @@ public class Parser {
      * Parses an event command.
      *
      * @param argument Event command arguments.
-     * @return Description, start date/time, and end date/time.
+     * @return Command that adds the event task.
      * @throws YappaException If the command is invalid.
      */
     private static Command parseEvent(String argument)
@@ -140,10 +140,10 @@ public class Parser {
     }
 
     /**
-     * Parses an event command.
+     * Parses a todo command.
      *
      * @param argument Todo command arguments.
-     * @return Description, start date/time, and end date/time.
+     * @return Command that adds the todo task.
      * @throws YappaException If the command is invalid.
      */
     private static Command parseTodo(String argument)
@@ -173,6 +173,13 @@ public class Parser {
         return arguments.trim();
     }
 
+    /**
+     * Parses user input into an executable command.
+     *
+     * @param input User input to parse.
+     * @return Command represented by the input.
+     * @throws YappaException If the input is blank, unknown, or malformed.
+     */
     public static Command parse(String input) throws YappaException {
         if (input == null || input.isBlank()) {
             throw new YappaException("Please enter a command!");
