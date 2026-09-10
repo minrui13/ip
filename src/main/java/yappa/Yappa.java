@@ -1,7 +1,9 @@
 package yappa;
 
+import java.util.List;
 import yappa.exception.YappaException;
 import yappa.parser.Parser;
+import yappa.storage.LoadResult;
 import yappa.storage.Storage;
 import yappa.task.TaskList;
 import yappa.ui.Ui;
@@ -17,6 +19,7 @@ public class Yappa {
     private TaskList tasks = new TaskList();
     private final Ui ui = new Ui();
     private boolean isExitRequested;
+    private List<String> loadWarnings = List.of();
 
     /**
      * Creates Yappa and loads previously saved tasks.
@@ -39,10 +42,22 @@ public class Yappa {
      */
     private void loadTasks() {
         try {
-            tasks = storage.loadTasks();
+            LoadResult result = storage.loadTasks();
+            tasks = result.tasks();
+            loadWarnings = result.warnings();
         } catch (YappaException e) {
             tasks = new TaskList();
+            loadWarnings = List.of(e.getMessage());
         }
+    }
+
+    /**
+     * Returns warnings produced while loading saved tasks.
+     *
+     * @return Warnings from the most recent load operation.
+     */
+    public List<String> getLoadWarnings() {
+        return loadWarnings;
     }
 
     /**
@@ -72,7 +87,8 @@ public class Yappa {
     }
 
     /**
-     * Returns whether the most recently executed command requested application exit.
+     * Returns whether the most recently executed command requested application
+     * exit.
      *
      * @return True when the application should exit.
      */

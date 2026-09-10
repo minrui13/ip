@@ -23,8 +23,8 @@ import yappa.util.DateUtil;
  * Loads and saves Yappa tasks in a line-based text file.
  */
 public class Storage {
-    private final Path filePath;
     private static final String FIELD_SEPARATOR_REGEX = " \\| ";
+    private final Path filePath;
 
     /**
      * Creates storage rooted at the application's working directory.
@@ -44,15 +44,17 @@ public class Storage {
      * are reported and skipped so that remaining tasks can still be loaded.
      * </p>
      *
-     * @return Tasks loaded from storage.
+     * @return Loaded tasks and warnings produced for invalid records.
      * @throws YappaException If an existing storage file cannot be opened.
      */
-    public TaskList loadTasks() throws YappaException {
+    public LoadResult loadTasks() throws YappaException {
         List<Task> tasks = new ArrayList<>();
+        List<String> warnings = new ArrayList<>();
+
         File file = filePath.toFile();
 
         if (!file.exists()) {
-            return new TaskList(tasks);
+            return new LoadResult(new TaskList(tasks), warnings);
         }
 
         try (Scanner scanner = new Scanner(file)) {
@@ -66,15 +68,16 @@ public class Storage {
                 try {
                     tasks.add(parseTask(taskString));
                 } catch (YappaException e) {
-                    System.out.println(
+                    warnings.add(
                             "Task cannot be loaded: " + e.getMessage());
                 }
             }
         } catch (FileNotFoundException e) {
-            throw new YappaException("Storage file could not be opened: " + e.getMessage());
+            throw new YappaException(
+                    "Storage file could not be opened: " + e.getMessage());
         }
 
-        return new TaskList(tasks);
+        return new LoadResult(new TaskList(tasks), warnings);
     }
 
     /**
@@ -82,10 +85,13 @@ public class Storage {
      *
      * @param taskString Storage record to parse.
      * @return Parsed task.
-     * @throws YappaException If the storage record is malformed or contains invalid task data.
+     * @throws YappaException If the storage record is malformed or contains
+     *                        invalid task data.
      */
-    private static Task parseTask(String taskString) throws YappaException {
-        String[] taskParts = taskString.split(FIELD_SEPARATOR_REGEX);
+    private static Task parseTask(String taskString)
+            throws YappaException {
+
+        String[] taskParts = taskString.split(FIELD_SEPARATOR_REGEX, -1);
 
         validateTaskParts(taskParts);
 
@@ -153,13 +159,15 @@ public class Storage {
      * Saves all tasks in the task list to the storage file.
      *
      * @param tasks Tasks to save in iteration order.
-     * @throws YappaException If the directory or storage file cannot be written.
+     * @throws YappaException If the storage directory or file cannot be written.
      */
     public void saveTasks(TaskList tasks) throws YappaException {
         File file = filePath.toFile();
 
         File parent = file.getParentFile();
-        if (parent != null && !parent.exists() && !parent.mkdirs()) {
+        if (parent != null
+                && !parent.exists()
+                && !parent.mkdirs()) {
             throw new YappaException(
                     "Failed to create storage directory.");
         }

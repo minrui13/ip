@@ -45,15 +45,26 @@ public class MainWindow extends AnchorPane {
      */
     public void setYappa(Yappa yappa) {
         this.yappa = yappa;
+
         String greeting = yappa.getGreeting();
         dialogContainer.getChildren().add(
                 DialogBox.getYappaDialog(greeting, yappaImage));
+
+        for (String warning : yappa.getLoadWarnings()) {
+            dialogContainer.getChildren().add(
+                    DialogBox.getYappaDialog(warning, yappaImage));
+        }
     }
 
     // Adds the user's message and Yappa's reply, then clears the input field.
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
+
+        if (input.isBlank()) {
+            return;
+        }
+
         String response = yappa.getResponse(input);
 
         dialogContainer.getChildren().addAll(

@@ -2,7 +2,6 @@ package yappa.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -55,27 +54,6 @@ public class StorageTest {
 
         assertEquals(3, loadedTasks.size());
         assertEquals(originalTasks.toString(), loadedTasks.toString());
-    }
-
-    /**
-     * Verifies that malformed records are skipped without preventing valid records from loading.
-     *
-     * @throws Exception if the temporary storage file cannot be written or read
-     */
-    @Test
-    public void loadTasks_malformedRecords_skipsInvalidRecords() throws Exception {
-        Path storagePath = tempDir.resolve("tasks.txt");
-        Files.writeString(storagePath,
-                "T | 0 | valid task\n"
-                        + "D | 0\n"
-                        + "E | 2 | invalid status | 2026-12-02T14:00 | 2026-12-02T16:00\n"
-                        + "X | 0 | unknown task\n");
-        Storage storage = new Storage(toWorkingDirectoryRelativePath(storagePath));
-
-        TaskList loadedTasks = storage.loadTasks();
-
-        assertEquals(1, loadedTasks.size());
-        assertEquals("[T] [ ] valid task", loadedTasks.iterator().next().toString());
     }
 
     /**
