@@ -12,8 +12,8 @@ public abstract class Command {
     /**
      * Executes the command.
      *
-     * @param tasks   Task list to operate on.
-     * @param ui      User interface used to format responses.
+     * @param tasks Task list to operate on.
+     * @param ui    User interface used to format responses.
      * @return Response produced by the command.
      * @throws YappaException If the command cannot be executed.
      */
@@ -22,13 +22,11 @@ public abstract class Command {
             throws YappaException;
 
     /**
-     * Returns whether the command changes the task list.
+     * Returns whether this command modifies the task list.
      *
-     * @return False unless a command overrides this method.
+     * @return True if the command modifies the task list.
      */
-    public boolean modifiesTasks() {
-        return false;
-    }
+    public abstract boolean modifiesTasks();
 
     /**
      * Returns whether the command requests application exit.

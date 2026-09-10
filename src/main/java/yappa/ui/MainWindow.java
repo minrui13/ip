@@ -1,4 +1,4 @@
-package yappa;
+package yappa.ui;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import yappa.Yappa;
 
 /**
  * Controls the main JavaFX window and translates user actions into Yappa
@@ -45,29 +46,15 @@ public class MainWindow extends AnchorPane {
      */
     public void setYappa(Yappa yappa) {
         this.yappa = yappa;
-
         String greeting = yappa.getGreeting();
         dialogContainer.getChildren().add(
                 DialogBox.getYappaDialog(greeting, yappaImage));
-
-        for (String warning : yappa.getLoadWarnings()) {
-            dialogContainer.getChildren().add(
-                    DialogBox.getYappaDialog(warning, yappaImage));
-        }
     }
 
     // Adds the user's message and Yappa's reply, then clears the input field.
     @FXML
     private void handleUserInput() {
-        // Yappa is injected by Main before any user action can be handled.
-        assert yappa != null;
-
         String input = userInput.getText();
-
-        if (input.isBlank()) {
-            return;
-        }
-
         String response = yappa.getResponse(input);
 
         dialogContainer.getChildren().addAll(

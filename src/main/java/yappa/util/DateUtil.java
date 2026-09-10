@@ -17,6 +17,9 @@ public class DateUtil {
     private static final DateTimeFormatter DATETIME_STORAGE_FORMAT = DateTimeFormatter
             .ofPattern("yyyy-MM-dd'T'HH:mm");
 
+    private DateUtil() {
+    }
+
     /**
      * Parses a date-time entered by a user in {@code dd/MM/yyyy HHmm} format.
      *
