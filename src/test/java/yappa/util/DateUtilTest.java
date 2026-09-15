@@ -62,6 +62,6 @@ public class DateUtilTest {
      */
     @Test
     public void toDisplayString_dateTime_returnsReadableFormat() {
-        assertEquals("Dec 02 2026, 6:05 pm", DateUtil.toDisplayString(SAMPLE_DATE_TIME));
+        assertEquals("Dec 02 2026, 6:05 PM", DateUtil.toDisplayString(SAMPLE_DATE_TIME));
     }
 }
