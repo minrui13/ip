@@ -27,7 +27,7 @@ public class EventTest {
         Event event = new Event("project meeting", START, END);
 
         assertEquals(
-                "[E] [ ] project meeting (from: Dec 02 2026, 2:00 pm to: Dec 02 2026, 4:00 pm)",
+                "[E] [ ] project meeting (from: Dec 02 2026, 2:00 PM to: Dec 02 2026, 4:00 PM)",
                 event.toString());
     }
 
