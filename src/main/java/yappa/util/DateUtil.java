@@ -1,5 +1,6 @@
 package yappa.util;
 
+import java.rmi.server.LoaderHandler;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -20,6 +21,15 @@ public class DateUtil {
     private DateUtil() {
     }
 
+    private static LocalDateTime parse(String input, DateTimeFormatter formatter, String errorMessage)
+            throws YappaException {
+        try {
+            return LocalDateTime.parse(input.trim(), formatter);
+        } catch (DateTimeParseException e) {
+            throw new YappaException(errorMessage, e);
+        }
+    }
+
     /**
      * Parses a date-time entered by a user in {@code dd/MM/yyyy HHmm} format.
      *
@@ -28,14 +38,8 @@ public class DateUtil {
      * @throws YappaException If the input does not follow the required format.
      */
     public static LocalDateTime parseDateTime(String input) throws YappaException {
-        try {
-            return LocalDateTime.parse(input.trim(), DATETIME_INPUT_FORMATTER);
-        } catch (DateTimeParseException e) {
-            throw new YappaException(
-                    "Oh no, invalid datetime!. Please use the format dd/MM/yyyy HHmm, "
-                            + "e.g. 02/12/2019 1800",
-                    e);
-        }
+        return parse(input, DATETIME_INPUT_FORMATTER,
+                "Oh no, invalid datetime! Please use the format dd/MM/yyyy HHmm, e.g. 02/12/2019 1800");
     }
 
     /**
@@ -46,11 +50,7 @@ public class DateUtil {
      * @throws YappaException If the stored value is invalid.
      */
     public static LocalDateTime parseStorageDateTime(String input) throws YappaException {
-        try {
-            return LocalDateTime.parse(input.trim(), DATETIME_STORAGE_FORMAT);
-        } catch (DateTimeParseException e) {
-            throw new YappaException("Oh no, corrupted date/time in storage file!:" + input, e);
-        }
+        return parse(input, DATETIME_STORAGE_FORMAT, "Oh no, corrupted date/time in storage file!:" + input);
     }
 
     /**
