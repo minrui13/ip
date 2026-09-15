@@ -94,7 +94,6 @@ public class TaskList implements Iterable<Task> {
      * @return A list of tasks with descriptions containing the search query.
      */
     public TaskList find(String searchQuery) {
-
         return new TaskList(
                 tasks.stream()
                         .filter(task -> task.getDescription().contains(searchQuery))
@@ -130,9 +129,6 @@ public class TaskList implements Iterable<Task> {
         return tasks.iterator();
     }
 
-    /**
-     * Sorts tasks alphabetically by description, ignoring case.
-     */
     /**
      * Sorts tasks alphabetically by description, ignoring case.
      */

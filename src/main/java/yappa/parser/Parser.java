@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-import yappa.command.Command;
 import yappa.command.AddCommand;
 import yappa.command.ClearCommand;
+import yappa.command.Command;
 import yappa.command.DeleteCommand;
 import yappa.command.ExitCommand;
 import yappa.command.FindCommand;
@@ -17,18 +17,18 @@ import yappa.command.UnmarkCommand;
 import yappa.exception.YappaException;
 import yappa.task.Deadline;
 import yappa.task.Event;
-import yappa.task.Todo;
 import yappa.task.Task;
+import yappa.task.Todo;
 import yappa.util.DateUtil;
 
 /**
  * Extracts commands and task details from raw user input.
  */
 public class Parser {
+    private static final Map<String, CommandParser> COMMAND_PARSERS = new HashMap<>();
+
     private Parser() {
     }
-
-    private static final Map<String, CommandParser> COMMAND_PARSERS = new HashMap<>();
 
     static {
         COMMAND_PARSERS.put("list", arguments -> new ListCommand());

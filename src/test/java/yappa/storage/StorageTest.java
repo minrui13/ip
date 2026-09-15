@@ -25,19 +25,19 @@ public class StorageTest {
     /**
      * Verifies that loading a missing file produces an empty task list.
      *
-     * @throws Exception if storage access unexpectedly fails
+     * @throws Exception If storage access unexpectedly fails.
      */
     @Test
     public void loadTasks_missingFile_returnsEmptyTaskList() throws Exception {
         Storage storage = new Storage(toWorkingDirectoryRelativePath(tempDir.resolve("missing.txt")));
 
-        assertEquals(0, storage.loadTasks().size());
+        assertEquals(0, storage.loadTasks().tasks().size());
     }
 
     /**
      * Verifies that saving and loading preserve every supported task type.
      *
-     * @throws Exception if storage access or task construction unexpectedly fails
+     * @throws Exception If storage access or task construction unexpectedly fails.
      */
     @Test
     public void saveAndLoadTasks_allTaskTypes_preservesTaskData() throws Exception {
@@ -50,7 +50,7 @@ public class StorageTest {
         Storage storage = new Storage(toWorkingDirectoryRelativePath(tempDir.resolve("nested/tasks.txt")));
 
         storage.saveTasks(originalTasks);
-        TaskList loadedTasks = storage.loadTasks();
+        TaskList loadedTasks = storage.loadTasks().tasks();
 
         assertEquals(3, loadedTasks.size());
         assertEquals(originalTasks.toString(), loadedTasks.toString());
@@ -59,8 +59,8 @@ public class StorageTest {
     /**
      * Converts a temporary absolute path to the relative path required by {@link Storage}.
      *
-     * @param path absolute temporary path
-     * @return path relative to the application's current working directory
+     * @param path Absolute temporary path.
+     * @return Path relative to the application's current working directory.
      */
     private String toWorkingDirectoryRelativePath(Path path) {
         Path workingDirectory = Path.of("").toAbsolutePath();

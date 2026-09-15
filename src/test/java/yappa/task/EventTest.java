@@ -20,7 +20,7 @@ public class EventTest {
     /**
      * Verifies that a valid event is created and displayed correctly.
      *
-     * @throws YappaException if event validation unexpectedly fails
+     * @throws YappaException If event validation unexpectedly fails.
      */
     @Test
     public void constructor_endAfterStart_createsEvent() throws YappaException {
@@ -45,7 +45,7 @@ public class EventTest {
     /**
      * Verifies serialization of a completed event.
      *
-     * @throws YappaException if event validation unexpectedly fails
+     * @throws YappaException If event validation unexpectedly fails.
      */
     @Test
     public void toFileString_completedEvent_returnsStorageRecord() throws YappaException {

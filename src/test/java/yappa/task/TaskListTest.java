@@ -34,7 +34,7 @@ public class TaskListTest {
     /**
      * Verifies that adding and removing tasks updates list contents correctly.
      *
-     * @throws YappaException if a valid task index is unexpectedly rejected
+     * @throws YappaException If a valid task index is unexpectedly rejected.
      */
     @Test
     public void addAndRemove_validTasks_updatesListAndReturnsRemovedTask() throws YappaException {
@@ -54,7 +54,7 @@ public class TaskListTest {
     /**
      * Verifies that marking and unmarking update a task's completion state.
      *
-     * @throws YappaException if a valid task index is unexpectedly rejected
+     * @throws YappaException If a valid task index is unexpectedly rejected.
      */
     @Test
     public void markAndUnmark_validIndex_updatesCompletionState() throws YappaException {

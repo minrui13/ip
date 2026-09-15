@@ -19,7 +19,7 @@ public class DateUtilTest {
     /**
      * Verifies that valid user input is trimmed and parsed.
      *
-     * @throws YappaException if parsing unexpectedly fails
+     * @throws YappaException If parsing unexpectedly fails.
      */
     @Test
     public void parseDateTime_validInputWithWhitespace_returnsDateTime() throws YappaException {
@@ -38,7 +38,7 @@ public class DateUtilTest {
     /**
      * Verifies that storage formatting and parsing preserve a date-time.
      *
-     * @throws YappaException if parsing unexpectedly fails
+     * @throws YappaException If parsing unexpectedly fails.
      */
     @Test
     public void storageFormat_roundTrip_preservesDateTime() throws YappaException {

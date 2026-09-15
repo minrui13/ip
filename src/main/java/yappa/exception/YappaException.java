@@ -14,6 +14,12 @@ public class YappaException extends Exception {
         super(message);
     }
 
+    /**
+     * Creates an exception with an explanation and underlying cause.
+     *
+     * @param message Explanation of the error.
+     * @param cause Underlying cause of the error.
+     */
     public YappaException(String message, Throwable cause) {
         super(message, cause);
     }

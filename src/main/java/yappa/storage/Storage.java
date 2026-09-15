@@ -16,6 +16,7 @@ import yappa.task.Deadline;
 import yappa.task.Event;
 import yappa.task.Task;
 import yappa.task.TaskList;
+import yappa.task.TaskType;
 import yappa.task.Todo;
 import yappa.util.DateUtil;
 
@@ -95,7 +96,6 @@ public class Storage {
 
         validateTaskParts(taskParts);
 
-        String taskType = taskParts[0];
         boolean isDone = parseCompletionStatus(taskParts[1]);
         String description = taskParts[2];
 
@@ -111,6 +111,8 @@ public class Storage {
                 LocalDateTime from = DateUtil.parseStorageDateTime(taskParts[3]);
                 LocalDateTime to = DateUtil.parseStorageDateTime(taskParts[4]);
                 return new Event(description, isDone, from, to);
+            default:
+                throw new YappaException("Unknown task type: " + taskParts[0]);
         }
 
     }
