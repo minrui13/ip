@@ -3,6 +3,7 @@ package yappa.util;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Locale;
 
 import yappa.exception.YappaException;
 
@@ -13,7 +14,7 @@ public class DateUtil {
     private static final DateTimeFormatter DATETIME_INPUT_FORMATTER = DateTimeFormatter
             .ofPattern("dd/MM/yyyy HHmm");
     private static final DateTimeFormatter DATETIME_OUTPUT_FORMATTER = DateTimeFormatter
-            .ofPattern("MMM dd yyyy, h:mm a");
+            .ofPattern("MMM dd yyyy, h:mm a", Locale.ENGLISH);
     private static final DateTimeFormatter DATETIME_STORAGE_FORMAT = DateTimeFormatter
             .ofPattern("yyyy-MM-dd'T'HH:mm");
 

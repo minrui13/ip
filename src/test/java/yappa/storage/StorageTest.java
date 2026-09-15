@@ -29,7 +29,7 @@ public class StorageTest {
      */
     @Test
     public void loadTasks_missingFile_returnsEmptyTaskList() throws Exception {
-        Storage storage = new Storage(toWorkingDirectoryRelativePath(tempDir.resolve("missing.txt")));
+        Storage storage = new Storage(tempDir.resolve("missing.txt"));
 
         assertEquals(0, storage.loadTasks().tasks().size());
     }
@@ -47,23 +47,12 @@ public class StorageTest {
                 new Todo("read book", true),
                 new Deadline("submit report", false, end),
                 new Event("project meeting", true, start, end)));
-        Storage storage = new Storage(toWorkingDirectoryRelativePath(tempDir.resolve("nested/tasks.txt")));
+        Storage storage = new Storage(tempDir.resolve("nested/tasks.txt"));
 
         storage.saveTasks(originalTasks);
         TaskList loadedTasks = storage.loadTasks().tasks();
 
         assertEquals(3, loadedTasks.size());
         assertEquals(originalTasks.toString(), loadedTasks.toString());
-    }
-
-    /**
-     * Converts a temporary absolute path to the relative path required by {@link Storage}.
-     *
-     * @param path Absolute temporary path.
-     * @return Path relative to the application's current working directory.
-     */
-    private String toWorkingDirectoryRelativePath(Path path) {
-        Path workingDirectory = Path.of("").toAbsolutePath();
-        return workingDirectory.relativize(path.toAbsolutePath()).toString();
     }
 }
