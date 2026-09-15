@@ -69,7 +69,7 @@ public class Parser {
             }
             return taskNumber - 1;
         } catch (NumberFormatException e) {
-            throw new YappaException("Please give me a valid task number!");
+            throw new YappaException("Please give me a valid task number!", e);
         }
     }
 

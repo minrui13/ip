@@ -33,7 +33,8 @@ public class DateUtil {
         } catch (DateTimeParseException e) {
             throw new YappaException(
                     "Oh no, invalid datetime!. Please use the format dd/MM/yyyy HHmm, "
-                            + "e.g. 02/12/2019 1800");
+                            + "e.g. 02/12/2019 1800",
+                    e);
         }
     }
 
@@ -48,7 +49,7 @@ public class DateUtil {
         try {
             return LocalDateTime.parse(input.trim(), DATETIME_STORAGE_FORMAT);
         } catch (DateTimeParseException e) {
-            throw new YappaException("Oh no, corrupted date/time in storage file!:" + input);
+            throw new YappaException("Oh no, corrupted date/time in storage file!:" + input, e);
         }
     }
 

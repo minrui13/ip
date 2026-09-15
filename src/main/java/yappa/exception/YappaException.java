@@ -13,4 +13,8 @@ public class YappaException extends Exception {
     public YappaException(String message) {
         super(message);
     }
+
+    public YappaException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
