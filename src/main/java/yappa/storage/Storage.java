@@ -29,10 +29,10 @@ public class Storage {
     private final Path filePath;
 
     /**
-     * Creates storage rooted at the application's working directory.
+     * Creates a storage instance bound to the given file path.
      *
-     * @param relativePath Path to the storage file, relative to the working
-     *                     directory.
+     * @param filePath Absolute or relative path to the storage file.
+     *                 Must not be {@code null}.
      */
     public Storage(Path filePath) {
         this.filePath = Objects.requireNonNull(
