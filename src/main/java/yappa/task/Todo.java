@@ -31,7 +31,8 @@ public class Todo extends Task {
      */
     @Override
     public String toFileString() {
-        return "T | " + (isDone() ? "1" : "0")
+        return TaskType.TODO.getCode()
+                + " | " + (isDone() ? "1" : "0")
                 + " | " + getDescription();
     }
 
@@ -42,6 +43,7 @@ public class Todo extends Task {
      */
     @Override
     public String toString() {
-        return "[T] " + super.toString();
+        return "[" + TaskType.TODO.getCode() + "] "
+                + super.toString();
     }
 }

@@ -41,7 +41,8 @@ public class Deadline extends Task {
      */
     @Override
     public String toFileString() {
-        return "D | " + (isDone() ? "1" : "0")
+        return TaskType.DEADLINE.getCode()
+                + " | " + (isDone() ? "1" : "0")
                 + " | " + getDescription()
                 + " | " + DateUtil.toFileString(date);
     }
@@ -53,6 +54,9 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D] " + super.toString() + " (by: " + DateUtil.toDisplayString(this.date) + ")";
+        return "[" + TaskType.DEADLINE.getCode() + "] "
+                + super.toString()
+                + " (by: "
+                + DateUtil.toDisplayString(this.date) + ")";
     }
 }

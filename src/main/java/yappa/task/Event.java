@@ -71,7 +71,8 @@ public class Event extends Task {
      */
     @Override
     public String toFileString() {
-        return "E | " + (isDone() ? "1" : "0")
+        return TaskType.EVENT.getCode()
+                + " | " + (isDone() ? "1" : "0")
                 + " | " + getDescription()
                 + " | " + DateUtil.toFileString(from)
                 + " | " + DateUtil.toFileString(to);
@@ -84,8 +85,10 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E] " + super.toString()
+        return "[" + TaskType.EVENT.getCode() + "] "
+                + super.toString()
                 + " (from: " + DateUtil.toDisplayString(this.from)
-                + " to: " + DateUtil.toDisplayString(this.to) + ")";
+                + " to: " + DateUtil.toDisplayString(this.to)
+                + ")";
     }
 }

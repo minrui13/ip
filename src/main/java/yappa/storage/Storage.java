@@ -74,7 +74,7 @@ public class Storage {
             }
         } catch (FileNotFoundException e) {
             throw new YappaException(
-                    "Storage file could not be opened: " + e.getMessage());
+                    "Storage file could not be opened: " + e.getMessage(), e);
         }
 
         return new LoadResult(new TaskList(tasks), warnings);
@@ -99,23 +99,20 @@ public class Storage {
         boolean isDone = parseCompletionStatus(taskParts[1]);
         String description = taskParts[2];
 
-        switch (taskType) {
-            case "T":
+        switch (TaskType.fromStorageCode(taskParts[0])) {
+            case TODO:
                 return new Todo(description, isDone);
 
-            case "D":
+            case DEADLINE:
                 LocalDateTime date = DateUtil.parseStorageDateTime(taskParts[3]);
                 return new Deadline(description, isDone, date);
 
-            case "E":
+            case EVENT:
                 LocalDateTime from = DateUtil.parseStorageDateTime(taskParts[3]);
                 LocalDateTime to = DateUtil.parseStorageDateTime(taskParts[4]);
                 return new Event(description, isDone, from, to);
-
-            default:
-                throw new YappaException(
-                        "Unknown task type: " + taskType);
         }
+
     }
 
     /**
@@ -178,7 +175,7 @@ public class Storage {
                         + System.lineSeparator());
             }
         } catch (IOException e) {
-            throw new YappaException("Failed to save tasks to file: " + e.getMessage());
+            throw new YappaException("Failed to save tasks to file: " + e.getMessage(), e);
         }
     }
 
