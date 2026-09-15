@@ -16,7 +16,7 @@ import yappa.ui.Ui;
 
 public class Yappa {
 
-    private final Storage storage = new Storage("data/yappa.txt");
+    private final Storage storage = new Storage(Path.of("data", "yappa.txt"));
     private TaskList tasks = new TaskList();
     private final Ui ui = new Ui();
     private boolean isExitRequested;

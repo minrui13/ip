@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 import yappa.exception.YappaException;
@@ -33,8 +34,9 @@ public class Storage {
      * @param relativePath Path to the storage file, relative to the working
      *                     directory.
      */
-    public Storage(String relativePath) {
-        this.filePath = Paths.get(".", relativePath);
+    public Storage(Path filePath) {
+        this.filePath = Objects.requireNonNull(
+                filePath, "Storage file path cannot be null");
     }
 
     /**
