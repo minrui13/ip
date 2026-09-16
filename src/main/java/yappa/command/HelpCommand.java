@@ -1,5 +1,6 @@
 package yappa.command;
 
+import yappa.exception.YappaException;
 import yappa.task.TaskList;
 import yappa.ui.Ui;
 
