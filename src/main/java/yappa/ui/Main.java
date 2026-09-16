@@ -12,6 +12,7 @@ import yappa.Yappa;
 /** Starts the JavaFX user interface for Yappa. */
 public class Main extends Application {
 
+    private static final String APPLICATION_TITLE = "Yappa - Your No-Nonsense Task Assistant";
     private final Yappa yappa = new Yappa();
 
     /**
@@ -22,6 +23,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         try {
+            stage.setTitle(APPLICATION_TITLE);
             stage.setMinHeight(600);
             stage.setMinWidth(600);
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));

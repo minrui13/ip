@@ -1,8 +1,8 @@
 .dialog-container {
   -fx-background-image: url("../images/background.jpg");
   -fx-background-size: cover;
-  -fx-background-position: center;
-  -fx-background-repeat: no-repeat;
+  -fx-background-position: center center;
+  -fx-background-attachment: fixed;
 }
 
 .dialog-label {

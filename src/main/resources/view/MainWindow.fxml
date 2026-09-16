@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="-Infinity" minWidth="-Infinity"
+            minHeight="400.0" minWidth="550.0"
             prefHeight="600.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -53,6 +53,7 @@
                     fx:id="dialogContainer"
                     prefHeight="552.0"
                     prefWidth="588.0" 
+                    maxHeight= "Infinity"
                     stylesheets="@../css/style.css"
                     styleClass="dialog-container"
                     />
