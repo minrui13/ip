@@ -207,7 +207,7 @@ public class Parser {
         String normalizedInput = input.trim().replaceAll("\\s+", " ");
         String[] parts = normalizedInput.split(" ", 2);
 
-        String commandWord = parts[0].toLowerCase(Locale.ROOT);
+        String commandWord = parts[0].toLowerCase();
         String arguments = parts.length > 1 ? parts[1].trim() : "";
 
         CommandParser commandParser = COMMAND_PARSERS.get(commandWord);

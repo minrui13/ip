@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import yappa.exception.YappaException;
 
@@ -67,11 +68,21 @@ public class TaskList implements Iterable<Task> {
     }
 
     /**
-     * Appends a task to the list.
+     * Appends a task to the task list after validating that it is non-null and not
+     * a duplicate.
      *
-     * @param task Task to add.
+     * @param task Task instance to be added to the list.
+     * @throws NullPointerException If the provided task is {@code null}.
+     * @throws YappaException       If an identical task already exists in the list.
      */
-    public void add(Task task) {
+    public void add(Task task) throws YappaException {
+        Objects.requireNonNull(task, "Task cannot be null.");
+
+        if (containsDuplicate(task)) {
+            throw new YappaException(
+                    "This task already exists.");
+        }
+
         tasks.add(task);
     }
 
@@ -110,6 +121,20 @@ public class TaskList implements Iterable<Task> {
         if (index < 0 || index >= tasks.size()) {
             throw new YappaException("Task number " + (index + 1) + " does not exist!");
         }
+    }
+
+    /**
+     * Checks whether a task with the same type and case-insensitive description
+     * already exists in the list.
+     *
+     * @param newTask Task instance to check for duplicates against existing tasks.
+     * @return {@code true} if an identical task type with matching description
+     *         exists, {@code false} otherwise.
+     */
+    public boolean containsDuplicate(Task newTask) {
+        return tasks.stream()
+                .anyMatch(existing -> existing.getClass().equals(newTask.getClass())
+                        && existing.getDescription().equalsIgnoreCase(newTask.getDescription()));
     }
 
     /**
