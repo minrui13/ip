@@ -32,15 +32,15 @@ prefer typing commands. Add tasks, track deadlines and events, search your task 
 
 1. Ensure that **Java 25** is installed on your computer.
 
-2. Download `yappa.jar` from the
+2. Download `Yappa.jar` from the
    [latest GitHub release](https://github.com/minrui13/ip/releases/latest).
 
-3. Place `yappa.jar` in an empty folder where you want to run Yappa.
+3. Place `Yappa.jar` in an empty folder where you want to run Yappa.
 
 4. Open a terminal in that folder and run:
 
    ```console
-   java -jar yappa.jar
+   java -jar Yappa.jar
    ```
 5. Yappa's GUI should appear. Type commands into the input box and press
 Enter or the Send button to execute them.
@@ -333,19 +333,19 @@ Saved tasks are loaded automatically the next time Yappa starts.
 
 ---
 
-Command Summary
-| Action           | Format                                  | Example                                                   |
-| ---------------- | --------------------------------------- | --------------------------------------------------------- |
-| **Help**         | `help`                                  | `help`                                                    |
-| **List tasks**   | `list`                                  | `list`                                                    |
-| **Sort tasks**   | `sort`                                  | `sort`                                                    |
-| **Add todo**     | `todo DESCRIPTION`                      | `todo read chapter 5`                                     |
-| **Add deadline** | `deadline DESCRIPTION /by DATE_TIME`    | `deadline submit assignment /by 20/09/2026 2359`          |
-| **Add event**    | `event DESCRIPTION /from START /to END` | `event meeting /from 21/09/2026 1400 /to 21/09/2026 1600` |
-| **Mark task**    | `mark TASK_NUMBER`                      | `mark 2`                                                  |
-| **Unmark task**  | `unmark TASK_NUMBER`                    | `unmark 2`                                                |
-| **Delete task**  | `delete TASK_NUMBER`                    | `delete 2`                                                |
-| **Find tasks**   | `find SEARCH`                           | `find meeting`                                            |
-| **Clear tasks**  | `clear`                                 | `clear`                                                   |
-| **Exit**         | `bye`                                   | `bye`                                                     |
+## Command Summary
 
+| Action | Format | Example |
+| --- | --- | --- |
+| **Help** | `help` | `help` |
+| **List tasks** | `list` | `list` |
+| **Sort tasks** | `sort` | `sort` |
+| **Add todo** | `todo DESCRIPTION` | `todo read chapter 5` |
+| **Add deadline** | `deadline DESCRIPTION /by DATE_TIME` | `deadline submit assignment /by 20/09/2026 2359` |
+| **Add event** | `event DESCRIPTION /from START /to END` | `event meeting /from 21/09/2026 1400 /to 21/09/2026 1600` |
+| **Mark task** | `mark TASK_NUMBER` | `mark 2` |
+| **Unmark task** | `unmark TASK_NUMBER` | `unmark 2` |
+| **Delete task** | `delete TASK_NUMBER` | `delete 2` |
+| **Find tasks** | `find SEARCH` | `find meeting` |
+| **Clear tasks** | `clear` | `clear` |
+| **Exit** | `bye` | `bye` |
