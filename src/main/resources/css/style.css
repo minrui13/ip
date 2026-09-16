@@ -21,7 +21,7 @@
 }
 
 .yappa-dialog {
-  -fx-background-color: mediumpurple;
+  -fx-background-color: rgb(137, 96, 217);
   -fx-text-fill: seashell;
   -fx-font-weight: bold;
   -fx-background-radius: 15 15 15 4;
