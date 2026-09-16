@@ -32,15 +32,15 @@ prefer typing commands. Add tasks, track deadlines and events, search your task 
 
 1. Ensure that **Java 25** is installed on your computer.
 
-2. Download `yappa.jar` from the
+2. Download `Yappa.jar` from the
    [latest GitHub release](https://github.com/minrui13/ip/releases/latest).
 
-3. Place `yappa.jar` in an empty folder where you want to run Yappa.
+3. Place `Yappa.jar` in an empty folder where you want to run Yappa.
 
 4. Open a terminal in that folder and run:
 
    ```console
-   java -jar yappa.jar
+   java -jar Yappa.jar
    ```
 5. Yappa's GUI should appear. Type commands into the input box and press
 Enter or the Send button to execute them.
