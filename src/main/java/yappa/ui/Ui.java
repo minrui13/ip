@@ -85,13 +85,13 @@ public class Ui {
     }
 
     /**
-     * Returns a confirmation that a task has been marked as not completed.
+     * Returns a confirmation that a task has been unmarked.
      *
      * @param taskDescription Description of the unmarked task.
      * @return Task unmarked confirmation.
      */
     public String showTaskUnmarked(String taskDescription) {
-        return buildMessage("Ok! I've marked this task as not completed:", "\t[ ] " + taskDescription);
+        return buildMessage("Ok! I've unmarked this task:", "\t[ ] " + taskDescription);
     }
 
     /**
