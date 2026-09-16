@@ -21,22 +21,23 @@ import yappa.util.DateUtil;
  * and a label containing text from the speaker.
  */
 public class DialogBox extends HBox {
-    @FXML
-    private Label dialog;
-    @FXML
-    private Label timestamp;
-    @FXML
-    private ImageView displayPicture;
     private static final String STYLE_USER_DIALOG = "user-dialog";
     private static final String STYLE_YAPPA_DIALOG = "yappa-dialog";
     private static final String STYLE_USER_TIMESTAMP = "user-timestamp-label";
     private static final String STYLE_YAPPA_TIMESTAMP = "yappa-timestamp-label";
     private static final String STYLE_ERROR = "dialog-error";
 
+    @FXML
+    private Label dialog;
+    @FXML
+    private Label timestamp;
+    @FXML
+    private ImageView displayPicture;
+
     /**
      * Creates a dialog box with the specified text and speaker image.
      *
-     * @param text         Text to display.
+     * @param content      Text to display.
      * @param speakerImage Speaker image to display.
      */
     public DialogBox(String content, Image speakerImage) {
@@ -84,6 +85,7 @@ public class DialogBox extends HBox {
      *
      * @param text         Text to display.
      * @param speakerImage Speaker image to display.
+     * @param isError      Whether the message represents an error.
      * @return Yappa-aligned dialog box.
      */
     public static DialogBox getYappaDialog(String text, Image speakerImage, boolean isError) {
