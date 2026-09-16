@@ -21,6 +21,7 @@ public class Yappa {
     private TaskList tasks = new TaskList();
     private final Ui ui = new Ui();
     private boolean isExitRequested;
+    private boolean isLastError = false;
     private List<String> loadWarnings = List.of();
 
     /**
@@ -77,6 +78,7 @@ public class Yappa {
             assert command != null;
 
             String response = command.execute(tasks, ui);
+            isLastError = false;
 
             if (command.modifiesTasks()) {
                 storage.saveTasks(tasks);
@@ -86,6 +88,7 @@ public class Yappa {
 
             return response;
         } catch (YappaException e) {
+            isLastError = true;
             return e.getMessage();
         }
     }
@@ -98,6 +101,10 @@ public class Yappa {
      */
     public boolean isExitRequested() {
         return isExitRequested;
+    }
+
+    public boolean isLastError() {
+        return isLastError;
     }
 
 }

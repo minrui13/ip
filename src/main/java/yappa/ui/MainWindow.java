@@ -48,7 +48,7 @@ public class MainWindow extends AnchorPane {
         this.yappa = yappa;
         String greeting = yappa.getGreeting();
         dialogContainer.getChildren().add(
-                DialogBox.getYappaDialog(greeting, yappaImage));
+                DialogBox.getYappaDialog(greeting, yappaImage, false));
     }
 
     // Adds the user's message and Yappa's reply, then clears the input field.
@@ -59,7 +59,7 @@ public class MainWindow extends AnchorPane {
 
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getYappaDialog(response, yappaImage));
+                DialogBox.getYappaDialog(response, yappaImage, yappa.isLastError()));
 
         userInput.clear();
 

@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import yappa.util.DateUtil;
 
 /**
  * Represents a dialog box consisting of an ImageView to represent the speaker's
@@ -23,25 +24,33 @@ public class DialogBox extends HBox {
     @FXML
     private Label dialog;
     @FXML
+    private Label timestamp;
+    @FXML
     private ImageView displayPicture;
+    private static final String STYLE_USER_DIALOG = "user-dialog";
+    private static final String STYLE_YAPPA_DIALOG = "yappa-dialog";
+    private static final String STYLE_USER_TIMESTAMP = "user-timestamp-label";
+    private static final String STYLE_YAPPA_TIMESTAMP = "yappa-timestamp-label";
+    private static final String STYLE_ERROR = "dialog-error";
 
     /**
      * Creates a dialog box with the specified text and speaker image.
      *
-     * @param text Text to display.
+     * @param text         Text to display.
      * @param speakerImage Speaker image to display.
      */
-    public DialogBox(String text, Image speakerImage) {
+    public DialogBox(String content, Image speakerImage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
             fxmlLoader.setController(this);
             fxmlLoader.setRoot(this);
             fxmlLoader.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to load DialogBox.fxml", e);
         }
 
-        dialog.setText(text);
+        dialog.setText(content);
+        timestamp.setText(DateUtil.nowAsTimeLabel());
         displayPicture.setImage(speakerImage);
     }
 
@@ -59,26 +68,33 @@ public class DialogBox extends HBox {
     /**
      * Creates a dialog box aligned as a user message.
      *
-     * @param text Text to display.
+     * @param text         Text to display.
      * @param speakerImage Speaker image to display.
      * @return User-aligned dialog box.
      */
     public static DialogBox getUserDialog(String text, Image speakerImage) {
         DialogBox dialogBox = new DialogBox(text, speakerImage);
-        dialogBox.dialog.getStyleClass().add("user-dialog");
+        dialogBox.dialog.getStyleClass().add(STYLE_USER_DIALOG);
+        dialogBox.timestamp.getStyleClass().add(STYLE_USER_TIMESTAMP);
         return dialogBox;
     }
 
     /**
      * Creates a dialog box aligned as a Yappa message.
      *
-     * @param text Text to display.
+     * @param text         Text to display.
      * @param speakerImage Speaker image to display.
      * @return Yappa-aligned dialog box.
      */
-    public static DialogBox getYappaDialog(String text, Image speakerImage) {
+    public static DialogBox getYappaDialog(String text, Image speakerImage, boolean isError) {
         DialogBox dialogBox = new DialogBox(text, speakerImage);
-        dialogBox.dialog.getStyleClass().add("yappa-dialog");
+        dialogBox.dialog.getStyleClass().add(STYLE_YAPPA_DIALOG);
+        if (isError) {
+            dialogBox.dialog.getStyleClass().add(STYLE_ERROR);
+        } else {
+            dialogBox.dialog.getStyleClass().remove(STYLE_ERROR);
+        }
+        dialogBox.timestamp.getStyleClass().add(STYLE_YAPPA_TIMESTAMP);
         dialogBox.flip();
         return dialogBox;
     }

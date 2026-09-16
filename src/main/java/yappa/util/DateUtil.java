@@ -1,6 +1,7 @@
 package yappa.util;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
@@ -17,6 +18,7 @@ public class DateUtil {
             .ofPattern("MMM dd yyyy, h:mm a", Locale.ENGLISH);
     private static final DateTimeFormatter DATETIME_STORAGE_FORMAT = DateTimeFormatter
             .ofPattern("yyyy-MM-dd'T'HH:mm");
+    private static final DateTimeFormatter TIMESTAMP_LABEL_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
     private DateUtil() {
     }
@@ -71,5 +73,14 @@ public class DateUtil {
      */
     public static String toFileString(LocalDateTime dateTime) {
         return dateTime.format(DATETIME_STORAGE_FORMAT);
+    }
+
+    /**
+     * Formats the current time for display under a chat bubble.
+     *
+     * @return Current time as {@code HH:mm}.
+     */
+    public static String nowAsTimeLabel() {
+        return LocalTime.now().format(TIMESTAMP_LABEL_FORMATTER);
     }
 }

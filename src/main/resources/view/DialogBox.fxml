@@ -4,27 +4,53 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<fx:root alignment="BOTTOM_RIGHT"
-         spacing="10.0"
-         maxHeight="1.7976931348623157E308"
-         maxWidth="1.7976931348623157E308"
-         prefWidth="400.0"
-         type="javafx.scene.layout.HBox"
-         xmlns="http://javafx.com/javafx/17"
-         xmlns:fx="http://javafx.com/fxml/1">
-  <children>
-    <Label 
-        fx:id="dialog"  
-        text="Label" 
-        wrapText="true" 
-        minHeight="-Infinity"  
-        stylesheets="@../css/style.css"
-        styleClass="dialog-label"
-    />
-    <ImageView fx:id="displayPicture" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true"  styleClass="image-view"/>
-  </children>
-  <padding>
-    <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
-  </padding>
+<fx:root 
+    type="javafx.scene.layout.HBox"
+    alignment="BOTTOM_RIGHT"
+    spacing="10.0"
+    prefWidth="400.0"
+    maxHeight="1.7976931348623157E308"
+    maxWidth="1.7976931348623157E308"
+    xmlns="http://javafx.com/javafx/17"
+    xmlns:fx="http://javafx.com/fxml/1">
+
+    <children>
+        <VBox 
+            alignment="TOP_LEFT" 
+            spacing="2.0" 
+            styleClass="dialog-text-container">
+            
+            <Label 
+                fx:id="dialog"
+                text="Label"
+                wrapText="true"
+                minHeight="-Infinity"
+                stylesheets="@../css/style.css"
+                styleClass="dialog-label" />
+            
+            <Label 
+                fx:id="timestamp"
+                text="00:00"
+                maxWidth="Infinity"
+                styleClass="timestamp-label" />
+        </VBox>
+
+        <ImageView 
+            fx:id="displayPicture"
+            fitHeight="70.0"
+            fitWidth="70.0"
+            pickOnBounds="true"
+            preserveRatio="true"
+            styleClass="image-view" />
+    </children>
+
+    <padding>
+        <Insets 
+            top="15.0" 
+            right="5.0" 
+            bottom="15.0" 
+            left="5.0" />
+    </padding>
 </fx:root>

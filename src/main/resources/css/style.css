@@ -17,12 +17,32 @@
   -fx-background-color: rgb(0, 166, 255);
   -fx-text-fill: seashell;
   -fx-font-weight: bold;
+  -fx-background-radius: 15 15 4 15;
 }
 
 .yappa-dialog {
   -fx-background-color: mediumpurple;
   -fx-text-fill: seashell;
   -fx-font-weight: bold;
+  -fx-background-radius: 15 15 15 4;
+}
+
+.dialog-error {
+  -fx-background-color: rgb(220, 58, 58);
+}
+
+.user-timestamp-label {
+  -fx-alignment: BOTTOM-RIGHT;
+}
+
+.yappa-timestamp-label {
+  -fx-alignment: BOTTOM-LEFT;
+}
+
+.timestamp-label {
+  -fx-text-fill: seashell;
+  -fx-font-size: 10px;
+  -fx-opacity: 0.4;
 }
 
 .image-view {
