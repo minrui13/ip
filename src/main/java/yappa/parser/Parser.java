@@ -70,14 +70,13 @@ public class Parser {
      * @throws YappaException If a task number is missing or invalid.
      */
     private static int parseIndex(String argument) throws YappaException {
-        String trimmedArgument = argument.trim();
 
-        if (trimmedArgument.isEmpty()) {
+        if (argument.isEmpty()) {
             throw new YappaException("Please specify a task number!");
         }
 
         try {
-            int taskNumber = Integer.parseInt(trimmedArgument);
+            int taskNumber = Integer.parseInt(argument);
             if (taskNumber <= 0) {
                 throw new YappaException("Task number must be greater than 0!");
             }
@@ -104,8 +103,8 @@ public class Parser {
 
         String[] parts = argument.split(" /by ", 2);
 
-        String description = parts[0].trim();
-        String deadlineText = parts[1].trim();
+        String description = parts[0];
+        String deadlineText = parts[1];
 
         if (description.isEmpty() || deadlineText.isEmpty()) {
             throw new YappaException(
@@ -142,9 +141,9 @@ public class Parser {
                     "Please provide both a start and end time.");
         }
 
-        String description = parts[0].trim();
-        String startTimeText = parts[1].trim();
-        String endTimeText = parts[2].trim();
+        String description = parts[0];
+        String startTimeText = parts[1];
+        String endTimeText = parts[2];
 
         if (description.isEmpty() || startTimeText.isEmpty() || endTimeText.isEmpty()) {
             throw new YappaException(
@@ -190,7 +189,7 @@ public class Parser {
             throw new YappaException(errorMessage);
         }
 
-        return arguments.trim();
+        return arguments;
     }
 
     /**
@@ -205,8 +204,10 @@ public class Parser {
             throw new YappaException("Please enter a command!");
         }
 
-        String[] parts = input.trim().split("\\s+", 2);
-        String commandWord = parts[0].toLowerCase();
+        String normalizedInput = input.trim().replaceAll("\\s+", " ");
+        String[] parts = normalizedInput.split(" ", 2);
+
+        String commandWord = parts[0].toLowerCase(Locale.ROOT);
         String arguments = parts.length > 1 ? parts[1].trim() : "";
 
         CommandParser commandParser = COMMAND_PARSERS.get(commandWord);

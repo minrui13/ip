@@ -26,7 +26,7 @@ public class DateUtil {
     private static LocalDateTime parse(String input, DateTimeFormatter formatter, String errorMessage)
             throws YappaException {
         try {
-            return LocalDateTime.parse(input.trim(), formatter);
+            return LocalDateTime.parse(input, formatter);
         } catch (DateTimeParseException e) {
             throw new YappaException(errorMessage, e);
         }
