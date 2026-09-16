@@ -9,6 +9,7 @@ import yappa.command.AddCommand;
 import yappa.command.DeleteCommand;
 import yappa.command.ExitCommand;
 import yappa.command.FindCommand;
+import yappa.command.HelpCommand;
 import yappa.command.ListCommand;
 import yappa.command.MarkCommand;
 import yappa.command.UnmarkCommand;
@@ -26,6 +27,7 @@ public class ParserTest {
         assertInstanceOf(UnmarkCommand.class, Parser.parse("unmark 1"));
         assertInstanceOf(DeleteCommand.class, Parser.parse("delete 1"));
         assertInstanceOf(FindCommand.class, Parser.parse("find report"));
+        assertInstanceOf(HelpCommand.class, Parser.parse("help"));
     }
 
     /** Verifies that valid task commands produce add commands. */

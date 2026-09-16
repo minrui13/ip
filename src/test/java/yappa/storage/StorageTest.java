@@ -2,6 +2,7 @@ package yappa.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -54,5 +55,20 @@ public class StorageTest {
 
         assertEquals(3, loadedTasks.size());
         assertEquals(originalTasks.toString(), loadedTasks.toString());
+    }
+
+    /** Verifies that invalid records are skipped and reported as warnings. */
+    @Test
+    public void loadTasks_invalidRecord_returnsWarningAndValidTasks() throws Exception {
+        Path storagePath = tempDir.resolve("tasks.txt");
+        Files.writeString(storagePath,
+                "T | 0 | valid task" + System.lineSeparator()
+                        + "invalid record" + System.lineSeparator());
+        Storage storage = new Storage(storagePath);
+
+        LoadResult result = storage.loadTasks();
+
+        assertEquals(1, result.tasks().size());
+        assertEquals(1, result.warnings().size());
     }
 }
