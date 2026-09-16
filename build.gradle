@@ -7,12 +7,13 @@ plugins {
 }
 
 checkstyle {
-    toolVersion = '14.1.0'
+    toolVersion = '10.12.5'
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
 }
 
 repositories {
@@ -20,17 +21,16 @@ repositories {
 }
 
 javafx {
-    version = '17.0.7'
+    version = '23.0.1'
     modules = ['javafx.controls', 'javafx.fxml']
 }
 
 dependencies {
-    String jUnitVersion = '5.14.4'
+    String jUnitVersion = '5.10.2'
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:${jUnitVersion}"
-
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${jUnitVersion}"
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.14.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
 }
 
 test {
@@ -44,6 +44,7 @@ test {
 
 application {
     mainClass.set('yappa.ui.Launcher')
+    applicationDefaultJvmArgs = ['--enable-native-access=javafx.graphics']
 }
 
 jar {
@@ -60,5 +61,5 @@ shadowJar {
 
 run {
     standardInput = System.in
-    jvmArgs '-ea'
+    jvmArgs = ['-ea', '--enable-native-access=javafx.graphics']
 }
