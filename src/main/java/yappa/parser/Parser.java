@@ -10,6 +10,7 @@ import yappa.command.Command;
 import yappa.command.DeleteCommand;
 import yappa.command.ExitCommand;
 import yappa.command.FindCommand;
+import yappa.command.HelpCommand;
 import yappa.command.ListCommand;
 import yappa.command.MarkCommand;
 import yappa.command.SortCommand;
@@ -31,9 +32,26 @@ public class Parser {
     }
 
     static {
-        COMMAND_PARSERS.put("list", arguments -> new ListCommand());
-        COMMAND_PARSERS.put("clear", arguments -> new ClearCommand());
-        COMMAND_PARSERS.put("bye", arguments -> new ExitCommand());
+        COMMAND_PARSERS.put("list", arguments -> {
+            requireNoArguments(arguments);
+            return new ListCommand();
+        });
+        COMMAND_PARSERS.put("clear", arguments -> {
+            requireNoArguments(arguments);
+            return new ClearCommand();
+        });
+        COMMAND_PARSERS.put("bye", arguments -> {
+            requireNoArguments(arguments);
+            return new ExitCommand();
+        });
+        COMMAND_PARSERS.put("help", arguments -> {
+            requireNoArguments(arguments);
+            return new HelpCommand();
+        });
+        COMMAND_PARSERS.put("sort", arguments -> {
+            requireNoArguments(arguments);
+            return new SortCommand();
+        });
         COMMAND_PARSERS.put("mark", arguments -> new MarkCommand(parseIndex(arguments)));
         COMMAND_PARSERS.put("unmark", arguments -> new UnmarkCommand(parseIndex(arguments)));
         COMMAND_PARSERS.put("delete", arguments -> new DeleteCommand(parseIndex(arguments)));
@@ -42,10 +60,6 @@ public class Parser {
         COMMAND_PARSERS.put("todo", Parser::parseTodo);
         COMMAND_PARSERS.put("deadline", Parser::parseDeadline);
         COMMAND_PARSERS.put("event", Parser::parseEvent);
-        COMMAND_PARSERS.put("sort", arguments -> {
-            requireNoArguments(arguments);
-            return new SortCommand();
-        });
     }
 
     /**
@@ -85,7 +99,7 @@ public class Parser {
 
         if (!argument.contains(" /by ")) {
             throw new YappaException(
-                    "Oh no! Please re-enter in this format: deadline <task> /by <dd/MM/yyyy HHmm>");
+                    "Oh no! Please re-enter in this format: deadline <description> /by <dd/MM/yyyy HHmm>");
         }
 
         String[] parts = argument.split(" /by ", 2);
@@ -117,7 +131,8 @@ public class Parser {
         if (!argument.contains(" /from ")
                 || !argument.contains(" /to ")) {
             throw new YappaException(
-                    "Oh no! Please re-enter in this format: event <task> /from <start> /to <end>");
+                    "Oh no! Please re-enter in this format: event <description> "
+                            + "/from <dd/MM/yyyy HHmm> /to <dd/MM/yyyy HHmm>");
         }
 
         String[] parts = argument.split(" /from | /to ", 3);
@@ -203,8 +218,14 @@ public class Parser {
         return commandParser.parse(arguments);
     }
 
-    private static void requireNoArguments(String arguments)
-            throws YappaException {
+    /**
+     * Ensures that no additional arguments were provided for a command that expects
+     * none.
+     *
+     * @param arguments Raw argument string passed to the command parser.
+     * @throws YappaException If the provided argument string is not blank.
+     */
+    private static void requireNoArguments(String arguments) throws YappaException {
         if (!arguments.isBlank()) {
             throw new YappaException(
                     "This command does not accept arguments.");

@@ -146,6 +146,27 @@ public class Ui {
     }
 
     /**
+     * Returns the list of commands available to the user.
+     *
+     * @return Formatted help menu.
+     */
+    public String showHelpMenu() {
+        return buildMessage(
+                "Here are the commands!",
+                "/list",
+                "/todo <description>",
+                "/deadline <description> /by <dd/MM/yyyy HHmm>",
+                "/event <description> /from <dd/MM/yyyy HHmm> /to <dd/MM/yyyy HHmm>",
+                "/mark <task_number>",
+                "/unmark <task_number>",
+                "/delete <task_number>",
+                "/find <search>",
+                "/help",
+                "/clear",
+                "/bye");
+    }
+
+    /**
      * Determines the greeting period from the current local time.
      *
      * @return {@code Morning}, {@code Afternoon}, or {@code Evening}.
