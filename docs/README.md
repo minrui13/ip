@@ -333,30 +333,19 @@ Saved tasks are loaded automatically the next time Yappa starts.
 
 ---
 
-### Command Summary
+## Command Summary
 
-* **Help:** `help`
-  * *Example:* `help`
-* **List tasks:** `list`
-  * *Example:* `list`
-* **Sort tasks:** `sort`
-  * *Example:* `sort`
-* **Add todo:** `todo DESCRIPTION`
-  * *Example:* `todo read chapter 5`
-* **Add deadline:** `deadline DESCRIPTION /by DATE_TIME`
-  * *Example:* `deadline submit assignment /by 20/09/2026 2359`
-* **Add event:** `event DESCRIPTION /from START /to END`
-  * *Example:* `event meeting /from 21/09/2026 1400 /to 21/09/2026 1600`
-* **Mark task:** `mark TASK_NUMBER`
-  * *Example:* `mark 2`
-* **Unmark task:** `unmark TASK_NUMBER`
-  * *Example:* `unmark 2`
-* **Delete task:** `delete TASK_NUMBER`
-  * *Example:* `delete 2`
-* **Find tasks:** `find SEARCH`
-  * *Example:* `find meeting`
-* **Clear tasks:** `clear`
-  * *Example:* `clear`
-* **Exit:** `bye`
-  * *Example:* `bye`
-
+| Action | Format | Example |
+| --- | --- | --- |
+| **Help** | `help` | `help` |
+| **List tasks** | `list` | `list` |
+| **Sort tasks** | `sort` | `sort` |
+| **Add todo** | `todo DESCRIPTION` | `todo read chapter 5` |
+| **Add deadline** | `deadline DESCRIPTION /by DATE_TIME` | `deadline submit assignment /by 20/09/2026 2359` |
+| **Add event** | `event DESCRIPTION /from START /to END` | `event meeting /from 21/09/2026 1400 /to 21/09/2026 1600` |
+| **Mark task** | `mark TASK_NUMBER` | `mark 2` |
+| **Unmark task** | `unmark TASK_NUMBER` | `unmark 2` |
+| **Delete task** | `delete TASK_NUMBER` | `delete 2` |
+| **Find tasks** | `find SEARCH` | `find meeting` |
+| **Clear tasks** | `clear` | `clear` |
+| **Exit** | `bye` | `bye` |
