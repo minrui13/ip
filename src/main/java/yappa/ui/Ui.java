@@ -162,6 +162,7 @@ public class Ui {
                 "delete <task_number>",
                 "find <search>",
                 "help",
+                "sort",
                 "clear",
                 "bye");
     }
