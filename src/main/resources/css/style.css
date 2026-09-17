@@ -11,6 +11,7 @@
   -fx-border-radius: 15px;
   -fx-effect: dropshadow(gaussian, rgba(0, 85, 150, 0.4), 5, 0, 0, 0);
   -fx-font-weight: 500;
+  -fx-font-family: "monospace";
 }
 
 .user-dialog {

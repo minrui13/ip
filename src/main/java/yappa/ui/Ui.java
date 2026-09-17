@@ -10,12 +10,14 @@ import yappa.task.TaskList;
  */
 public class Ui {
 
-    private static final String LOGO = "__   __                    \n"
-            + "\\ \\ / /_ _ _ __  _ __  __ _ \n"
-            + " \\ V / _` | '_ \\| '_ \\/ _` |\n"
-            + "  | | (_| | |_) | |_) | (_| |\n"
-            + "  |_|\\__,_| .__/| .__/ \\__,_|\n"
-            + "          |_|   |_|          \n";
+    private static final String LOGO = """
+            __   __
+            \\ \\ / /__ _ _ __  _ __   __ _
+             \\ V / _` | '_ \\| '_ \\ / _` |
+              | | (_| | |_) | |_) | (_| |
+              |_|\\__,_| .__/| .__/ \\__,_|
+                      |_|   |_|
+            """;
 
     private static String buildMessage(String... messageParts) {
         return String.join(System.lineSeparator(), messageParts);
