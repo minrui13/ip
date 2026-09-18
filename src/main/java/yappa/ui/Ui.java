@@ -31,7 +31,8 @@ public class Ui {
     public String showGreeting() {
         return buildMessage(LOGO,
                 "Good " + getTimeOfDay() + "! I'm Yappa. Ready to yap and get stuff done!",
-                "What are we tackling today? Let's do this!");
+                "What are we tackling today? Let's do this!",
+                "\nNot sure where to start? Enter 'help'");
     }
 
     /**

@@ -74,7 +74,6 @@ public class Yappa {
 
         try {
             Command command = Parser.parse(input);
-            // Parser.parse returns a command for every successful parse.
             assert command != null;
 
             String response = command.execute(tasks, ui);

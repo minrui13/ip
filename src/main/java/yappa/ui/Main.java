@@ -5,7 +5,7 @@ import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import yappa.Yappa;
 
@@ -27,7 +27,7 @@ public class Main extends Application {
             stage.setMinHeight(600);
             stage.setMinWidth(600);
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
-            AnchorPane mainPane = fxmlLoader.load();
+            BorderPane mainPane = fxmlLoader.load();
             Scene scene = new Scene(mainPane);
             stage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setYappa(yappa);

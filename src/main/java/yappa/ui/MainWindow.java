@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import yappa.Yappa;
@@ -16,7 +16,7 @@ import yappa.Yappa;
  * Controls the main JavaFX window and translates user actions into Yappa
  * commands.
  */
-public class MainWindow extends AnchorPane {
+public class MainWindow extends BorderPane {
     @FXML
     private ScrollPane scrollPane;
     @FXML
