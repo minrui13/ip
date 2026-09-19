@@ -17,6 +17,8 @@ import yappa.Yappa;
  * commands.
  */
 public class MainWindow extends BorderPane {
+    private static final int AVATAR_SIZE = 50;
+
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -28,8 +30,20 @@ public class MainWindow extends BorderPane {
 
     private Yappa yappa;
 
-    private final Image userImage = new Image(getClass().getResourceAsStream("/images/user.png"));
-    private final Image yappaImage = new Image(getClass().getResourceAsStream("/images/yappa.png"));
+    // Decode the large source images at avatar size to avoid Linux JavaFX
+    // rendering artefacts when the images are downscaled during layout.
+    private final Image userImage = new Image(
+            getClass().getResourceAsStream("/images/user.png"),
+            AVATAR_SIZE,
+            AVATAR_SIZE,
+            true,
+            true);
+    private final Image yappaImage = new Image(
+            getClass().getResourceAsStream("/images/yappa.png"),
+            AVATAR_SIZE,
+            AVATAR_SIZE,
+            true,
+            true);
 
     /**
      * Initializes scrolling behavior after the FXML controls are loaded.

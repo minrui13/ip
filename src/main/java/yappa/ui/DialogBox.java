@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import yappa.util.DateUtil;
 
 /**
@@ -31,6 +32,8 @@ public class DialogBox extends HBox {
     private Label dialog;
     @FXML
     private Label timestamp;
+    @FXML
+    private VBox dialogTextContainer;
     @FXML
     private ImageView displayPicture;
 
@@ -75,8 +78,11 @@ public class DialogBox extends HBox {
      */
     public static DialogBox getUserDialog(String text, Image speakerImage) {
         DialogBox dialogBox = new DialogBox(text, speakerImage);
+
+        dialogBox.dialogTextContainer.setAlignment(Pos.TOP_RIGHT);
         dialogBox.dialog.getStyleClass().add(STYLE_USER_DIALOG);
         dialogBox.timestamp.getStyleClass().add(STYLE_USER_TIMESTAMP);
+
         return dialogBox;
     }
 
