@@ -7,52 +7,60 @@ plugins {
 }
 
 checkstyle {
-    toolVersion = '10.12.5'
+    toolVersion = '11.0.0'
 }
 
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
-    }
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 repositories {
     mavenCentral()
 }
 
-javafx {
-    version = '23.0.1'
-    modules = ['javafx.controls', 'javafx.fxml']
-}
-
 dependencies {
-    String jUnitVersion = '5.10.2'
-    String javaFxVersion = '23.0.1'
+    String jUnitVersion = '5.14.4'
+
+    String javaFxVersion = '17.0.7'
+
+    implementation("org.openjfx:javafx-base:${javaFxVersion}:win")
+    implementation("org.openjfx:javafx-base:${javaFxVersion}:mac")
+    implementation("org.openjfx:javafx-base:${javaFxVersion}:linux")
+    implementation("org.openjfx:javafx-controls:${javaFxVersion}:win")
+    implementation("org.openjfx:javafx-controls:${javaFxVersion}:mac")
+    implementation("org.openjfx:javafx-controls:${javaFxVersion}:linux")
+    implementation("org.openjfx:javafx-fxml:${javaFxVersion}:win")
+    implementation("org.openjfx:javafx-fxml:${javaFxVersion}:mac")
+    implementation("org.openjfx:javafx-fxml:${javaFxVersion}:linux")
+    implementation("org.openjfx:javafx-graphics:${javaFxVersion}:win")
+    implementation("org.openjfx:javafx-graphics:${javaFxVersion}:mac")
+    implementation("org.openjfx:javafx-graphics:${javaFxVersion}:linux")
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:${jUnitVersion}"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${jUnitVersion}"
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
 
-    // Include JavaFX's native graphics libraries for every supported desktop OS.
-    // This makes the Shadow JAR portable: the JavaFX runtime selects the correct
-    // native library at startup on Windows, Linux, or macOS.
-    ['win', 'linux', 'mac'].each { platform ->
-        runtimeOnly "org.openjfx:javafx-graphics:${javaFxVersion}:${platform}"
-    }
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${jUnitVersion}"
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.14.4'
 }
+
 
 test {
     useJUnitPlatform()
-    jvmArgs '-ea'
 
     testLogging {
         events 'passed', 'skipped', 'failed'
+
+        showExceptions = true
+        exceptionFormat = 'full'
+        showCauses = true
+        showStackTraces = true
+        showStandardStreams = false
     }
 }
 
 application {
     mainClass.set('yappa.ui.Launcher')
-    applicationDefaultJvmArgs = ['--enable-native-access=javafx.graphics']
+    applicationDefaultJvmArgs = ['--enable-native-access=ALL-UNNAMED']
 }
 
 jar {
@@ -64,11 +72,13 @@ shadowJar {
     archiveFileName = 'Yappa.jar'
     mergeServiceFiles()
     manifest {
-        attributes 'Main-Class': 'yappa.ui.Launcher'
+        attributes(
+                'Main-Class': 'yappa.ui.Launcher',
+                'Enable-Native-Access': 'ALL-UNNAMED')
     }
 }
 
 run {
     standardInput = System.in
-    jvmArgs = ['-ea', '--enable-native-access=javafx.graphics']
+    jvmArgs = ['-ea', '--enable-native-access=ALL-UNNAMED']
 }
