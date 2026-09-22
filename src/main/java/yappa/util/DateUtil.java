@@ -4,7 +4,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import yappa.exception.YappaException;
 
@@ -13,11 +15,14 @@ import yappa.exception.YappaException;
  */
 public class DateUtil {
     private static final DateTimeFormatter DATETIME_INPUT_FORMATTER = DateTimeFormatter
-            .ofPattern("dd/MM/yyyy HHmm");
+            .ofPattern("dd/MM/uuuu HHmm")
+            .withResolverStyle(ResolverStyle.STRICT);;
     private static final DateTimeFormatter DATETIME_OUTPUT_FORMATTER = DateTimeFormatter
             .ofPattern("MMM dd yyyy, h:mm a", Locale.ENGLISH);
+    private static final Pattern DATETIME_PATTERN = Pattern.compile("\\d{2}/\\d{2}/\\d{4} \\d{4}");
     private static final DateTimeFormatter DATETIME_STORAGE_FORMAT = DateTimeFormatter
-            .ofPattern("yyyy-MM-dd'T'HH:mm");
+            .ofPattern("uuuu-MM-dd'T'HH:mm")
+            .withResolverStyle(ResolverStyle.STRICT);
     private static final DateTimeFormatter TIMESTAMP_LABEL_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
     private DateUtil() {
@@ -40,8 +45,15 @@ public class DateUtil {
      * @throws YappaException If the input does not follow the required format.
      */
     public static LocalDateTime parseDateTime(String input) throws YappaException {
+        String trimmedInput = input.trim();
+
+        if (!DATETIME_PATTERN.matcher(trimmedInput).matches()) {
+            throw new YappaException(
+                    "Invalid format! Use dd/MM/yyyy HHmm, e.g. 02/12/2019 1800");
+        }
+
         return parse(input, DATETIME_INPUT_FORMATTER,
-                "Oh no, invalid datetime! Please use the format dd/MM/yyyy HHmm, e.g. 02/12/2019 1800");
+                "Invalid date or time! Please enter a real date and time.");
     }
 
     /**
