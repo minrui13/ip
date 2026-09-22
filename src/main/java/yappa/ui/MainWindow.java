@@ -17,7 +17,7 @@ import yappa.Yappa;
  * commands.
  */
 public class MainWindow extends BorderPane {
-    private static final int AVATAR_SIZE = 50;
+    private static final int AVATAR_RENDER_SIZE = 256;
 
     @FXML
     private ScrollPane scrollPane;
@@ -34,14 +34,14 @@ public class MainWindow extends BorderPane {
     // rendering artefacts when the images are downscaled during layout.
     private final Image userImage = new Image(
             getClass().getResourceAsStream("/images/user.png"),
-            AVATAR_SIZE,
-            AVATAR_SIZE,
+            AVATAR_RENDER_SIZE,
+            AVATAR_RENDER_SIZE,
             true,
             true);
     private final Image yappaImage = new Image(
             getClass().getResourceAsStream("/images/yappa.png"),
-            AVATAR_SIZE,
-            AVATAR_SIZE,
+            AVATAR_RENDER_SIZE,
+            AVATAR_RENDER_SIZE,
             true,
             true);
 
