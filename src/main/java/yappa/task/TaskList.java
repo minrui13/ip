@@ -1,5 +1,6 @@
 package yappa.task;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -132,9 +133,7 @@ public class TaskList implements Iterable<Task> {
      *         exists, {@code false} otherwise.
      */
     public boolean containsDuplicate(Task newTask) {
-        return tasks.stream()
-                .anyMatch(existing -> existing.getClass().equals(newTask.getClass())
-                        && existing.getDescription().equalsIgnoreCase(newTask.getDescription()));
+        return tasks.contains(newTask);
     }
 
     /**
@@ -157,10 +156,29 @@ public class TaskList implements Iterable<Task> {
     /**
      * Sorts tasks alphabetically by description, ignoring case.
      */
-    public void sort() {
-        tasks.sort(Comparator.comparing(
-                Task::getDescription,
-                String.CASE_INSENSITIVE_ORDER));
+    public void sort(SortField field, SortOrder order) {
+        Comparator<Task> comparator;
+
+        if (field == SortField.DESCRIPTION) {
+            comparator = Comparator.comparing(
+                    Task::getDescription,
+                    String.CASE_INSENSITIVE_ORDER);
+        } else {
+            Comparator<LocalDateTime> dateComparator = order == SortOrder.ASCENDING
+                    ? Comparator.naturalOrder()
+                    : Comparator.reverseOrder();
+
+            comparator = Comparator.comparing(
+                    task -> task.getDateTime().orElse(null),
+                    Comparator.nullsLast(dateComparator));
+        }
+
+        if (field == SortField.DESCRIPTION
+                && order == SortOrder.DESCENDING) {
+            comparator = comparator.reversed();
+        }
+
+        tasks.sort(comparator);
     }
 
     /**

@@ -1,6 +1,8 @@
 package yappa.task;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.Optional;
 
 import yappa.util.DateUtil;
 
@@ -9,17 +11,17 @@ import yappa.util.DateUtil;
  */
 public class Deadline extends Task {
     /** Date and time by which this task should be completed. */
-    private final LocalDateTime date;
+    private final LocalDateTime by;
 
     /**
      * Creates a new deadline task.
      *
      * @param description Task description.
-     * @param date        Deadline date and time.
+     * @param by          Deadline date and time.
      */
-    public Deadline(String description, LocalDateTime date) {
+    public Deadline(String description, LocalDateTime by) {
         super(description);
-        this.date = date;
+        this.by = by;
     }
 
     /**
@@ -27,11 +29,20 @@ public class Deadline extends Task {
      *
      * @param description Task description.
      * @param isDone      Whether the task is completed.
-     * @param date        Deadline date and time.
+     * @param by          Deadline date and time.
      */
-    public Deadline(String description, boolean isDone, LocalDateTime date) {
+    public Deadline(String description, boolean isDone, LocalDateTime by) {
         super(description, isDone);
-        this.date = date;
+        this.by = by;
+    }
+
+    public LocalDateTime getBy() {
+        return this.by;
+    }
+
+    @Override
+    public Optional<LocalDateTime> getDateTime() {
+        return Optional.of(getBy());
     }
 
     /**
@@ -44,7 +55,7 @@ public class Deadline extends Task {
         return TaskType.DEADLINE.getCode()
                 + " | " + (isDone() ? "1" : "0")
                 + " | " + getDescription()
-                + " | " + DateUtil.toFileString(date);
+                + " | " + DateUtil.toFileString(by);
     }
 
     /**
@@ -57,6 +68,25 @@ public class Deadline extends Task {
         return "[" + TaskType.DEADLINE.getCode() + "] "
                 + super.toString()
                 + " (by: "
-                + DateUtil.toDisplayString(this.date) + ")";
+                + DateUtil.toDisplayString(getBy()) + ")";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Deadline other)) {
+            return false;
+        }
+        return getDescription().equalsIgnoreCase(other.getDescription())
+                && getBy().equals(other.getBy());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                getDescription().toLowerCase(),
+                getBy());
     }
 }

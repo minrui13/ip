@@ -2,6 +2,8 @@ package yappa.ui;
 
 import java.time.LocalTime;
 
+import yappa.task.SortField;
+import yappa.task.SortOrder;
 import yappa.task.Task;
 import yappa.task.TaskList;
 
@@ -138,8 +140,12 @@ public class Ui {
      *
      * @return Task sorting confirmation.
      */
-    public String showTasksSorted() {
-        return "Tasks have been sorted alphabetically!";
+    public String showTasksSorted(SortField sortField, SortOrder sortOrder) {
+        return "Tasks have been sorted by "
+                + sortField
+                + " in "
+                + sortOrder.toString().toLowerCase()
+                + " order!";
     }
 
     private static String formatTaskCount(int taskCount) {
@@ -156,18 +162,26 @@ public class Ui {
     public String showHelpMenu() {
         return buildMessage(
                 "Here are the commands!",
-                "list",
-                "todo <description>",
-                "deadline <description> /by <dd/MM/yyyy HHmm>",
-                "event <description> /from <dd/MM/yyyy HHmm> /to <dd/MM/yyyy HHmm>",
-                "mark <task_number>",
-                "unmark <task_number>",
-                "delete <task_number>",
-                "find <search>",
-                "help",
-                "sort",
-                "clear",
-                "bye");
+                "\nTask commands:",
+                "  todo <description>",
+                "  deadline <description> /by <dd/MM/yyyy HHmm>",
+                "  event <description> /from <dd/MM/yyyy HHmm> "
+                        + "/to <dd/MM/yyyy HHmm>",
+                "  mark <task_number>",
+                "  unmark <task_number>",
+                "  delete <task_number>",
+                "  find <search>",
+
+                "\nDisplay and sorting commands:",
+                "  list",
+                "  sort [alpha|datetime] [asc|desc]",
+
+                "\nGeneral commands:",
+                "  help",
+                "  clear",
+                "  bye"
+
+        );
     }
 
     /**

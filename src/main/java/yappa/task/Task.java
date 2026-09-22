@@ -1,5 +1,8 @@
 package yappa.task;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 /**
  * Represents a generic task managed by Yappa.
  * Base class for specific task types like Todo, Deadline, and Event.
@@ -66,6 +69,15 @@ public abstract class Task {
      */
     public boolean isDone() {
         return isDone;
+    }
+
+    /**
+     * Returns this task's associated date-time, if it has one.
+     *
+     * @return Task date-time, or an empty value when the task has no date-time.
+     */
+    public Optional<LocalDateTime> getDateTime() {
+        return Optional.empty();
     }
 
     /**

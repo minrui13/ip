@@ -46,4 +46,20 @@ public class Todo extends Task {
         return "[" + TaskType.TODO.getCode() + "] "
                 + super.toString();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Todo other)) {
+            return false;
+        }
+        return getDescription().equalsIgnoreCase(other.getDescription());
+    }
+
+    @Override
+    public int hashCode() {
+        return getDescription().toLowerCase().hashCode();
+    }
 }

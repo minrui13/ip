@@ -23,6 +23,7 @@ prefer typing commands. Add tasks, track deadlines and events, search your task 
   - [Deleting a task: `delete`](#deleting-a-task-delete)
   - [Clearing all tasks: `clear`](#clearing-all-tasks-clear)
   - [Exiting Yappa: `bye`](#exiting-yappa-bye)
+- [Handling Duplicates](#handling-duplicates)
 - [Saving Data](#saving-data)
 - [Command Summary](#command-summary)
 
@@ -194,29 +195,58 @@ Here are your current tasks:
 
 ### Sorting tasks: `sort`
 
-Sorts tasks alphabetically by their descriptions.
+Sorts tasks by description or date/time.
 
-Sorting is case-insensitive.
+Sorting is case-insensitive when sorting alphabetically.
+
+The default sorting options are:
+
+- Field: alphabetical
+- Order: ascending
 
 **Format:**
 
+`sort [FIELD] [ORDER]`
+
+Where:
+
+- `FIELD` is either `alpha` or `date`
+- `ORDER` is either `asc` or `desc`
+
+**Examples:**
+
+```text
+sort
+sort alpha asc
+sort alpha desc
+sort date asc
+sort date desc
+```
+The following command is equivalent to sort alpha asc:
+
 `sort`
 
-**Example:**
+For alphabetical sorting, tasks are ordered by their descriptions:
 
 Before sorting:
+
 ```
 1. [T][ ] Write report
 2. [T][ ] buy milk
 3. [T][ ] Attend meeting
 ```
+After sort alpha asc:
 
-After `sort`:
 ```
 1. [T][ ] Attend meeting
 2. [T][ ] buy milk
 3. [T][ ] Write report
 ```
+For date sorting:
+* Deadlines are sorted by their deadline.
+* Events are sorted by their start time.
+* Todos, which do not have a date/time, are placed after dated task
+
 ---
 
 ### Finding tasks: `find`
@@ -324,6 +354,37 @@ Closes Yappa.
 
 ---
 
+### Handling Duplicates
+
+Yappa prevents duplicate tasks with the same description in most cases.
+
+* Todo tasks with the same description are treated as duplicates.
+* Deadline tasks with the same description are allowed if their deadline date/time is different.
+* Event tasks with the same description are allowed if their start or end date/time is different.
+* Tasks with the same description and identical date/time details are treated as duplicates.
+
+For example, these tasks are allowed:
+
+```text
+deadline submit report /by 20/09/2026 2359
+deadline submit report /by 25/09/2026 2359
+```
+
+These events are also allowed:
+
+```text
+event team meeting /from 21/09/2026 1400 /to 21/09/2026 1600
+event team meeting /from 22/09/2026 1400 /to 22/09/2026 1600
+```
+However, adding the exact same task twice is not allowed:
+
+```text
+todo read chapter 5
+todo read chapter 5
+```
+
+---
+
 ### Saving Data
 
 Yappa automatically saves changes to your task list. You do not need to
@@ -339,7 +400,7 @@ Saved tasks are loaded automatically the next time Yappa starts.
 | --- | --- | --- |
 | **Help** | `help` | `help` |
 | **List tasks** | `list` | `list` |
-| **Sort tasks** | `sort` | `sort` |
+| **Sort tasks** | `sort [alpha|date] [asc|desc]` | `sort date desc` |
 | **Add todo** | `todo DESCRIPTION` | `todo read chapter 5` |
 | **Add deadline** | `deadline DESCRIPTION /by DATE_TIME` | `deadline submit assignment /by 20/09/2026 2359` |
 | **Add event** | `event DESCRIPTION /from START /to END` | `event meeting /from 21/09/2026 1400 /to 21/09/2026 1600` |

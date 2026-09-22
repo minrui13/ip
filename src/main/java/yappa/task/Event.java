@@ -1,6 +1,8 @@
 package yappa.task;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.Optional;
 
 import yappa.exception.YappaException;
 import yappa.util.DateUtil;
@@ -64,6 +66,19 @@ public class Event extends Task {
         }
     }
 
+    public LocalDateTime getFrom() {
+        return from;
+    }
+
+    public LocalDateTime getTo() {
+        return to;
+    }
+
+    @Override
+    public Optional<LocalDateTime> getDateTime() {
+        return Optional.of(getFrom());
+    }
+
     /**
      * Formats this event for file storage.
      *
@@ -91,4 +106,25 @@ public class Event extends Task {
                 + " to: " + DateUtil.toDisplayString(this.to)
                 + ")";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Event other)) {
+            return false;
+        }
+        return getDescription().equalsIgnoreCase(other.getDescription())
+                && getTo().equals(other.getTo()) && getFrom().equals(other.getFrom());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                getDescription().toLowerCase(),
+                getFrom(),
+                getTo());
+    }
+
 }

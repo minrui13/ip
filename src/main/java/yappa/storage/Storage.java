@@ -105,8 +105,8 @@ public class Storage {
                 return new Todo(description, isDone);
 
             case DEADLINE:
-                LocalDateTime date = DateUtil.parseStorageDateTime(taskParts[3]);
-                return new Deadline(description, isDone, date);
+                LocalDateTime by = DateUtil.parseStorageDateTime(taskParts[3]);
+                return new Deadline(description, isDone, by);
 
             case EVENT:
                 LocalDateTime from = DateUtil.parseStorageDateTime(taskParts[3]);
