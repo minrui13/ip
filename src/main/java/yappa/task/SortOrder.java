@@ -26,6 +26,13 @@ public enum SortOrder {
                 return order;
             }
         }
-        throw new YappaException("Invalid sort order. Use 'asc' or 'desc'.");
+
+        throw new YappaException(
+                "Invalid sort order. Use 'asc' or 'desc'.");
+    }
+
+    @Override
+    public String toString() {
+        return displayName;
     }
 }

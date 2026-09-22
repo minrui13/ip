@@ -175,11 +175,14 @@ public class Parser {
 
     }
 
-    private static SortCommand parseSort(String arguments) throws YappaException {
+    private static SortCommand parseSort(String arguments)
+            throws YappaException {
         String trimmedArguments = arguments.trim();
 
         if (trimmedArguments.isEmpty()) {
-            return new SortCommand(SortField.DESCRIPTION, SortOrder.ASCENDING);
+            return new SortCommand(
+                    SortField.DESCRIPTION,
+                    SortOrder.ASCENDING);
         }
 
         String[] parts = trimmedArguments.split("\\s+");
@@ -189,44 +192,15 @@ public class Parser {
                     "Sort format: sort [alpha|datetime] [asc|desc]");
         }
 
-        SortField field = parseSortField(parts[0]);
+        SortField field = SortField.fromInput(parts[0]);
 
         SortOrder order = SortOrder.ASCENDING;
 
         if (parts.length == 2) {
-            order = parseSortOrder(parts[1]);
+            order = SortOrder.fromInput(parts[1]);
         }
 
         return new SortCommand(field, order);
-
-    }
-
-    private static SortField parseSortField(String input)
-            throws YappaException {
-        String value = input.trim();
-
-        for (SortField field : SortField.values()) {
-            if (field.toString().equalsIgnoreCase(value)) {
-                return field;
-            }
-        }
-
-        throw new YappaException(
-                "Invalid sort field. Use 'alpha' or 'datetime'.");
-    }
-
-    private static SortOrder parseSortOrder(String input)
-            throws YappaException {
-        String value = input.trim();
-
-        for (SortOrder order : SortOrder.values()) {
-            if (order.toString().equalsIgnoreCase(value)) {
-                return order;
-            }
-        }
-
-        throw new YappaException(
-                "Invalid sort order. Use 'asc' or 'desc'.");
     }
 
     /**

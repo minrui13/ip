@@ -13,11 +13,6 @@ public enum SortField {
         this.displayName = displayName;
     }
 
-    @Override
-    public String toString() {
-        return displayName;
-    }
-
     /**
      * Resolves a user-typed sort field name into a {@code SortField}.
      *
@@ -32,5 +27,10 @@ public enum SortField {
             }
         }
         throw new YappaException("Invalid sort field. Use 'alpha' or 'datetime'.");
+    }
+
+    @Override
+    public String toString() {
+        return displayName;
     }
 }
