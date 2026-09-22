@@ -95,8 +95,8 @@ Yappa displays:
 
 ```
 Here are the commands!
-list
-sort
+
+Task commands:
 todo <description>
 deadline <description> /by <dd/MM/yyyy HHmm>
 event <description> /from <dd/MM/yyyy HHmm> /to <dd/MM/yyyy HHmm>
@@ -104,6 +104,12 @@ mark <task_number>
 unmark <task_number>
 delete <task_number>
 find <search>
+
+Display and sorting commands:
+list
+sort [alpha|datetime] [asc|desc]
+
+General commands:
 help
 clear
 bye
@@ -195,7 +201,7 @@ Here are your current tasks:
 
 ### Sorting tasks: `sort`
 
-Sorts tasks by description or date/time.
+Sorts tasks by description or datetime.
 
 Sorting is case-insensitive when sorting alphabetically.
 
@@ -210,7 +216,7 @@ The default sorting options are:
 
 Where:
 
-- `FIELD` is either `alpha` or `date`
+- `FIELD` is either `alpha` or `datetime`
 - `ORDER` is either `asc` or `desc`
 
 **Examples:**
@@ -219,8 +225,8 @@ Where:
 sort
 sort alpha asc
 sort alpha desc
-sort date asc
-sort date desc
+sort datetime asc
+sort datetime desc
 ```
 The following command is equivalent to sort alpha asc:
 
@@ -400,7 +406,7 @@ Saved tasks are loaded automatically the next time Yappa starts.
 | --- | --- | --- |
 | **Help** | `help` | `help` |
 | **List tasks** | `list` | `list` |
-| **Sort tasks** | `sort [alpha|date] [asc|desc]` | `sort date desc` |
+| **Sort tasks** | `sort [alpha|datetime] [asc|desc]` | `sort datetime desc` |
 | **Add todo** | `todo DESCRIPTION` | `todo read chapter 5` |
 | **Add deadline** | `deadline DESCRIPTION /by DATE_TIME` | `deadline submit assignment /by 20/09/2026 2359` |
 | **Add event** | `event DESCRIPTION /from START /to END` | `event meeting /from 21/09/2026 1400 /to 21/09/2026 1600` |
